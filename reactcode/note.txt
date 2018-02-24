@@ -1,0 +1,75 @@
+一、react介绍
+    ① vue,angular是mvvm框架，数据双向绑定 React不处理Ajax、路由和数据存储，也不规定数据组织的方式。它不是一个Model-View-Controller框架。如果非要问它是什么，他就是MVC里的“V”
+    ② react特点
+        虚拟DOM：
+        组件化：
+        单向数据流：React设计者认为数据双向绑定虽然便捷，但在复杂场景下副作用也是很明显，所以React更倾向于单向的数据流动-从父节点传递到子节点。（使用ReactLink也可以实现双向绑定，但不建议使用）
+二、环境搭建
+    ① react.js：实现React核心逻辑，且于具体的渲染引擎无关，从而可以跨平台公用。如果应用要迁    移到React Native，这一部分逻辑是不需要改变的。
+      react-dom.js：包含了具体的DOM渲染更新逻辑，以及服务端渲染的逻辑，这部分就是与浏览器相关的部分了。
+    ② React.createClass 它的作用是注册一个组件类
+      ReactDOM.render() ReactDOM.render是React的最基本方法，用于将模板转为HTML语言，并插入指定的DOM节点。
+三、初识JSX语法
+    ① 什么是JSX?
+        JSX就是Javascript和XML结合的一种格式。React发明了JSX，利用HTML语法来创建虚拟DOM。当遇到<，JSX就当HTML解析，遇到{就当JavaScript解析。
+        XML语法直接加入JS中,通过代码而非模板来高效的定义界面。之后JSX通过翻译器转换为纯JS再由浏览器执行。在实际开发中，JSX在产品打包阶段都已经编译成纯JavaScript，JSX的语法不会带来任何性能影响。另外，由于JSX只是一种语法，因此JavaScript的关键字class, for等也不能出现在XML中，而要如例子中所示，使用className, htmlFor代替，这和原生DOM在JavaScript中的创建也是一致的。JSX只是创建虚拟DOM的一种语法格式而已,除了用JSX,我们也可以用JS代码来创建虚拟DOM.
+    ② 加入JSX语法支持
+        如果要使用JSX语法的支持，你可以使用Babel来进行转换，但是为了讲解方便我们这里直接引入Babel的核心文件 browser.min.js。加入这个js后，js要设置type属性 type='text/babel'
+    ③ JSX中的表达式
+        JSX是支持表达式的，你只要使用{}括号，就可以使用表达式了
+        需要注意的是表达式不支持if…else这样的语句，但是支持三元运算符和二元运算符。
+四、进阶JSX语法
+    ① 新版本的React需要使用key，如果没有key虽然会出来效果，但是控制台会包错。key的作用是生成虚拟DOM时，需要使用key来进行标记,DOM更新时进行比较。
+    ② JSX允许直接在模版插入JavaScript变量。如果这个变量是一个数组，则会展开这个数组的所有成员。
+五、React组件：state成员
+    ① React组件可以把它看做带有props属性集合和state状态集合并且构造一个虚拟DOM结构的对象
+    ② getInitialState函数必须有返回值，可以是null,false,一个对象。
+      访问state数据的方法是”this.state.属性名”。
+      变量用{}包裹，不需要再加双引号。
+      render的返回值必须被一个闭标签包裹
+六、React组件：props和render成员
+    我们不应该修改props中的值。事实上，如果要在组件外更改也是一个很麻烦的事，需要找到组件实例，这没有必要。在设计组件时，就要想好组件哪些使用state，哪些使用props集合，那些使用state集合。通常固定的组件内只读的、应由父组件传递进来的属性适合放在props集合中，如组件的类名、颜色、字体、事件响应回调函数等。
+
+    props与state的区别
+    props不能被其所在的组件修改，从父组件传递进来的属性不会在组件内部更改；state只能在所在组件内部更改，或在外部调用setState函数对状态进行间接修改。
+
+    render成员函数
+    首先说render是一个函数，它对于组件来说，render成员函数是必需的。render函数的主要流程是检测this.props和this.state,再返回一个单一组件实例。
+
+    render函数应该是纯粹的，也就是说，在render函数内不应该修改组件state，不读写DOM信息，也不与浏览器交互。如果需要交互，应该在生命周期中进行交互
+七、React组件：生命周期
+    初始化-组件将要挂载-组将挂载完毕-组件将要更新-组件更新完毕-组件将要摧毁
+八、React组件：this.props.children
+    this.props.children的值有三种可能，如果当前组件没有子节点，他就是undfined；如果有一个子节点，数据类型是object；如果有多个子节点，数据类型就是array。所以处this.proprs.children的时候要小心。
+九、React组件：props属性验证
+    组件的属性是可以接收任何值的，但有时候我们希望对外界父级组件传递进来的属性数据进行限定，比如希望name属性不能缺少、onClick属性必须是函数类型等，这对确保组件被正确使用非常有意义。为此React引入了propTypes机制。React.PropTypes提供各种验证器（validator）来验证传入数据的有效性。当向props传入无效数据时，React会在JavaScript控制台抛出警告
+
+    getDefaultProps默认值设置
+十、React组件：获取真实DOM节点。
+    有时候我们需要从组件中获取真实的DOM节点，来进行业务逻辑的编写，React为我们提供了ref属性。
+十一、react表单操作
+    react是单向数据流，那么react是如何操作表单的呢？可以通过表单的onchange事件修改状态
+    ① 事件响应
+    表单组件可以通过设置onChange()回调函数来监听组件变化。当用户的交互行文导致一下变化时，onChange()被执行并通过浏览器做出响应。
+    ② 另外需要注意的是在<label>标签里的for不能在正常使用了，而是要写成htmlFor。
+    ③ React表单name复用
+    ④ 可控表单
+    ⑤ 不可控表单
+
+            
+        React项目构建和路由
+第01节：构建：create-react-app 快速脚手架
+
+① creat-react-app优点
+无需配置：官方的配置堪称完美，几乎不用你再配置任何东西，就可以上手开发项目。
+高集成性：集成了对React，JSX，ES6和Flow的支持。
+自带服务：集成了开发服务器，你可以实现开发预览一体化。
+热更新：保存自动更新，让你的开发更简单。
+全兼容性：自动处理CSS的兼容问题，无需添加-webkit前缀。
+自动发布：集成好了发布成品功能，编译后直接发布，并且包含了sourcemaps功能。
+② create-react-app的安装
+    npm install -g create-react-app
+③ 创建React项目
+    create-react-app my-app
+④ 启动服务
+    npm start
