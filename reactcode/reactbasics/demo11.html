@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="../reactjstext/react.js"></script>
+    <script src="../reactjstext/react-dom.js"></script>
+    <script src="https://cdn.bootcss.com/babel-core/5.7.2/browser.min.js"></script>
+    <script type="text/babel">
+        var Hello = React.createClass({
+            propTypes: {
+                title: React.PropTypes.string.isRequired
+            },//propTypes的作用主要是对prop属性的类型做一个限制
+            getDefaultProps: function(){
+                return {
+                    title: 'hello jspang'
+                }  
+            },//默认属性 getInitialState初始化状态
+            render: function(){
+                return(
+                    <p>{this.props.title}</p>
+                )
+            }
+        })
+        var data = '123';
+        ReactDOM.render(<Hello />,document.getElementById('container'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="../reactjstext/react.js"></script>
+    <script src="../reactjstext/react-dom.js"></script>
+    <script src="https://cdn.bootcss.com/babel-core/5.7.2/browser.min.js"></script>
+    <script type="text/babel">
+        var Form = React.createClass({
+            getInitialState: function () {
+                return {
+                    username: '',
+                    checked: true,
+                    gender: 'man'
+                }
+            },
+            handchange: function(name,event){
+                let target = event.target
+                let newState = {};
+                newState[name] = name=="checked"?target.checked:target.value;
+                this.setState(newState)
+                console.log(newState)
+            },
+            handsubmit: function(event){
+                event.preventDefault();
+                var is = this.state.checked?'是':'不是'
+                var gender = this.state.gender=="man"?'帅哥':'美女'
+                var name = this.state.username;
+                alert(name+is+gender)
+            },
+            render: function(){
+                return(
+                    <form onSubmit={this.handsubmit}>
+                        <label htmlFor='user'>名字：</label>
+                        <input onChange={this.handchange.bind(this,'username')} type='text' id='user' name='username' value={this.state.username} />
+                        <br />
+                        <label htmlFor='checkbox'>是/否</label>
+                        <input onChange={this.handchange.bind(this,'checked')} type='checkbox' id='checkbox' name='checkbox' checked={this.state.checked} />
+                        <br />
+                        <select name='gender' value={this.state.gender} onChange={this.handchange.bind(this,'gender')}>
+                            <option value='man'>帅哥</option>
+                            <option value='women'>美女</option>    
+                        </select>
+                        <br />
+                        <button>提交</button>
+                    </form>
+                )
+            },
+            
+        })
+        ReactDOM.render(<Form />,document.getElementById('container'))
+    </script>
+</body>
+</html>

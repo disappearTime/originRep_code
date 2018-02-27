@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="../reactjstext/react.js"></script>
+    <script src="../reactjstext/react-dom.js"></script>
+    <script src="https://cdn.bootcss.com/babel-core/5.7.2/browser.min.js"></script>
+    <script type="text/babel">
+        var Hello = React.createClass({
+            render: function(){
+                return(
+                    <p>
+                        <input type='text' ref='txt' />
+                        <input type='button' onClick={this.handleclick} value='text on focus' />
+                    </p>
+                )
+            },
+            handleclick: function(){
+                this.refs.txt.focus()
+            }
+        })
+        var data = '123';
+        ReactDOM.render(<Hello />,document.getElementById('container'))
+    </script>
+</body>
+</html>
