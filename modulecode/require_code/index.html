@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script data-main="js/main" src="js/require.js"></script>
+    <script>
+        require(["a"],function(){
+            alert("load finished")
+        })
+        require(["jquery","underscore"],function($,_){//第一个参数是请求的模块，是一个数组，第二个参数是模块请求回来后的一个回调函数
+            _.each([1,2,3],alert);
+        })
+    </script>
+    <span>body</span>
+</body>
+</html>

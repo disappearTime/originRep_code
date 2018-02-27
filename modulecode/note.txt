@@ -1,0 +1,8 @@
+一、模块化开发的四种方式
+    ① 基于node的模块化 commonjs
+    ② ES6的模块化开发
+    ③ 基于AMD规范的模块化开发，产品requirejs
+    ④ 基于CMD规范的模块化开发，产品seajs
+
+二、seajs(CMD规范) 过时了
+    ① 安装seajs npm install seajs -D
