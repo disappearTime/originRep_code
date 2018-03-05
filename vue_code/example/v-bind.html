@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind</title>
+    <style>
+        .classA{
+            color:red;
+        }
+        .classB{
+            font-size: 150%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>绑定类名class</h1>
+        <p v-bind:class="className">v-bind绑定class类名</p>
+        <p :class="className">v-bind简写</p>
+        <p :class="{ classB:isok }">绑定class中的判断</p>
+        <input type="checkbox" id="isok" v-model="isok">
+        <label for="isok">{{ isok }}</label>
+        <p v-bind:class="[classA,classB]">v-bind绑定多个类名</p>
+        <p v-bind:class="isok?classA:classB">v-bind绑定类名中的三元运算符</p>
+        <p v-bind:style="{color:blue,fontWeight:fontWeight}">v-bind绑定style</p>
+        <p v-bind:style="styleObj">v-bind绑定style对象</p>
+    </div>
+    <script src="../assets/js/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                className:'classA',
+                isok:true,
+                classA:'classA',
+                classB:'classB',
+                styleObj:{
+                    fontSize:"30px",
+                    color:"green"
+                },
+                blue:"blue",
+                fontWeight:"bold",
+                message:"你好！"
+            }
+        })
+    </script>
+</body>
+</html>

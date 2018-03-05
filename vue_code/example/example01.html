@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>example methods demo</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <h1>example methods demo</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:"hello world!"
+            },
+            methods: {
+                add:function(){
+                    console.log("调用了add方法")
+                }
+            },
+            mounted:function(){
+                $("#app").html("在mounted和updated勾子函数中vue和jq可以结合使用")
+            }//dom挂载之后执行，只有在mounted和updated勾子函数里才能使用jquery,否则找不到dom元素
+        })
+        app.add();
+    </script>
+</body>
+</html>

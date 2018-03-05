@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>example methods demo</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <h1>example methods demo</h1>
+    <hr>
+    <div id="app">
+        <p>{{ num }}</p>
+        <button type="button" @click="add">add</button>
+        <button type="button" onclick="reduce()">reduce</button>
+        <button type="button" onclick="reduceonce()">reduceonce</button>
+        <button type="off" onclick="off()">off</button>
+    </div>
+    
+    <script type="text/javascript">
+        var app = new Vue({
+            el:"#app",
+            data:{
+                num:1
+            },
+            methods: {
+                add:function(){
+                    this.num++
+                }
+            }
+        })
+        //$on 在构造器外部添加方法
+        app.$on("reduce",function(){
+            this.num--;
+        })
+        //$emit 调用构造器外部添加的方法
+        function reduce(){
+            app.$emit("reduce")
+        }
+        //$once 在构造器外部添加只能使用一次的方法
+        app.$once("reduceonce",function(){
+            this.num--
+        })
+        function reduceonce(){
+            app.$emit("reduceonce");
+        }
+        //$off 关闭事件 不能关闭构造器内部原有的方法
+        function off(){
+            app.$off("reduce");
+        }
+    </script>
+</body>
+</html>

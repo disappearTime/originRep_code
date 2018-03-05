@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mixins混入选项</title>
+    <script src="../assets/js/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <p>{{ num }}</p>
+        <button @click="add()">加</button>
+    </div>
+    <script>
+        //三种混入updated方法执行顺序，全局混入>mixins选项混入方法>原生的updated
+        var addconsole = {
+            updated:function(){
+                console.log("混入方法：数据更新后变成了"+this.num)
+            }
+        }
+        //混入全局API 写在构造器前面
+        Vue.mixin({
+            updated:function(){
+                console.log("我是全局的混入")
+            }
+        })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                num:1
+            },
+            methods: {
+                add:function(){
+                    this.num++;
+                }
+            },
+            updated:function(){
+                console.log("原生方法：数据更新后变成了"+this.num)
+            },
+            mixins: [addconsole]//混入某些功能
+        })
+        
+    </script>
+</body>
+</html>

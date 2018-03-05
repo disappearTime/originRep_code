@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件继承</title>
+    <script src="../assets/js/vue.js"></script>
+    <template id="panda">
+        <div class="container">
+            <p>动物名：<slot name="animal"></slot></p>
+            <p>国家：<slot name="area"></slot></p>
+            <p>城市：<slot name="city"></slot></p>
+            <slot></slot>
+        </div>
+    </template>
+    <div id="app">
+        <panda>
+            <span slot="animal">{{ pandadata.animal }}</span>
+            <span slot="area">{{ pandadata.area }}</span>
+            <span slot="city">{{ pandadata.city }}</span>
+            <p>我会被匿名slot替换</p>
+            <p>我也会被匿名slot替换</p>
+        </panda>  
+    </div>
+    
+</head>
+<body>
+    <script>
+        console.log("1" == 1)
+        var pandaObj = {
+            template:"#panda"
+        }
+        var app = new Vue({
+            el:"#app",
+            data:{
+                pandadata:{
+                    animal:"panda",
+                    area:"China",
+                    city:'sichuan'
+                }
+            },
+            components: {
+                "panda":pandaObj
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件继承</title>
+    <script src="../assets/js/vue.js"></script>
+    <div id="app">
+        <panda></panda>
+    </div>
+    
+</head>
+<body>
+    <script>
+        var cityComponent = {
+            template:'<p>siChuan of China</p>'
+        }//注意程序的执行迅速，这个写在后边
+        var pandaComponent = {
+            template:`<div style="color:red;">
+                        <p>panda is from china</p>
+                        <city></city>
+                     </div>`,
+            components:{
+                "city":cityComponent
+            }
+        }
+        var app = new Vue({
+            el:"#app",
+            components: {
+                "panda":pandaComponent
+            }
+        })
+    </script>
+</body>
+</html>

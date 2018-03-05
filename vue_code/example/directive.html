@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+</head>
+<body>
+    <div id="app">
+        <p v-addcolor="color">{{ num }}</p>
+        <button type="button" @click="add">加</button><br>
+        <button @click="desbind" type="button">解绑</button>
+    </div>
+    <script src="../assets/js/vue.js"></script>
+    
+    <script>
+        Vue.directive("addcolor",{
+            //自定义指令生命周期
+            bind:function(el,binding){
+                console.log("1:"+"bind");
+                el.style = "color:"+binding.value+";"
+            },
+            inserted:function(){
+                console.log("2:"+"inserted");
+            },
+            update:function(){
+                console.log("3:"+"update");
+            },
+            componentUpdated:function(){
+                console.log("4:"+"componentUpdated");
+            },
+            unbind:function(){
+                console.log("5:"+"unbind");
+            }
+        })
+        var app = new Vue({
+            el:"#app",
+            data:{
+                num:1,
+                color:"blue"
+            },
+            methods: {
+                add:function(){
+                    this.num++
+                },
+                desbind:function(){
+                    app.$destroy();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="../assets/js/vue.js"></script>
+    <div id="app">
+        <component-a></component-a>
+        <component-b></component-b>
+    </div>
+</head>
+<body>
+    <script>
+        var bus = new Vue()
+        var componentA = {
+            template: '<button v-on:click="aa">1</button>',
+            data () {
+                return {
+                    meg: 0
+                }
+            },
+            methods: {
+                aa: function(){
+                    bus.$emit('aa',++this.meg)//$emit触发当前实例的事件，附加参数会传给监听器的回调
+                }
+            }
+        }
+        var componentB = {
+            template: `<button>2</button>`,
+            mounted () {
+                bus.$on('aa',function(text){
+                    console.log(`我是由组件1传过来的${text}`)
+                })
+            }
+        }
+        var app = new Vue({
+            el: '#app',
+            components:{
+                componentA:componentA,
+                componentB:componentB
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-pre、v-cloak、v-once</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <p v-pre>原样输出：{{ message }}</p>
+        <p v-cloak>渲染完成后才显示</p>
+        <p v-once>{{ message }}</p>
+        <input type="text" v-model="message">
+        <p>{{ message }}</p>
+    </div>
+    <script src="../assets/js/vue.js"></script>
+    
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:"你好！"
+            }
+        })
+    </script>
+</body>
+</html>

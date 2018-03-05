@@ -1,0 +1,69 @@
+1 npm install -g live-server 全局安装服务器
+2 live-server 启动服务
+3 ctrl+c终止程序的执行
+4 vscode快捷键 alt+shift+↓复制一行
+
+vue指令
+1 v-if & v-else & v-show
+①v-if:判断是否加载，可以减轻服务器的压力，在需要时加载。
+②v-show:调整css displayr属性，可以使客户端操作更加流畅。
+2 v-for
+①v-for指令用来遍历数据<p v-for=" (item,index) in items "></p>
+②computed属性可以在输出数据时，对数据进行操作。
+3 v-text、{{}}、v-html的差别
+①{{}}这种取值方式，在网速较慢时，数据渲染不出来，而是直接显示这个变量，v-text不存在这个问题，v-html可以识别标签，但这种方式可能会遭到黑客攻击，测试时可能不会通过。
+4 v-on事件绑定
+①v-on:click @click都是绑定点击事件
+②v-on:keyup.enter、v-on:keyup.13都是绑定enter键抬起事件。
+5 v-model数据双向绑定，常用于表单操作，可以绑定一个数据，可以多选框同时绑定数组。
+demo见vuecode
+6 v-bind 数据绑定
+① 绑定类名 v-bind:class 简写：class  可以绑定标签的所有属性
+7 vue其他指令 v-pre、v-cloak、v-once
+v-pre原样输出不进行渲染，v-cloak渲染完成后才显示，v-once只进行一次渲染
+
+vue API
+①Vue.directive自定义指令
+②Vue.extend扩展构造器
+③Vue.set弥补检测不到属性改变的问题
+
+vue-cli 脚手架
+1 安装vue脚手架 npm install vue-cli -g
+2 vue -V 查看版本 注意：大写的V
+3 初始化 vue init webpack vuecliTest 最后一个是项目名称
+4 初始化完成后会有提示，进入项目文件夹--npm install(下载package.json中的依赖)--npm run dev 运行
+5 npm run build命令 开发完成后打包 生成一个dist文件，这个文件就是上传到服务器的
+6 入口文件 main.js
+7 参数传递
+① 通常的参数传递是通过url传递，vue路由可以通过name传递参数，如下
+{{ $route.name }}
+注意：如果存在子路由，name要写在子路由里面
+②：<router-link :to="{name:'nihao',params:{id:'zhuweiwei'}}">你好</router-link>
+8 单页面多路由区域操作
+9 通过url传递参数
+10 重定向 redirect
+11 alias别名的使用
+注意：在根目录下是不起作用的（现在起作用了）
+12 路由过度动画
+13 路由勾子函数
+① 在路由配置index.js里只能配置一个勾子函数
+beforeEnter:(to,from,next)=>{
+console.log(to);
+console.log(from);
+next()//next是一个开关，执行这一步才能跳转到下一个路由
+}
+② 在模板配置文件中可以配置两个勾子函数
+ 	beforeRouteEnter:(to,from,next)=>{
+
+}
+beforeRouteLeave:(to,from,next)=>{
+
+}
+14 编程式导航
+$route.go(-1) $route.go(1) $route.push
+15 如何与后端结合上线
+开发完成后将config文件夹下的index.js的assetsPublicPath: '/'改为assetsPublicPath:'./'
+然后命令行中打包 npm run build 将生成的dist文件发给服务端 
+'/'表示绝对路劲 ‘./’表示相对路劲
+16 vuex 数据管理器
+① npm install vuex --save

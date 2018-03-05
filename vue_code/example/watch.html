@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>methods方法选项</title>
+    <script src="../assets/js/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <p>温度：{{ newTpt }}</p>
+        <p>穿衣：{{ clothes }}</p>
+        <button @click="addTemperature()">增加温度</button><button @click="reduceTemperature()">减少温度</button>
+    </div>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                temperature:5,
+                clothes:"夹克"
+            },
+            computed: {
+                newTpt:function(){
+                    return this.temperature = parseInt(this.temperature)+"℃";
+                }
+            },
+            methods: {
+                addTemperature:function(){
+                    this.temperature = parseInt(this.temperature) + 5
+                },
+                reduceTemperature:function(){
+                    this.temperature = parseInt(this.temperature) - 5
+                }
+            },
+            // watch: {
+            //     temperature:function(newVal,oldValue){
+            //         var tpt = parseInt(newVal);
+            //         if(tpt < 0){
+            //             this.clothes = "羽绒服"
+            //         }else if(tpt>20){
+            //             this.clothes = "短袖"
+            //         }else{
+            //             this.clothes = "夹克"
+            //        }
+            //     }
+            // }
+        })
+        app.$watch("temperature",function(newvalue,oldvalue){
+            var tpt = parseInt(newvalue);
+            if(tpt < 0){
+                this.clothes = "羽绒服"
+            }else if(tpt>20){
+                this.clothes = "短袖"
+            }else{
+                this.clothes = "夹克"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>methods方法选项</title>
+    <script src="../assets/js/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        {{ price }}
+        <button @click="add()" type="button">加</button>
+        <btn @click.native="add(10)"></btn>
+    </div>
+    <button onclick="app.add(20)">外部按钮加</button>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                price:100
+            },
+            methods:{
+                add:function(num){
+                    if(num!="" && num!=undefined){
+                        this.price+=num
+                    }else{
+                        this.price++
+                    }
+                }
+            },
+            components: {
+                "btn":{
+                    template:`<button>btn add</button>`
+                }
+            }
+        })
+    </script>
+</body>
+</html>

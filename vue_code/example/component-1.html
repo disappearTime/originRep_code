@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件</title>
+    <script src="../assets/js/vue.js"></script>
+    <div id="app">
+        <cpt></cpt>
+        <cptin></cptin> 
+    </div>
+    <cpt></cpt>
+</head>
+<body>
+    <script>
+        Vue.component("cpt",{
+            template:`<h3 style="color:blue;">我是全局组件，但也要放在一个实例构造器里，可以在多个构造器里使用</h3>`
+        })
+        var app = new Vue({
+            el:"#app",
+            components:{
+                "cptin":{//这里的键名一定要带引号，否则会出现未定义的错误
+                    template:`<h3>我是局部组件，我只能在一个实例构造器内使用</h3>` 
+                }
+            }
+        })
+    </script>
+</body>
+</html>

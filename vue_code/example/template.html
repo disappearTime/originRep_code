@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板的三种写法</title>
+</head>
+<body>
+    <h1>模板template的三种写法</h1>
+    <div id="app">
+        
+    </div>
+    <template id="tpl1">
+        <h3 style="color:red;">我是template模板</h3>
+    </template>
+    <script src="../assets/js/vue.js"></script>
+    <script type="x-template" id="tpl3">
+        <h3 style="color:yellow;">我是script标签模板</h3>
+    </script>
+    <script>
+        var app = new Vue({//构造器
+            el:"#app",
+            //template:`<h3 style="color:blue;">我是渲染出来的</h3>`//非单引号 Esc退出键下面
+            template:"#tpl3"
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if</title>
+    <script src="../assets/js/vue.js"></script>
+    <div id="app">
+        <p>当前获取的分数：{{ score }}</p>
+        <button type="button" v-on:click="addScore">加分</button>
+        <button type="button" @click="reduceScore">减分</button><br />
+        <input type="text" v-on:keyup.enter="getScore" v-model="score1" >
+    </div>
+</head>
+<body>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                score:0,
+                score1:1,
+            },
+            methods: {
+                addScore:function(){
+                    this.score++;
+                },
+                reduceScore:function(){
+                    this.score--;
+                },
+                getScore:function(){
+                    this.score = parseInt(this.score)+parseInt(this.score1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

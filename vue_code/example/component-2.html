@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue组件props属性设置</title>
+    <script src="../assets/js/vue.js"></script>
+    <div id="app">
+        <panda :from-here="message"></panda>
+    </div>
+    
+</head>
+<body>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                message:"China"
+            },
+            components: {
+                "panda":{
+                    template:`<div style="color:blue">panda is from {{ fromHere }} </div>`,
+                    props: ["fromHere"]//使用驼峰的形式，vue不支持横杠
+                }
+            }
+        })
+    </script>
+</body>
+</html>

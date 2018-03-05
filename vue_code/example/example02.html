@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>example methods demo</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <h1>example methods demo</h1>
+    <hr>
+    <div id="app">
+    </div>
+    <button type="button" onclick="destroyed()">摧毁</button>
+    <button type="button" onclick="reload()">刷新</button>
+    <button type="button" onclick="tick()">数据修改</button>
+    <script type="text/javascript">
+        var extendGzq = Vue.extend({
+            template:`<p>{{ message }}</p>`,
+            data:function(){
+                return {
+                    message:"hello world"
+                }
+            },
+            mounted:function(){
+                console.log("mounted,被创建")
+            },
+            destroyed:function(){
+                console.log("被卸载")
+            },
+            updated:function(){
+                console.log("数据更新完后")
+            }
+        })
+        var vm = new extendGzq().$mount("#app")//扩展构造器用模板内容替换挂载的元素，页面渲染后div#app没有了
+        function destroyed(){
+            vm.$destroy();
+        }
+        function reload(){
+            vm.$forceUpdate();//强制刷新
+        }
+        function tick(){
+            vm.message = "message update info";
+            vm.$nextTick(function(){
+                console.log("message更新完成后执行")
+            })
+        }
+    </script>
+</body>
+</html>

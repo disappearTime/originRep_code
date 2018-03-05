@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mixins混入选项</title>
+    <script src="../assets/js/vue.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <p>{{ num }}</p>
+        <button @click="add()">加</button>
+        <button @click="reduce()">减</button>
+    </div>
+    <script>
+        //扩展的方法与构造器已有的方法同名时，不执行
+        var extendsObj = {
+            updated:function(){
+                console.log("extends扩展的updated,")
+            },
+            methods: {
+                add:function(){
+                    console.log("extends扩展的add方法")
+                },
+                reduce:function(){
+                    console.log("extends扩展的reduce方法")
+                }
+            }
+        }
+        var app = new Vue({
+            el:"#app",
+            data:{
+                num:1
+            },
+            methods: {
+                add:function(){
+                    this.num++;
+                }
+            },
+            updated:function(){
+                console.log("原生updated")
+            },
+            extends: extendsObj//功能跟mixins有点类似，mixins接收一个数组。
+        })
+        
+    </script>
+</body>
+</html>
