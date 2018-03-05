@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this指向问题</title>
+</head>
+<body>
+    <script>
+        // this的指向主要有四种:
+        // 1 作为对象的方法调用，这个时候this指向的是该对象（）
+        var obj = {
+            a: 1,
+            getA: function(){
+                console.log(this === obj);
+                console.log(this.a);
+            }
+        }
+        obj.getA();
+        // 2 作为普通函数调用，这个时候this总是指向全局对象(任何全局变量和全局函数都是window对象的属性和方法)
+        var win_name = "zhuweiwei";
+        let getName = () => console.log(this.win_name);
+        getName();
+        // 3 作为构造器调用，这个时候this的指向就分情况了，主要是看构造器有没有显式返回一个对象。
+        // 当用new运算符调用函数时，该函数总会返回一个对象，通常情况this就是指向这个对象的，但是如果构造器显式的返回一个object类的对象，那么运算结果最终返回的是那个对象而不是this，所以这个时候this指向的对象就是显式返回的那个对象。
+        function Class1(){
+            this.name = "111";
+        }
+        var obj1 = new Class1();
+        console.log(obj1.name);// 111
+        function Class2(){
+            this.name = "111";
+            return {
+                name: "222" // 显式返回一个对象
+            }
+        }
+        var obj2 = new Class2();
+        console.log(obj2.name);// this指向显式返回的那个对象
+        // 4 call、bind、apply可以改变this的指向
+        var a = {
+            user: "追梦子",
+            fn: function(){
+                console.log(this.user);
+            }
+        }
+        a.fn();// 追梦子
+        var b = a.fn;
+        b();// undefined this指针丢失 可以通过call,bind apply 方法概念this指向。
+        // 1、call() call方法除了第一个参数以外还可以添加多个参数。
+        b.call(a);// 追梦子
+        var obj_ = {
+            user: '追梦子',
+            fn: function(a,b){
+                console.log(this)
+                console.log(this.user);
+                console.log(a+b);
+            }
+        }
+        var fn_ = obj_.fn;
+        fn_.call(obj_,1,2);// 追梦子，3
+        // apply 同call方法类似，第一个参数是this指针的指向，后面的参数通过数组的形式传入
+        fn_.apply(obj_,[2,3])// 追梦子 5
+        // 注意如果call和apply的第一个参数写的是null,那么this指向的是window对象。
+        fn_.apply(null,[3,4])
+        // 3 bind方法也可以改变指针但是不会立即执行 bind会复制一个函数
+        fn_.bind(a)(5,6);
+
+        // 关于this记住两句话：1 this指向调用这个方法的对象(确定this首相要找到这个方法的所有者) 2 this永远指向的是最后调用他的对象 例：
+        var o = {
+            a: 10,
+            b: {
+                a: 12,
+                fn: function(){
+                    console.log(this)
+                    console.log(this.a)
+                }
+            }
+        }
+        o.b.fn();//this指向b
+        var j = o.b.fn;//this指向window
+        j();
+
+        //构造函数中的this 当构造函数中显式的返回一个对象时，this指向这个返回的对象，否则this指向构造函数的实例(new关键字可以改变指针)
+    </script>
+</body>
+</html>

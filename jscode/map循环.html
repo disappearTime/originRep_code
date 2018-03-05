@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var names = ['朱威威','朱欢欢','朱涛涛'];
+        var newnames = names.map(function(name){
+            console.log(name)
+            return 'map映射'
+        })//数组map方法返回一个新数组，不会改变原数组，深拷贝
+        console.log(names);
+        console.log(newnames)
+    </script>
+</body>
+</html>
