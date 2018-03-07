@@ -1,0 +1,5 @@
+                                            微信小程序
+1 开发流程
+    第一步 需要一个小程序账号 申请账号：https://mp.weixin.qq.com/wxopen/waregister?action=step1 我的账号：usedbywxcx@163.com 密码zww123456
+    第二步下载开发者工具 https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=2018228
+    第三步 获取AppID (无appid部分功能受限) 小程序的 AppID 相当于小程序平台的一个身份证，后续你会在很多地方要用到 AppID (注意这里要区别于服务号或订阅号的 AppID)。AppID在菜单的设置-开发设置可以看到(https://mp.weixin.qq.com/wxopen/devprofile?action=get_profile&token=422150810&lang=zh_CN)
