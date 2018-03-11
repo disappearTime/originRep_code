@@ -87,3 +87,39 @@
         安装还是在命令行用npm进行安装，不过在全局安装generator-react-webpack之前，你可以先安装yeoman。命令如下：
         npm install -g yo
         npm install -g generator-react-webpack
+第03节：webpack构建react
+    ① 在根目录下初始化 npm init
+    ② 安装webpack开发依赖包 npm install webpack@3.6.0 --save-dev
+    ③ 在项目根目录下建立webpack.config.js
+    ④ 开发服务器配置
+        安装 yarn add webpack-dev-server@2.9.3 --save-dev(注意版本，webpack3.6.0,server2.9.3,目前webpack到四版本了，下载以前稳定版本)
+        配置： devServer: {
+            contentBase: './',
+            host: 'localhost',
+            compress: true,
+            port: 1717
+        }
+        配置好后再package.json里增加一个scrips命令，起名server
+         "scripts": {
+            "build": "webpack",
+            "server": "webpack-dev-server --open"
+        },
+        自动刷新浏览器,
+        在我们修改代码时，现在并不能自动刷新浏览器，不会立即呈现我们编写的代码结果，而是要再次npm run build才可以。其实只要在出口文件配置中加一个publicPath:'temp/',然后在index.html引入js时写这个temp地址就可以实时预览了。
+    ⑤ Babel安装配置
+        安装：yarn add --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+        配置：module: {
+            loaders: [
+                {
+                    test:/\.js$/,
+                    exclude: /node_modules/,
+                    loaders: "babel-loader",
+                    query: {
+                        presets: ['es2015','react']
+                    }
+                }
+            ]
+        }
+    ⑥ 编写React
+        安装React和React-dom两个包：yarn add react react-dom --save-dev
+    ⑥ 总结：其实自己配置React开发环境在实际工作中也并不多，因为我们的配置毕竟不是很成熟，而且支持较少。这里学习只是为了你更好的掌握React构建过程和设置参数，实际工作中尽量使用合适的脚手架工具。首推02节这种方式
