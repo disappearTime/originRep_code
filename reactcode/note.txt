@@ -74,7 +74,7 @@
 ④ 启动服务
     npm start
 
-第02节：构建：generator-react-webpack
+第02节：构建：generator-react-webpack(实际工作用的比较多)
     react的生态圈非常庞大，第三方的构建工具也有很多种，这节课介绍一个在业内比较流行的构建工具generator-react-webpack，它是需要yeoman的支持的。
     ① 优点介绍：
     基于webpack构建，可以很容易的配置自己需要的webpack。
@@ -84,9 +84,11 @@
     集成了esLint功能。
     可以轻松配置单元测试，比如Karma和Mocha
     ② 安装
-        安装还是在命令行用npm进行安装，不过在全局安装generator-react-webpack之前，你可以先安装yeoman。命令如下：
+        安装还是在命令行用npm进行安装，不过在全局安装generator-react-webpack之前，你可以先安装yeoman。(yeoman安装参照：http://blog.csdn.net/panlingfan/article/details/27345037)命令如下：
         npm install -g yo
         npm install -g generator-react-webpack
+    ③ 使用yeoman构建我们的项目
+        yo yo-react-webpack(项目名称)
 第03节：webpack构建react
     ① 在根目录下初始化 npm init
     ② 安装webpack开发依赖包 npm install webpack@3.6.0 --save-dev
