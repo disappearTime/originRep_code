@@ -88,7 +88,8 @@
         npm install -g yo
         npm install -g generator-react-webpack
     ③ 使用yeoman构建我们的项目
-        yo yo-react-webpack(项目名称)
+        yo react-webpack(注意这不是项目名称，这个名字和npm install -g generator-react-webpack有关，要和generator后面保持一致构建的时候)
+        安装完成可能有报错信息，可以不用管
 第03节：webpack构建react
     ① 在根目录下初始化 npm init
     ② 安装webpack开发依赖包 npm install webpack@3.6.0 --save-dev
