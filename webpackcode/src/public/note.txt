@@ -1,0 +1,209 @@
+详细内容见技术胖博客
+
+1、什么是webpack?
+    ① webpack可以看成是模块打包机，主要作用是打包、转换、优化。注意和gulp不一样，webpack主要是打包的。
+2、webpack的安装
+    ① 需要先安装node环境，才能使用npm包管理工具 npm install webpack -g 全局安装
+      注意：官方是不推荐全局安装的(实际工作中还是本地安装下) 去了公司之后要看公司用什么版本，要一致。更新到最新版本时，将package.json的webpack版本手动改为最新版，删掉node-module，最后npm install
+    ② 全局安装后，在你的项目根目录初始化 npm init 生成package.json文件，这是npm的说明   文件
+    ③ 初始化后 本地安装webpack npm install webpack --save-dev (save表示保存到         package.json,dev表示开发时使用这个包，生成环境不使用。)
+3、建立基本项目结构
+    ① 在根目录下创建src和dist两个文件夹。src：开发时的代码存放在这个目录下，             dist:webpack打包成的文件
+4、配置文件：入口和出口
+    ① 配置文件webpack.config.js 配置文件不要写注释
+    在项目根目录下手动建立webpack.config.js webpack配置模板如下：
+    module.exports={
+        //入口文件的配置项
+        entry:{},
+        //出口文件的配置项
+        output:{},
+        //模块：例如解读CSS,图片如何转换，压缩
+        module:{},
+        //插件，用于生产模版和各项功能
+        plugins:[],
+        //配置webpack开发服务功能
+        devServer:{}
+    }
+    ② entry选项(入口配置)
+      可以多个入口-多页应用 可以单个入口-单页应用（spa）
+    ③ output选项（出口配置）
+      output:{
+        //打包的路径文职
+        path:path.resolve(__dirname,'dist'),//打包到dist目录下，绝对路劲，需先                                            require(path)
+        //打包的文件名称
+        filename:'[name].js' //打包的名字与入口的key值相等
+      },
+5、配置文件：服务和热更新
+    ① 设置webpack-dev-server
+      下载：npm install webpack-dev-server --save-dev 下载后需要配置一下devServer:
+      devServer:{
+        //设置基本目录结构
+        contentBase:path.resolve(__dirname,'dist'),
+        //服务器的IP地址，可以使用IP也可以使用localhost
+        host:'localhost',
+        //服务端压缩是否开启
+        compress:true,
+        //配置服务端口号
+        port:1717
+      }
+    ② 配置好后,在package.json里配置一下scripts选项就可以使用npm run server开启服务了:
+    "scripts": {
+        "server":"webpack-dev-server"
+    },
+    ③ npm run server启动后，它有一种监控机制(也叫watch).可以监控我们的源代码，并立即在浏览器给我们更新：
+    注意：这里只是我们的webpack3.6版本支持，在3.5版本时要支持热更新还需要一些其他的操作。因为已经有了成熟的3.6版本，我就不再介绍低版本的操作方法。还有一种情况。如果你都设置好了，但是不进行热更新，可能是你系统的问题，在Linux和Ma上支持良好，在Windows上有时会出现问题。window7已被开发者淘汰了
+
+6、模块：css文件打包
+    ① loaders 所有的loaders都需要在npm中单独进行安装，并在webpack中进行配置
+      test：用于匹配处理文件的扩展名的表达式，这个选项是必须进行配置的；
+      use：loader名称，就是你要使用模块的名称，这个选项也必须进行配置，否则报错；
+      include/exclude:手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
+      query：为loaders提供额外的设置选项（可选）。
+    ② 处理css文件需要下载style-loader css-loader
+7、插件配置：配置js压缩
+    ① 压缩js代码 
+      注意：虽然uglifyjs是插件，但是webpack版本里默认已经集成，不需要再次安装，需要引入
+      引入：const uglify = require('uglifyjs-webpack-plugin),然后在plugins配置里new-个uglify对象就可以了，如下：
+      plugins: [
+          new uglify()
+      ]
+    ②：devServer和JS压缩的冲突
+       devServer用于开发环境，而压缩JS用于生产环境，在开发环境中作生产环境的事情所以Webpack设置了冲突报错。
+       在实际开发中，webpack配置文件是分开的，开发环境一个文件，生产环境一个文件。开发环境是不用压缩js的所以开发环境的配置文件没有js压缩插件
+8、插件配置：HTML文件的发布
+    ① 打包html文件
+      现在webpack.config.js中引入html-webpack-plugin插件：const htmlPlugin = require('html-webpack-plugin') 引入后使用npm进行安装 npm i html-webpack-plugin --save-dev 最后在webpack.config.js里的plugin里进行配置，配置如下：
+      new htmlPlugin({
+            minify:{
+                removeAttributeQuotes:true
+            },
+            hash:true,
+            template:'./src/index.html'
+      })
+      minify：是对html文件进行压缩，removeAttrubuteQuotes是却掉属性的双引号。
+      hash：为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存JS。
+      template：是要打包的html模版路径和文件名称。
+9、图片迈坑：css中的图片处理
+    ①：安装解析图片的loader:file-loader、url-loader(url-loader中包含了file-loader,只使用url-loader就行了)
+10、图片迈坑： css分离与图片路径处理
+11、css分离：extract-text-webpack-plugin
+    ① 有些简单的页面，js代码少，大部分代码在css中，项目组长要求把css单独提取出来，方便以后更改，这时候可以使用extract-text-webpack-plugin
+    ② 安装 npm install extract-text-webpack-plugin --save-dev
+    ③ 引入 安装完成后，需要require引入。
+    ④ 设置plugin：引入成功后需要在plugins属性中进行配置。这里只要new一下这个对象就可以了。new extractTextPlugin("/css/index.css")，这部配置完成后，包装代码：还要修改原来我们的style-loader和css-loader：
+            {
+              test: /\.css$/,
+              use: extractTextPlugin.extract({
+                fallback: "style-loader",
+                use: "css-loader"
+              })
+            }
+    ⑤ 图片路径问题：利用extract-text-webpack-plugin插件很轻松的就把CSS文件分离了出来，但是CSS路径并不正确，很多小伙伴就在这里搞个几天还是没有头绪，网上也给出了很多的解决方案，我觉的最好的解决方案是使用publicPath解决，在处理前，我们在webpack.config.js 上方声明一个对象，叫website。
+    var website ={
+        publicPath:"http://192.168.0.101:1717/" 本机ip和服务端口
+    } 
+    然后在output选项中引用这个对象的publicPath属性
+    //出口文件的配置项
+    output:{
+        //输出的路径，用了Node语法
+        path:path.resolve(__dirname,'dist'),
+        //输出的文件名称
+        filename:'[name].js',
+        publicPath:website.publicPath
+    },
+    配置完成后，你再使用webpack命令进行打包，你会发现原来的相对路径改为了绝对路径，这样来讲速度更快。
+11、图片迈坑：处理HTML中的图片
+    ① 在webpack中是不喜欢你使用标签<img>来引入图片的，但是我们作前端的人特别热衷于这种写法，国人也为此开发了一个：html-withimg-loader
+    ② 如何把图片放到指定的文件夹下：
+        use:[{
+            loader:'url-loader',
+            options:{
+                limit:5000,
+                outputPath:'images/',
+            }
+        }]
+    ③ html-withimg-loader
+    html-withimg-loader就是我们今天的重点了，这个插件并不是很火，也是我个人喜欢的一个小loader。解决的问题就是在hmtl文件中引入<img>标签的问题。
+    安装：npm install html-withimg-loader --save
+    配置loader：
+    {
+        test:/\.(html|html)$/i,
+        user:['html-withimg-loader']
+    }
+12、css进阶:Less文件的打包和分离
+    ① 打包Less文件
+      安装：npm install less --save-dev
+      写loader配置：
+      {
+    test: /\.less$/,
+    use: [{
+           loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        , {
+            loader: "less-loader" // compiles Less to CSS
+        }]
+    }
+    ② less文件分离：
+    test: /\.less$/,
+            use: extractTextPlugin.extract({
+                use: [{
+                    loader: "css-loader"
+                }, {
+                    loader: "less-loader"
+                }],
+                // use style-loader in development
+                fallback: "style-loader"
+            })配置好后，你会发现less被分离到了index.css文件里。
+13、css进阶：SASS文件的打包和分离 npm install node-sass sass-loader --save-dev
+14、css进阶：自动处理css3属性前缀 npm install --save-dev postcss-loader autoprefixer
+15、css进阶：消除未使用的css npm i -D purifycss-webpack purify-css
+    ① 注意：使用这个插件必须配合extract-text-webpack-plugin这个插件，这个插件在前边的课程已经讲解过了。如果你还不会请自学一下。
+16、编译es6代码 cnpm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+17、打包后如何调试
+    ①source-map:在一个单独文件中产生一个完整且功能完全的文件。这个文件具有最好的source map,但是它会减慢打包速度；
+    ②cheap-module-source-map:在一个单独的文件中产生一个不带列映射的map，不带列映射提高了打包速度，但是也使得浏览器开发者工具只能对应到具体的行，不能对应到具体的列（符号）,会对调试造成不便。
+    ③eval-source-map:使用eval打包源文件模块，在同一个文件中生产干净的完整版的sourcemap，但是对打包后输出的JS文件的执行具有性能和安全的隐患。在开发阶段这是一个非常好的选项，在生产阶段则一定要不开启这个选项。
+    ④cheap-module-eval-source-map:这是在打包文件时最快的生产source map的方法，生产的 Source map 会和打包后的JavaScript文件同行显示，没有影射列，和eval-source-map选项具有相似的缺点。
+    大型项目可以使用source-map，如果是中小型项目使用eval-source-map就完全可以应对，需要强调说明的是，source map只适用于开发阶段，上线前记得修改这些调试设置。
+18、实战技巧：开发和生产并行设置。
+    ① npm install jquery package.json中没有依赖 项目拷贝给别人继续开发，再次npm install就会少这个包
+    ② npm install jquery --save 存在于dependencies中，是生产环境需要依赖的包
+    ③ npm install jquery --save-dev 开发环境需要的，上线不需要这个包的依赖
+19、实战技巧：优雅打包第三方类库
+    ① 例：安装jq: npm install --save jquery ----- import $ from 'jquery' ------$('title').html('hello jspang')
+    ② 用plugin引入： const webpack = require('webpack')(在webpack.config.js里引入必须使用require，否则会报错的)------
+    plugins:[
+        new webpack.ProvidePlugin({
+            $:"jquery"
+        })
+    ],配置好后不需要再引入了
+    总结：每一个项目都可能引入第三方类库，而像Vue和Angular这样的成熟框架都推出了自己的webpack框架，比如vue-cli。但是很多情况还是需要我们手动更改这些配置好的webpack来适用于我们的公司项目，所以这节课的知识也是在工作中经常使用的，希望小伙伴们一定要重视并进行练习
+20、实战技巧：watch的正确使用方法
+    ① 在初级开发阶段，使用webpack-dev-server就可以充当服务器和完成打包任务，但时随着你项目的进一步完成，可能需要前后台联调或者两个前端合并代码时，就需要一个公共的服务器了。
+    watchOptions:{
+        //检测修改的时间，以毫秒为单位
+        poll:1000, 
+        //防止重复保存而发生重复编译错误。这里设置的500是半秒内重复保存，不进行打包操作
+        aggregateTimeout:500, 
+        //不监听的目录
+        ignored:/node_modules/, 
+    }
+    ② BannerPlugin插件的使用：const webpack = require('webpack');-----new webpack.BannerPlugin('JSPang版权所有，看官方免费视频到jspang.com收看')
+21、实战技巧：webpack优化黑技能 见技术胖博客
+22、实战技巧：静态资源集中输出 见技术胖博客
+    ① 使用copy-webpack-plugin
+23、实战技巧：json配置文件使用。
+
+注意、安装失败问题：有道云笔记有，注意node版本
+只有项目安装webpack，如何打包？
+有的小伙伴在学习视频时，并没有全局安装webpack，而是使用了项目安装。首先我要说的是，这种做法是webpack推崇的，webpack并不鼓励全局安装webpack。但是小伙伴看我视频中直接在终端用webpack进行打包项目，他使用时会出现不是内部命令或者外部命令。
+这时候需要配置package.json里的scripts选项，我们以前的课程已经学习了配置 webpack-dev-server命令，在这个命令下面我们再加一个build命令进行打包项目使用。
+  "scripts": {
+    "server": "webpack-dev-server --open",
+    "build":"webpack"
+  },
+  "scripts": {
+    "server": "webpack-dev-server --open",
+    "build":"webpack"
+  },

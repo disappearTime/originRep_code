@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 100%;
+            height: 800px;
+            background: skyblue;
+            transform: translate(0,0)
+        }
+        .fixed_pos{
+            position: fixed;/* 当父元素使用了transform属性，子元素的固定定位相对于父元素 */
+            top: 100px;
+            left: 100px;
+            background:black;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="fixed_pos"></div>
+    </div>
+</body>
+</html>

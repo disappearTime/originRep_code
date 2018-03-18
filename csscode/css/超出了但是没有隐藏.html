@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .over_hid{
+            width: 200px;
+            height: 200px;
+            margin: 200px auto;
+            border: 1px solid black;
+            overflow: hidden;
+        }
+        .inner_box{
+            width: 40px;
+            height: 40px;
+            background: blue;
+            position: fixed;/* 父元素的超出隐藏对使用了固定定位的子元素不起作用 */
+            top:0;
+            left: 0;
+            /* transform: translateY(-50px); */
+        }
+    </style>
+</head>
+<body>
+    <div class="over_hid">
+        <div class="inner_box"></div>
+    </div>
+</body>
+</html>

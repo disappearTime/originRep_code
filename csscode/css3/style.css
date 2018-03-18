@@ -1,0 +1,115 @@
+.bor_r{
+    width: 100px;
+    height: 100px;
+    border: 1px solid green;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 10px 10px 10px 10px / 10px 10px 10px 10px;/* 斜杠前面表示水平方向的变化，顺时针顺序；后边表示垂直方向的变化 */
+}
+.bor_img{
+    border: 10px solid transparent;
+    text-align: center;
+    width: 70px;
+    padding: 5px 10px;
+    border-image: url(http://www.runoob.com/try/demo_source/button.png) 0 14 0 14 stretch;
+}
+.bor_shadow{
+    width: 100px;
+    height: 100px;
+    background: blue;
+    box-shadow: 10px 10px 5px #000;
+}
+.resize{
+    border: 2px solid;
+    padding: 10px 40px;
+    width: 300px;
+    resize: both;
+    overflow: auto;
+}
+.duolie{
+    width: 200px;
+    border: 1px solid black;
+    column-count: 3;  /* 指定列的数量 */
+    column-gap:26px;/* 指定列与列之间的间隙 */
+    column-rule-style:solid;/* 指定列与列之间边框的样式 */
+    column-rule-width: 1px;/* 指定列与列之间边框的宽度 */
+    column-rule-color: red;/* 指定列与列之间边框的颜色 */
+    column-rule:1px solid red;
+}
+.outline-offset{
+    width: 150px;
+    height: 40px;
+    border: 1px solid black;
+    outline: 2px solid red;/* 轮廓与边框的有两点不同：轮廓不占空间，轮廓可能是非矩形 */
+    outline-offset: 15px; 
+}
+.bor_img{/* 利用border属性来创建缩略图 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+.flex_box{
+    width: 300px;
+    height: 300px;
+    display: flex;
+    border: 1px solid black;
+    flex-direction:column-reverse;/* 弹性盒方向   */
+    justify-content: flex-start; /* 弹性子元素沿着主轴对齐方式  flex-start | flex-end | center | space-between | space-around */
+    align-items: flex-start;/* 弹性子元素在侧轴方向上的对齐方式 */
+    flex-wrap: wrap; /* 指定弹性子元素的换行方式 */
+    align-content: flex-start;/* 设置各个行的对齐 */
+}
+.flex_box .item{
+    width: 80px;
+    height: 80px;
+    background: blue;
+    border: 1px solid red;
+}
+.flex_box .item1{
+    order: 4;/* 指定弹性子元素的位置 */
+    align-self: center;
+    flex: 1;/* 指定弹性子元素如何分配空间 */
+}
+.flex_box .item2{
+    order: 3;
+    flex: 1;
+}
+.flex_box .item3{
+    order: 1;
+    margin-top: auto;/* 自动获取弹性容器剩余的空间 */
+    flex: 1;
+}
+.flex_box .item4{
+    order: 2;
+    flex: 1;
+}
+.media{
+    width: 100px;
+    height: 100px;
+    background: blue;
+}
+@media screen and (min-width:480px){
+    .media{
+        background: red;
+    }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width: 100%;
+        }
+        .tab{
+            height: 40px;
+            width: 100%;
+            background:black;
+            color: white;
+            position: relative;
+            z-index: 100;
+        }
+        .singer{
+            position: fixed;
+            top: 40px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: brown;
+            z-index: 10;
+        }
+        .singer_detail{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: blue;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">导航栏</div>
+    <div class="singer">
+        <div class="singer_detail">歌手详情</div>
+    </div>
+</body>
+</html>
