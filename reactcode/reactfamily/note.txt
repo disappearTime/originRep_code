@@ -1,1 +1,37 @@
                             从零搭建react全通
+1 初始化 npm init (根目录)
+2 根目录下创建 webpack.dev.config.js(开发配置文件)
+3 新建入口文件 src/index.js
+4 使用babel编译es6,es7 
+    ① npm install babel-core babel-loader babel-preset-es2015 babel-preset-react babel-preset-stage-0 --save-dev
+    ② 在根目录新建babel配置文件
+        {
+            "presets": [
+                "es2015",
+                "react",
+                "stage-0"
+            ],
+            "plugins": []
+        }
+5 修改webpack.dev.config.js 增加babel-loader
+    /*src文件夹下面的以.js结尾的文件，要使用babel解析*/
+    /*cacheDirectory是用来缓存编译结果，下次编译加速*/
+    module: {
+        rules: [{
+            test: /\.js$/,
+            use: ['babel-loader?cacheDirectory=true'],
+            include: path.join(__dirname, 'src')
+        }]
+    }
+    (使用webpack --config webpack.dev.config.js打包测试看能否正常编译)
+6 安装react npm install react react-dom --save
+7 修改src/index.js 入口 使用react
+    import React from 'react';
+    import ReactDom from 'react-dom';
+    ReactDom.render(
+    <div>Hello React!</div>, document.getElementById('app'));  
+8 打包命令优化
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev-build": "webpack --config webpack.dev.config.js"
+    }
