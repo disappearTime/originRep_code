@@ -126,3 +126,16 @@
     ⑥ 编写React
         安装React和React-dom两个包：yarn add react react-dom --save-dev
     ⑥ 总结：其实自己配置React开发环境在实际工作中也并不多，因为我们的配置毕竟不是很成熟，而且支持较少。这里学习只是为了你更好的掌握React构建过程和设置参数，实际工作中尽量使用合适的脚手架工具。首推02节这种方式
+
+react路由(使用构建工具快速构建的情况下，需要的包都下载好了)
+① npm install react-router --save(安装路由依赖包)  
+② 使用时Router就是React的一个组件 
+    import { Router } from 'react-router';
+    render(<Router/>, document.getElementById('app'));
+③ Router组件本身只是一个容器，真正的路由要通过Route组件定义
+    import { Router, Route, hashHistory } from 'react-router';
+    render((
+        <Router history={hashHistory}>
+            <Route path="/" component={App}/>
+        </Router>
+    ), document.getElementById('app'));
