@@ -127,3 +127,5 @@
     import Page1 from 'pages/Page1/Page1';
     src/index.js
     import getRouter from 'router/router';
+13 rudux(类似于vue中的vuex)
+    ① 安装 npm install redux --save
