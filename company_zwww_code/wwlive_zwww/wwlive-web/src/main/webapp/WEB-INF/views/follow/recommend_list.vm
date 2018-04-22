@@ -1,0 +1,311 @@
+#set($layout = '/layout/empty.vm')
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no;email=no">
+    <title>关注</title>
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+</head>
+<body>
+#*<div class="cs">
+    测试：<a style="height: 40px;width:100%;display: inline-block;opacity: 0;" href="$!{rc.contextPath}/external/baberead?target=blank">宝贝播书</a>
+</div>*#
+<div class="no-follow">你还没有关注主播呐，女神都在等你关注哦~</div>
+<div class="follow-list">
+    <ul class="noAncFollow">
+    #foreach($map in ${recommends})
+        #if(${map.isLive} == 1)
+            <li data-id="${map.anchorId}" class="follow-box"
+                onclick="toLive('${map.videoId}', '${map.chatroomId}', '${map.anchorId}', '${map.type}', '${map.coverImg}','${map.ext}');">
+                <div class="follow-icon bor-bott">
+                    <div class="follow-img">
+                        <img src="${map.coverImg}" alt="">
+                        <p class="follow-living">直播中</p>
+                    </div>
+                    <div class="follow-flex">
+                        <h3>
+                            #if(${map.medals}!="" && ${map.medals}!="null" && ${map.medals.size()}>0 )
+                                #foreach($item in ${map.medals})
+                                    #if($item == "女神勋章")
+                                        <img class="goddessSmallImg" src="${rc.contextPath}/static/images/goddessSign.png" alt="">
+                                    #end
+                                #end
+                            #end
+                           ${map.userName}
+                        #if(${map.sex} == 0)
+                            <img src="${rc.contextPath}/static/images/woman.png" alt="">
+                        #else
+                            <img src="${rc.contextPath}/static/images/man.png" alt="">
+                        #end
+                        </h3>
+                        <span>$!{map.videoName}</span>
+                        <p>正在直播&nbsp;&nbsp;<b id='view_${map.anchorId}'>&nbsp;&nbsp;#if($!{map.viewers})$!{map.viewers}#else 0 #end</b>人正在看</p>
+					</div>
+					<div class="add-follow">
+						<img src="${rc.contextPath}/static/images/add_follow.png" onerror="this.src='${rc.contextPath}/static/images/add_follow.png'"
+							onclick="followLive(this, '${map.videoId}', '${map.chatroomId}', '${map.anchorId}', '${map.type}', '${map.coverImg}','${map.ext}');" alt="">
+					</div>
+				</div>
+            </li>  
+        #else
+            <li data-id="${map.anchorId}" class="follow-box" onclick="toPersonalPage('$!{map.anchorId}');">
+                <div class="follow-icon bor-bott">
+                    <div class="follow-img">
+                        <img src="${map.headImg}" alt="">
+                    </div>
+                    <div class="follow-flex">
+                        <h3>
+                            #if(${map.medals}!="" && ${map.medals}!="null" && ${map.medals.size()}>0 )
+                                #foreach($item in ${map.medals})
+                                    #if($item == "女神勋章")
+                                        <img class="goddessSmallImg" src="${rc.contextPath}/static/images/goddessSign.png" alt="">
+                                    #end
+                                #end
+                            #end
+                            ${map.userName}
+                        #if(${map.sex} == 0)
+                            <img src="${rc.contextPath}/static/images/woman.png" alt="">
+                        #else
+                            <img src="${rc.contextPath}/static/images/man.png" alt="">
+                        #end
+                        </h3>
+                        <span></span>
+                        #set($cnt = ${map.followerCnt} + 1)
+                        <p>近期直播:<em>${map.videoCnt}</em>个&nbsp;&nbsp;&nbsp;&nbsp;粉丝:<em>${cnt}</em>人</p>
+					</div>
+					<div class="add-follow">
+						<img src="${rc.contextPath}/static/images/add_follow.png" onerror="this.src='${rc.contextPath}/static/images/add_follow.png'"
+							onclick="follow(this, '$!{map.anchorId}');" alt="">
+					</div>
+				</div>
+            </li>    
+        #end
+    #end    
+    </ul>
+</div>
+<input type="hidden" id="web" value="${rc.contextPath}">
+<input type="hidden" id="version" value="$!{version}">
+<input type="hidden" id="app" value="$!{app}">
+<input type="hidden" id="commonParams" value="$!{commonParams}">
+<div class="gagTip">您的账号已违规</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/echo.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/myself.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/base.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/follow/gagTip.js?$!application.getAttribute('/static/js/follow/gagTip.js')"></script>
+#*<script type="text/javascript" src="${rc.contextPath}/static/js/follow/followCommon.js?$!application.getAttribute('/static/js/follow/followCommon.js')"></script>*#
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+</body>
+<script type="text/javascript">
+    $("ul li:last-child .follow-icon").removeClass("bor-bott");
+    //确保多次点击时只有最后一次点击的请求能够成功
+    var pendingRequests = {};
+    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+        var key = options.url;
+        if (!pendingRequests[key]) {
+            pendingRequests[key] = jqXHR;
+        }else{
+            //jqXHR.abort(); //放弃后触发的提交
+            pendingRequests[key].abort(); // 放弃先触发的提交
+        }
+        var complete = options.complete;
+        options.complete = function(jqXHR, textStatus) {
+            pendingRequests[key] = null;
+            if ($.isFunction(complete)) {
+                complete.apply(this, arguments);
+            }
+        };
+    });
+    //判断是否为蓝版
+    var packname = getUrlParam("packname");
+    var path = $("#web").val();
+    var followimgSrc = path + "/static/images/add_follow.png";
+    if( packname != "" && packname != undefined ){
+        if( packname == "com.mianfei.book" ){
+            followimgSrc = path + "/static/images/add_followblue.png";
+            $(".follow-flex p b").addClass("skyblue")
+            $(".follow-flex p em").addClass("skyblue");
+            $(".add-follow img").attr("src",followimgSrc);
+        }else{
+            $(".add-follow img").attr("src",followimgSrc);
+        }
+
+    }else{
+        $(".add-follow img").attr("src",followimgSrc);
+    }
+    //关注列表页是否需要刷新，获取到的数据和原有数据一样时不再刷新页面
+    function updateFollowPage() {
+        if(arguments.length==0){
+            var anchorIdStr = '';
+            var oLi = $(".noAncFollow li");
+            var oLiLen = oLi.length;
+            for(var i=0;i<oLiLen;i++){
+                var anchorId = oLi.eq(i).attr("data-id");
+                anchorIdStr+=anchorId;
+            }
+
+            var loginId = getUrlParam("loginId")
+            var path =$("#web").val();
+            if (path == null || path == undefined) {
+                return;
+            }
+            var cnid = getUrlParam("cnid");
+            var i = path + "/external/app/user/follow/page1.json?" + "t=" + parseInt(( + new Date() / 1000) / (Math.random() * 1000)) + "&cnid=" + cnid;
+
+            $.ajax({
+                type: "GET",
+                url: i,
+                dataType:"text",
+                data:{"loginId" : loginId},
+                timeout: 9000,
+                success: function(data) {
+                    var str = data;
+                    var arr = str.split(",");
+                    var newAnchorIdStr = arr.join("");
+                    if(anchorIdStr==newAnchorIdStr){
+                        return;
+                    }else{
+                        window.location.reload();
+                    }
+                },
+            });
+        }else{
+            var number = arguments[3];
+            var anchorId = arguments[2];
+            if(number>0){
+                var newNum = number - 1;
+                $("#view_"+anchorId).html("&nbsp;&nbsp;"+newNum);
+            }
+            updateFollowPage();
+        }
+
+
+    }
+
+    //更新版本
+    function callRefresh(livefun,livedata){
+        var obj = new Object();
+        var path = $("#web").val();
+        var cnid = getUrlParam("cnid");
+        var app = $("#app").val();
+//        alert("--callUpdate-29-"+"----"+app);
+        $.ajax({
+            url: path+"/external/android/check?version=2.0.0&cnid="+cnid+"&app="+app,
+            type:"GET",
+            dataType:"json",
+            success: function(data){
+                obj.updateMsg=data.updateMsg;
+                obj.md5=data.md5;
+                obj.errorMsg=data.errorMsg;
+                obj.code= data.code;
+                obj.url=data.url;
+                obj.apkSize=data.apkSize;
+                obj.version=data.version;
+                obj.isupdate= 2;
+                var live = new Object();
+                live.fun = livefun;//"live";
+                live.data = livedata;
+                live.callUpdate=obj;
+                live.callRefresh="1";
+//                alert(JSON.stringify(live));
+                window.stub.jsClient(JSON.stringify(live));
+            }
+        });
+    }
+    //点击在直播状态的加关注
+    function followLive(followImg,videoId, chatroomId, anchorId, type, cover,ext){
+        addFollowEvent(followImg, anchorId);//点击先进行关注操作。
+        /*var version = $("#version").val();
+        var verS = toNum(version);*/
+        /*if(version==-1 || verS<needUpdateVersion){
+            var obj = new Object();
+            obj.videoId = videoId;
+            obj.chatroomId = chatroomId;
+            obj.anchorId = anchorId;
+            obj.type = type;
+            obj.cover = cover;
+            if(ext!=null && ext!="" && ext!=undefined){
+            	obj.ext = ext;
+            }
+            updataVersion("live",obj);
+        }/!* else{
+        	alert("去关注主播");
+            addFollowEvent(followImg, anchorId);
+        } *!/*/
+        event.stopPropagation();
+    }
+    //点击不在直播的加关注
+    function follow(followImg, anchorId){
+        var version = $("#version").val();
+//        alert(window.location+"----ßß-3333-"+version);
+        //addFollowEvent(followImg, anchorId);
+        addFollowEvent(followImg, anchorId);//点击先进行关注操作
+        /*var verS = toNum(version);
+        if(version==-1 || verS<needUpdateVersion){
+            var obj = new Object();
+            obj.anchorId = anchorId + "";
+            callRefresh("anchorCenter",obj);
+        }*/
+        /*else{
+            addFollowEvent(followImg, anchorId);
+        }*/
+        event.stopPropagation();
+    }
+    function addFollowEvent(followImg, anchorId){
+        var imgSrc = $(followImg)[0].src;
+//        alert(imgSrc.indexOf("end"));
+        if(imgSrc.indexOf("end") != -1){//点击灰色加关注图标跳转主播个人页
+            toPersonalPage(anchorId);
+            return;
+        }
+        // 版本号末尾数字变0操作
+        var version = $("#version").val();
+        var lastNo = version.substr(version.lastIndexOf(".") + 1, version.length);
+        if(lastNo != "0"){
+            version = version.substr(0, version.lastIndexOf(".")) + ".0";
+        }
+        var app = getUrlParam("app");
+        $.ajax({
+            url: "${rc.contextPath}/external/user/follow.json?" + $("#commonParams").val() + "&version=" + version+ "&app=" + app,
+            type: "POST",
+            data: {
+                anchorId: anchorId,
+                followFrom: "tabPage"
+            },
+            success: function(returnData){
+##                if(returnData.data.result == 1){
+##                    $(followImg).attr("src", "${rc.contextPath}/static/images/end_follow.png");
+##                } else if(returnData.data.result == 2){
+##                    gapTipShow();
+##                    return;
+##                } else{
+##                    alert("啊哦，貌似有点小故障， 请重试~");
+##                }
+                var obj = new Object();
+                obj.isCancel = "false";
+                obj.anchorId = anchorId;
+                if (returnData.data.result == 1) {
+                    $(followImg).attr("src", "${rc.contextPath}/static/images/end_follow.png");
+                    obj.result = "true";
+                } else if (returnData.data.result == 2) {
+                    //禁言
+                    gapTipShow();
+                    return;
+                } else {
+                    alert("啊哦，貌似有点小故障， 请重试~");
+                    obj.result = "false";
+                }
+                var live = new Object();
+                live.fun = "follow";
+                live.data = obj;
+                window.stub.jsClient(JSON.stringify(live));
+            }
+        });
+    }
+</script>
+</html>

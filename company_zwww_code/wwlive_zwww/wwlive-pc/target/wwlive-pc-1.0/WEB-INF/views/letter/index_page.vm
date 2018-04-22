@@ -1,0 +1,54 @@
+#set($layout = '/layout/empty.vm')
+<link href="/static/css/base.css" rel="stylesheet" />
+<link href="/static/css/live_pc.css?ver=12035" rel="stylesheet" />
+<div class="head">
+	<div class="logo">
+		<a href="#"><img src="/static/images/live_logo.png" /></a>
+		<ul class="top-infor">
+			<li class="infor-notice"><a href="#">消息通知</a><em id = "letter_msg"></em></li>
+			<li class="exit" onclick="window.location.href='/login/out.json';" ><a href="#">退出</a></li>
+		</ul>
+	</div>
+</div>
+<input type="hidden" id="lastId">
+<div id="letter_list"></div>
+<script src="/static/js/jquery-1.8.3.min.js"></script>
+<script src="/static/js/letter/schedule.js"></script>
+#parse("./user/user_info.vm")
+<script>
+	$(function() {
+		$("#letter_msg").hide();
+		showLetter(0, 1, 0);
+	});
+
+	function showLetter(receiveId, pageNum, total) {
+		$.ajax({
+			type : "POST",
+			url : "/pc/letter/list",
+			data : {
+				"pageIndex" : pageNum,
+				"id" : receiveId,
+				"total" : total
+			},
+			dataType : "html",
+			success : function(result) {
+				if (result != null) {
+					$("#letter_list").html(result);
+					var noRead = $("#noRead").val();
+					if (noRead != undefined && noRead > 0) {
+						$("#letter_msg").show();
+						$("#letter_msg").text(noRead);
+					} else {
+						$("#letter_msg").hide();
+					}
+					if (pageNum == 1) {
+						$("#lastId").val();
+					}
+				}
+			},
+			error : function(result) {
+				console.log(result);
+			}
+		});
+	}
+</script>

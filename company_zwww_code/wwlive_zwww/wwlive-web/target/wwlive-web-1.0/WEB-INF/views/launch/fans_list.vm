@@ -1,0 +1,241 @@
+#set($page_title='我的粉丝')
+<link href="${rc.contextPath}/static/css/userCard.css?$!application.getAttribute('/static/css/userCard.css')" type="text/css" rel="stylesheet">
+<div class="my-fans bor-t ">
+    <ul>
+
+    </ul>
+    <p class="" id="autopbn" ></p>
+    <input type="hidden" id="commonParams" value="${commonParams}">
+    <input type="hidden" value="${rc.contextPath}" id="web"/>
+</div>
+
+#foreach($param in ${params.keySet()})  
+    <input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<input type="hidden" value="" id="way">
+
+#*<div class="shadowUp-new" id="shadowUp" style="display:none;"></div>
+<div class="indexcard" id="indexcard" style="display:none;">
+    <div class="data-card" id="data-card">
+    </div>
+</div>*#
+<!--用户资料卡-->
+<div class="userMesCard_">
+    <div class="mask-layer"></div>
+    <div class="card">
+        <div class="tx-box">
+            <img onerror="this.src='$!{rc.contextPath}/static/images/user_cover.png'" class="tx" src=""/>
+            <img class="close" src="$!{rc.contextPath}/static/images/nobleclose.png"/>
+            <div class="bg-box">
+
+            </div>
+        </div>
+        <div class="mes">
+            <p class="nickname">
+
+            </p>
+            <p class="noble-box">
+
+            </p>
+            <p class="personal-mes">年龄：<em></em>岁&nbsp;&nbsp;星座：<i></i></p>
+        </div>
+        <div class="contri">
+            <div class="gz">
+                <p></p>
+                <span>关注数</span>
+            </div>
+            <div class="gxz">
+                <p></p>
+                <span>全站贡献值</span>
+            </div>
+            <div class="ph">
+                <p></p>
+                <span>全站排行</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+#*<script type="text/javascript" src="${rc.contextPath}/static/js/launch/video/userinfo.js?$!application.getAttribute('/static/js/launch/video/userinfo.js')"></script>*#
+<script type="text/javascript" src="${rc.contextPath}/static/js/appuserCard.js?$!application.getAttribute('/static/js/appuserCard.js')"></script>
+#*<script type="text/javascript" src="${rc.contextPath}/static/js/launch/video/userinfo.js?$!application.getAttribute('/static/js/launch/video/userinfo.js')"></script>*#
+<script type="text/javascript" src="${rc.contextPath}/static/js/util/dateutil.js?$!application.getAttribute('/static/js/util/dateutil.js')"></script>
+<script>
+/*$(function(){
+    //为滚动轴绑定图片懒加载事件
+    document.onscroll = function(){
+        Lazy.Load();
+    }
+    setTimeout(function() {
+        Lazy.Load()
+    },100);
+})*/
+$(function () {
+    //使用ajax获取数据
+    var pageNo = 1;
+    var timestamp = 0;
+    var pageSize = 10;
+    var d = 0;//加一个锁，刷新之后在新的数据请求回来前，不能继续请求数据
+    setTimeout(g,500);//进入页面500ms执行函数g，获取数据;
+    window.onscroll = function() {//滚动条事件，滚动的时候发送ajax请求
+        var j = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+        if (j + document.documentElement.clientHeight >= document.documentElement.scrollHeight && !d) {
+            var auto = $("#autopbn");
+            auto.show();
+            auto.html("<p class=\"loading\"><span class=\"relative\"><b></b>正在加载更多记录</span></p>");
+            d = 1;
+            setTimeout(g, 2000);
+        }
+    };
+    function g() {
+        var path = $("#web").val();
+        if (path == null || path == undefined) {
+            noFansPage();
+            return;
+        }
+        var commonParams = $("#commonParams").val();//通用参数
+        if (commonParams == null || commonParams == undefined) {
+            noFansPage();
+            return;
+        }
+        var i = path + "/launch/anchor/follower/page.json?" + "dense_fog=" + parseInt(( + new Date() / 1000) / (Math.random() * 1000)) + "&" + commonParams;
+        $.ajax({
+            type: "GET",
+            url: i,
+            data:{"pageNo":pageNo,"timestamp":timestamp},
+            dataType : 'json',
+            success: function(result) {
+                if (result == null || result.data == null) {
+                    removeAutoPaging();
+                    if (pageNo <= 1) {
+                        noFansPage();//
+                    }
+                    return;
+                }
+                var data = result.data;
+                /*var incomeList = data.data.incomeList;*/
+                /*innerMoreHtml(incomeList, "#detail-list")*/
+                handleDate(data);
+                if (data.length < pageSize) {
+                    removeAutoPaging();
+                    return;
+                }
+                pageNo++;
+                d = 0;
+                timestamp = $("li:last").attr("data-time");
+                /*Lazy.Init();*/
+            },
+            error: function(k, j) {
+                //alert("网络超时，点击更多重试");
+                console.log(k + "失败" + j);
+            },
+        });
+    }
+    function noFansPage() {
+        var path = $("#web").val();
+        if (path == null || path == undefined) {
+            path = "";
+        }
+        var html = "你还没有任何粉丝";
+        $("ul").append(html);
+    }
+    //移除上面的拉动刷新条
+    function removeAutoPaging() {
+        var auto = $("#autopbn");
+        auto.remove();
+        window.onscroll = null;
+    }
+
+    /*$.ajax({
+        type: "GET",
+        url: "/launch/anchor/follower/page.json?"+$("#commonParams").val(),
+        data: {"pageNo":1,timestamp:0},
+        dataType:"json",
+        success: function (result) {
+            if (result != null) {
+                if(result.code !=1000){
+                    var data = result.data;//data是对象数组
+                    handleDate(data);
+                    //添加内容后，懒加载初始话
+                    Lazy.Init();
+                }else{
+                    $("ul").html(result.info)
+                }
+            }
+        },
+        error: function () {
+            $("ul").html(result.info)
+        }
+    });*/
+    //处理ajax获取到的数据
+    function handleDate(data){
+        var path = $("#web").val();
+        console.log(data);
+        var str = "";
+        for(var i = 0;i<data.length;i++){
+            var imgSrc = data[i].headImg;
+            var sexImg = ""
+            var usertypeImg = ""
+            var timeSt = data[i].timestamp;
+            var nobleImg = "";
+            var errorImg = "javascript:this.src='${rc.contextPath}/static/images/user_cover.png';"
+            if (data[i].nobleCode){
+                if (data[i].nobleCode==1){//最低等级贵族
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/sqx.png' alt='' />"
+                }else if(data[i].nobleCode==2){
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/lqs.png' alt='' />"
+                }else if(data[i].nobleCode==3){
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/hqs.png' alt='' />"
+                }else if(data[i].nobleCode==4){
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/mfqs.png' alt='' />"
+                }else if(data[i].nobleCode==5){
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/zjqs.png' alt='' />"
+                }else if(data[i].nobleCode==6){
+                    nobleImg = "<img class='nobleImg' src='"+ path +"/static/images/sdqs.png' alt='' />"
+                }
+            }
+            if(data[i].sex==0){
+                /*sexImg = "/static/images/women.png"*/
+                sexImg = '<img src="${rc.contextPath}/static/images/women.png">'
+            }else if(data[i].sex==1){
+                /*sexImg =/static/images/mans.png"*/
+                sexImg = '<img src="${rc.contextPath}/static/images/mans.png">'
+            }else{
+                sexImg = "";
+            }
+            if(data[i].acctType==0){
+                usertypeImg = ""
+            }else if(data[i].acctType==1){
+                usertypeImg ='<img src="${rc.contextPath}/static/images/zb_cg.png" alt="">'
+            }else{
+                usertypeImg = '<img src="${rc.contextPath}/static/images/zb_fg.png" alt="">'
+            }
+            
+            var infoFun = "getUserInfo('"+data[i].loginId+"');";
+            
+            str += '<li class="bor-bott" data-time="'+ timeSt +'">'
+                    + '<div class="fans-tx"><img onclick="'+infoFun+'" src=" '+data[i].headImg+ '" alt="" onerror="'+ errorImg + '">'+ nobleImg +'</div>'
+                    + '<div class="fans-data">'
+                    +'<h3 onclick="'+infoFun+'">'+data[i].userName+'</h3>'
+                    +'<b>' + sexImg + '</b>'
+                    +'<em>'+ usertypeImg +'</em>'
+                    +'<p>全站贡献值:<b>'+ data[i].contrib +'</b></p></div>'
+                    + '</li>'
+        }
+        $("ul").append(str);
+    }
+})
+</script>
+
+<script>
+    $(document).ready(function(){
+        var imgW = $(".cover img").width();
+        $(".cover").height(imgW);
+    })
+</script>

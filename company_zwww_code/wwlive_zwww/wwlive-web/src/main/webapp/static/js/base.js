@@ -1,0 +1,1 @@
+$('.follow-list li').touchFn();

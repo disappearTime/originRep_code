@@ -1,0 +1,112 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>登录</title>
+    <link href="../static/css/base.css" rel="stylesheet"/>
+    <link href="../static/css/live_pc.css" rel="stylesheet"/>
+	<script src="/static/js/jquery-1.8.3.min.js"></script>
+    
+    <!-- 回车登录 -->
+    <script type="text/javascript">    
+        $(function(){
+        	$("body").keydown(function() {
+                if (event.keyCode == "13") {
+                    $("#loginBtn").click();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="login">
+    <div class="log_on">
+        <h3>用户登录</h3>
+         <input type="hidden" name="returnUrl" id="returnUrl" value="$!escapeTool.html($!returnUrl)"/>
+        <ul class="user_psw">
+            <li><label>用户名</label><input type="text" id="passport" value=""/><div class="error"><font id="passport_msg"></font><em></em></div></li>
+            <li><label>密码</label><input type="password" id="passwd" value=""/><div class="error"><font id="passwd_msg"></font><em></em></div></li>
+        </ul>
+        <div class="login_inp"><input type="button" id="loginBtn" value="登录"/></div>
+    </div>
+</div>
+<div class="shadowUp"></div>
+<div class="sure_div">
+    <p></p>
+    <div class="sure_inp"><input type="button" value="确定" /></div>
+</div>
+</body>
+<script>
+    $(function () {
+    	//$("#passport_msg").css({"display":"none"});
+    	//$("#passwd_msg").css({"display":"none"});
+        $("#loginBtn").bind("click", function () {
+
+            var passport = $.trim($("#passport").val());
+			if (passport == null || passport == "") {
+		    	$("#passport").siblings(".error").css({"display":"block"});
+		    	$("#passport_msg").text("用户名不能为空");
+		    	return;
+			}
+            var passwd = $.trim($("#passwd").val());
+            if (passwd == null || passwd == "") {
+            	$("#passwd").siblings(".error").css({"display":"block"});
+		    	$("#passwd_msg").text("密码不能为空");
+		    	return;
+			}
+            
+            $.ajax({
+                type: "POST",
+                url: "/login/dologin",
+                data: {"uname":passport, "passwd":passwd},
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        window.location.href = $("#returnUrl").val();
+                    }
+                    else {
+                        $(".sure_div p").text(data.msg);
+                        $(".sure_div , .shadowUp").show();
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $(".sure_div p").text("系统错误，请稍后再试。");
+                    $(".sure_div , .shadowUp").show();
+                }
+            });
+
+        });
+    });
+
+	$("#passport").blur(function(){
+		var passport = $.trim($("#passport").val());
+		if (passport == null || passport == "") {
+	    	$("#passport").siblings(".error").css({"display":"block"});
+	    	$("#passport_msg").text("用户名不能为空");
+	    	return;
+		}
+	});
+	
+	$("#passwd").blur(function(){
+        var passwd = $.trim($("#passwd").val());
+        if (passwd == null || passwd == "") {
+        	$("#passwd").siblings(".error").css({"display":"block"});
+	    	$("#passwd_msg").text("密码不能为空");
+	    	return;
+		}
+	});
+	
+	$("#passport").click(function(){
+    	$("#passport").siblings(".error").css({"display":"none"});
+	});
+	
+	$("#passwd").click(function(){
+    	$("#passwd").siblings(".error").css({"display":"none"});
+	});
+	$(".sure_inp input").click(function(){
+        $(".sure_div p").text("");
+		$(".sure_div ,.shadowUp").hide();
+	})
+</script>
+</html>

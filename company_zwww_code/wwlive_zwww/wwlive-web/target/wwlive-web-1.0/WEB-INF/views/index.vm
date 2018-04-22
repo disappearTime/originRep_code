@@ -1,0 +1,34 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>万维直播下载页</title>
+    <link rel="stylesheet" href="${rc.contextPath}/static/css/main.css">
+</head>
+<body>
+    <div class="all">
+        <div class="phone">
+        	<a href="${download}" class="logo"><img src="${rc.contextPath}/static/images/Logo_pic.png"/></a>
+            <div class="phone_con">
+                <div class="phone_pic"><img src="${rc.contextPath}/static/images/phone_pic.png" alt=""></div>
+                <div class="pic_right">
+	                <h3>介绍</h3>
+	                <p>互动直播平台新秀，可提供上百万人同时在线
+	                    的直播视频播放。平台包含lol、dota2等各类
+	                    热门游戏的直播，还有大批超高颜值美女主播
+	                    坐镇秀场直播，给用户最好的娱乐享受。</p>
+	                <a href="${download}">立即下载</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="${rc.contextPath}/static/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	var H =$(window).height();
+	$(".all , .phone").height(H);
+	
+</script>	
+
+</html>

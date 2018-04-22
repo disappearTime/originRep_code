@@ -1,0 +1,140 @@
+ul li.orange{
+	box-shadow: 0px 0px 15px rgba(255,195,198,0.5);
+}
+ul li.blue{
+	box-shadow: 0px 0px 15px rgba(74,178,243,0.5);
+}
+.babybook{
+	width: 100%;
+	box-sizing: border-box;
+	padding:0.71rem 0.675rem;
+}
+.babybook li{
+	width: 100%;
+	box-sizing: border-box;
+	border-radius: 3px;
+	/*padding:0.4444rem 0.342rem 0.4444rem 0.4444rem;*/
+	margin-bottom:0.888rem ;
+}
+.babybook li .book_card{
+	padding:0.4444rem 0.342rem 0.4444rem 0.4444rem;
+	width: 100%;
+	box-sizing: border-box;
+}
+.babybook li.orange .book_card{
+	box-shadow: -1px 1px 2px rgba(187,101,48,0.2);
+}
+.babybook li.blue .book_card{
+	box-shadow: -1px 1px 2px rgba(74,178,243,0.2);
+}
+.left{
+	position: relative;
+}
+.left .zbicon{
+	width:1.43rem;
+	height:0.58rem;
+	z-index: 5;
+	position: absolute;
+	top:0.09rem;
+	right:0.09rem;
+	display: none;
+}
+.babybook li .tx{
+	height:5rem;
+	border-radius: 3px;
+}
+.clearfix{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between!important;
+}
+
+.book img{
+	 height:2.2rem;
+	border-radius: 2px;
+}
+.book img:nth-of-type(1){
+	margin-right: 0.125rem;
+}
+.right{
+	width:75%;
+	font-family: FZLTHJW--GB1-0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+.reading{
+	width: 5rem;
+	text-align: center;
+}
+.reading img{
+	vertical-align: bottom;
+}
+.reading img:nth-of-type(1){
+	height: 0.85rem;
+}
+.reading img:nth-of-type(2){
+	height:1.59375rem;
+}
+.reading .btn{
+	width:4.9375rem;
+	background: transparent;
+	font-size: 0.8125rem;
+	border-radius: 0.933rem;
+	margin-top:0.9rem ;
+	letter-spacing: 1px;
+	font-family: FZLTHJW--GB1-0;
+	padding: 0.375rem 0;
+	display: inline-block;
+}
+
+.right h3{
+	width:8.5125rem;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	font-size: 0.9375rem;
+	color: #333333;
+	letter-spacing: 1px;
+}
+.right p{
+	font-size:0.8125rem ;
+	color: #666666;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	margin-left: -0.25rem;
+	padding-top:0.23125rem;
+	padding-bottom: 0.43125rem;
+}
+.reading>div{
+	margin-top: 0.59375rem;
+}
+.orange .btn{
+	color:rgba(255,139,67,1) ;
+	border:1px solid rgba(255,139,67,1);
+}
+.blue .btn{
+	color:#4AB2F3;
+	border:1px solid #4AB2F3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

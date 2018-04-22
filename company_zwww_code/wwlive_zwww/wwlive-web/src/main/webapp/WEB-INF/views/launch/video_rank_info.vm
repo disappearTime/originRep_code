@@ -1,0 +1,88 @@
+#set($page_title='贡献榜')
+<link href="${rc.contextPath}/static/css/userCard.css?$!application.getAttribute('/static/css/userCard.css')" type="text/css" rel="stylesheet">
+<div class="contri-top">
+	<div class="center-top no-bg">
+		<ul class="top-con">
+			<li>本次直播收入<p>#if($!anchorIncome != 0) #set($income=$anchorIncome / 100.0) $!{income} #else 0 #end<img src="${rc.contextPath}/static/images/zuan.png"></p></li>
+			<li>送礼用户数<p>#if($!giverCnt) $!giverCnt #else 0 #end</p></li>
+		</ul>
+	</div>
+</div>
+<input type="hidden" id="consPage" value="$!{consPage}"/>
+<input type="hidden" id="giverCnt" value="$!{giverCnt}"/>
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<div class="per-bg"><img src="${rc.contextPath}/static/images/huawen.png" alt="" /></div>
+
+#*<div class="shadowUp-new" id="shadowUp" style="display:none;"></div>
+<div class="indexcard" id="indexcard" style="display:none;">
+	<!-- <div class="func"><span>禁言</span><span>设为房管</span></div> -->
+	<div class="data-card" id="data-card">
+	</div>
+</div>*#
+#*用户资料卡*#
+<div class="userMesCard_">
+    <div class="mask-layer"></div>
+    <div class="card">
+        <div class="tx-box">
+            <img onerror="this.src='$!{rc.contextPath}/static/images/user_cover.png'" class="tx" src=""/>
+            <img class="close" src="$!{rc.contextPath}/static/images/nobleclose.png"/>
+            <div class="bg-box">
+
+            </div>
+        </div>
+        <div class="mes">
+            <p class="nickname">
+
+            </p>
+            <p class="noble-box">
+
+            </p>
+            <p class="personal-mes">年龄：<em></em>岁&nbsp;&nbsp;星座：<i></i></p>
+        </div>
+        <div class="contri">
+            <div class="gz">
+                <p></p>
+                <span>关注数</span>
+            </div>
+            <div class="gxz">
+                <p></p>
+                <span>全站贡献值</span>
+            </div>
+            <div class="ph">
+                <p></p>
+                <span>全站排行</span>
+            </div>
+        </div>
+	#*<div class="bort-box" s>
+        *##*<span class="setfg">设为房管</span>*##*
+        <span class="grzy">个人主页</span>
+    </div>*#
+    </div>
+</div>
+
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<div class="offer-list">
+<ul id="data-div">
+
+</ul>
+</div>
+<p class="" id="autopbn" ></p>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript"> 
+	//为滚动轴绑定图片懒加载事件
+	document.onscroll = function(){
+		Lazy.Load();
+	}
+	setTimeout(function() {
+		Lazy.Load()
+	},100);
+</script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/video/vidoeinfo.js?$!application.getAttribute('/static/js/launch/video/vidoeinfo.js')"></script>
+<script type="text/javascript" src = "${rc.contextPath}/static/js/util/dateutil.js?$!application.getAttribute('/static/js/launch/util/dateutil.js')"></script>
+#*<script type="text/javascript" src = "${rc.contextPath}/static/js/launch/video/userinfo.js?$!application.getAttribute('/static/js/launch/video/userinfo.js')"></script>*#
+<script type="text/javascript" src = "${rc.contextPath}/static/js/appuserCard.js?$!application.getAttribute('/static/js/appuserCard.js')"></script>

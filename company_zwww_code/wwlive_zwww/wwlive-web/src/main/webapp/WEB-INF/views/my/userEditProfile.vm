@@ -1,0 +1,82 @@
+#set($page_title="个人资料")
+#*<input type="text" value="" id="cs0" style="width: 300px;">
+<input type="text" value="" id="cs" style="width: 300px;">*#
+<div class="editFileWrapper">
+    <div class="editTx" onclick="uploadTxImg()">
+        <i class="editTit">头像</i>
+        #*<img class="editUserTx" src="${rc.contextPath}/static/images/user_cover.png" alt="">*#
+        <span class="rEditMes"><img class="backTip" src="${rc.contextPath}/static/images/back2.png" alt=""></span>
+    </div>
+    <ul class="editMes">
+        <li class="editAccount bor-bottomLi sameHeiLi"><i class="editTit">账号</i><em></em></li>
+        <li class="editNickName bor-bottomLi sameHeiLi"><i class="editTit">昵称</i>
+            <input type="text" placeholder="请输入1-10个字的数字、字母、汉字" id="nickTxt" value="">
+            <span class="rEditMes">
+                <img class="backTip" src="${rc.contextPath}/static/images/back10.png" alt=""><i class="refer"></i>
+            </span>
+        </li>
+        <li class="editSex sameHeiLi"><i class="editTit">性别</i><em></em><span class="rEditMes"><img class="changeSex" src="$!{rc.contextPath}/static/images/changeSex.png" alt=""><i class="refer"></i></span></li>
+        <li class="editBirth bor-bottomLi sameHeiLi"><i class="editTit">生日</i>
+            <input id="birthday" type="text" readonly="" name="input_date" value="" data-lcalendar="1900-01-1,2017-12-31">
+            <span class="rEditMes"><img class="backTip" src="${rc.contextPath}/static/images/back11.png" alt=""><i class="refer"></i></span>
+        </li>
+        <li class="editAge sameHeiLi bor-bottomLi"><i class="editTit">年龄</i><em class="dd-no"></em></li>
+        <li class="editConstell sameHeiLi"><i class="editTit">星座</i><em class="dd-no"></em></li>
+        <li class="editPass bor-bottomLi sameHeiLi"><i class="editTit">修改密码</i><span class="rEditMes"><img class="backTip" src="${rc.contextPath}/static/images/back12.png" alt=""><i class="refer"></i></span></li>
+        <li class="editBunding bor-bottomLi"><i class="editTit">第三方绑定</i>
+            <span class="rEditMes">
+                <img onclick="WeChatBound();" class="weixin" src="${rc.contextPath}/static/images/weixin.png" alt="">
+                #*QQ绑定
+                <img class="QQ" src="${rc.contextPath}/static/images/QQ.png" alt="">
+                *#
+            </span>
+        </li>
+        <li onclick="toLoginPage()" class="editLogin sameHeiLi"><i class="editTit">使用其他账号登录</i><span class="rEditMes"><img class="backTip" src="${rc.contextPath}/static/images/back13.png" alt=""><i class="refer"></i></span></li>
+    </ul>
+    <div class="editPassBg"></div>
+##    <div class="editPass">
+##        <div class="setNewPass">
+##            <h3>修改密码</h3>
+##            <div class="originPass theSame bor-bott">
+##                <input type="password" placeholder="请输入原密码">
+##                <img src="${rc.contextPath}/static/images/eye.png" alt="">
+##            </div>
+##            <div class="newPass theSame bor-bott">
+##                <input type="password" placeholder="请输入6位以上新密码" value="">
+##                <img src="${rc.contextPath}/static/images/eye.png" alt="">
+##            </div>
+##            <span><i class="">原密码错误,请重新输入</i></span>
+##            <p>忘记密码请联系客服QQ：213113003</p>
+##            <div class="confirmBox">
+##                <div class="cancel">取消</div>
+##                <div class="confirm">确认</div>
+##            </div>
+##        </div>
+##    </div>
+    <input type="hidden" value="${rc.contextPath}" id="web">
+    <i class="ancEditMessToast"></i>
+    <i class="successToast"><img src="${rc.contextPath}/static/images/success.png" alt="">修改密码成功</i>
+</div>
+
+<link href="${rc.contextPath}/static/css/lCalendar.css?$!application.getAttribute('/static/css/lCalendar.css')" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="${rc.contextPath}/static/js/lCalendar.min.js?$!application.getAttribute('/static/js/lCalendar.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/userEditProfile.js?$!application.getAttribute('/static/js/my/userEditProfile.js')"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,320 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>美女直播</title>
+    <input type="hidden" id="web" value="$!{rc.contextPath}">
+    <style type="text/css">
+        * {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-touch-callout: none
+        }
+        body, div, p, blockquote, hr, ul, ol, h1, h2, h3, h4, h5, h6, menu, dd, dl, form, fieldset, input, textarea, caption, select, button, input, pre, hr, td, th, address, section, article, aside, header, footer, nav, dialog, figure, hgroup {
+            margin: 0;
+            padding: 0
+        }
+        body{
+            cursor: pointer;
+        }
+        .openApp{
+            display: inline-block;
+            opacity: 0;
+        }
+        ul li{
+            list-style: none;
+        }
+        @-webkit-keyframes ani{
+            from{
+                left: 0;
+            }
+            to{
+                left: -4900%;
+            }
+        }
+        @keyframes ani{
+            from{
+                left: 0;
+            }
+            to{
+                left: -4900%;
+            }
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+        .wrap ul{
+            width: 5000%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-animation: ani 5s steps(49) infinite;
+            animation: ani 5s steps(49) infinite;
+            -webkit-animation-delay: 3s;
+            animation-delay: 3s;
+        }
+        .wrap ul li{
+            width: 2%;
+            float: left;
+        }
+        .wrap ul li img{
+            width: 100%;
+        }
+        .wrap .baby{
+            width: 100%;
+        }
+        .wrap .r{
+            width: 53.6%;
+            display: none;
+            position: absolute;
+            right: 7px;
+            top: 0;
+        }
+        .download{
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+        .toast{
+            display: inline-block;
+            height: 40px;
+            font-size: 14px;
+            color: #FFFFFF;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            line-height: 40px;
+            text-align: center;
+            width: 200px;
+            display: none;
+        }
+        .zb{
+            width: 100%;
+            display: none;
+        }
+        .head-bar {
+            width: 100%;
+            background-color: #27b5d9;
+            line-height: 32px;
+            padding: 6px 10px 7px;
+        }
+        .zw_box {
+            display: flex;
+            display: -webkit-box;
+            display: -moz-box;
+            width: 100%;
+            box-sizing: border-box;
+            box-orient: horizontal;
+            box-pack: justify;
+            -webkit-box-sizing: border-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-pack: justify;
+            -moz-box-sizing: border-box;
+            -moz-box-orient: horizontal;
+            -moz-box-pack: justify;
+        }
+        .head-bar a.back {
+            background: url(http://img.zwkanshu.com/images/ikanshu_icons_1.png) left top no-repeat;
+            background-size: 140px auto;
+            -moz-background-size: 140px auto;
+            -webkit-background-size: 140px auto;
+            background-position: -70px -798px;
+        }
+        .head-bar a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+        a {
+            text-decoration: none;
+            color: #4a4a4a;
+            background: transparent;
+        }
+        img, a {
+            border: 0 none;
+        }
+        .head-bar p {
+            font-size: 18px;
+            color: #fff;
+            text-align: center;
+        }
+        .zw_flex {
+            box-flex: 1.0;
+            -webkit-box-flex: 1.0;
+            -moz-box-flex: 1.0;
+        }
+        .head-bar a.home {
+            background: url(http://img.zwkanshu.com/images/ikanshu_icons_1.png) left top no-repeat;
+            background-size: 140px auto;
+            -moz-background-size: 140px auto;
+            -webkit-background-size: 140px auto;
+            background-position: -107px -844px;
+        }
+        .head-bar a {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+        a {
+            text-decoration: none;
+            color: #4a4a4a;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="zb">
+        <div class="head-bar zw_box zb">
+            <a href="javascript:history.back();" class="back"></a>
+            <p class="zw_flex">美女直播</p>
+            <a href="http://m.cread.com/default.aspx" class="home" name="logo"></a>
+        </div>
+    </div>
+    <div class="wrap">
+        <ul>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/1.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/2.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/3.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/4.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/5.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/6.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/7.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/8.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/9.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/10.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/11.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/12.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/13.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/14.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/15.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/16.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/17.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/18.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/19.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/20.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/21.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/22.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/23.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/24.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/25.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/26.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/27.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/28.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/29.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/30.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/31.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/32.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/33.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/34.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/35.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/36.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/37.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/38.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/39.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/40.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/41.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/41.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/42.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/43.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/44.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/45.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/46.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/47.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/47.JPG" alt="" /></li>
+            <li><img src="$!{rc.contextPath}/static/images/babyreading/48.JPG" alt="" /></li>
+        </ul>
+        <img class="r" src="$!{rc.contextPath}/static/images/babyreading/f.png"/>
+    </div>
+    <img class="download" src="$!{rc.contextPath}/static/images/babyreading/babydownload.jpg"/>
+    <div class="toast">
+        IOS版本暂未发布，敬请期待
+    </div>
+<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        //根据参数值，获取路径中相应的参数值。
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            //alert(r);
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var vt;
+        vt = getUrlParam("s");
+        if (vt && vt=="sc"){
+            $(".zb").show();
+        }
+        $(".wrap").on("click",function(){
+            //进入页面判断是ios终端还是安卓终端，或者是浏览器
+            var browser = BrowserInfo();
+            if (browser.isIphone) {
+                $(".toast").show();
+                setTimeout(function () {
+                    $(".toast").hide();
+                },1500)
+            }else if (browser.isAndroid){//安卓终端
+                if (browser.isWeixin){
+                    $(".r").show();
+                }else {
+                    if (vt && vt=="sc"){
+                        window.location.href = "https://ks3-cn-beijing.ksyun.com/apkdown/apk_download/dl/dl-app-release_20008.apk";
+                    }else {
+                        window.location.href = "https://ks3-cn-beijing.ksyun.com/apkdown/apk_download/dl/dl-app-release_20009.apk";
+                    }
+                }
+
+            }
+        })
+        $(".download").on("click",function(){
+            //进入页面判断是ios终端还是安卓终端，或者是浏览器
+            var browser = BrowserInfo();
+            if (browser.isIphone) {
+                $(".toast").show();
+                setTimeout(function () {
+                    $(".toast").hide();
+                },1500)
+            }else if (browser.isAndroid){//安卓终端
+                if (browser.isWeixin){
+                    $(".r").show();
+                }else {
+                    if (vt && vt=="sc"){
+                        window.location.href = "https://ks3-cn-beijing.ksyun.com/apkdown/apk_download/dl/dl-app-release_20008.apk";
+                    }else {
+                        window.location.href = "https://ks3-cn-beijing.ksyun.com/apkdown/apk_download/dl/dl-app-release_20009.apk";
+                    }
+                }
+
+            }
+        })
+        function BrowserInfo () {
+            var json = {
+                userAgent: navigator.userAgent.toLowerCase(),
+                isAndroid: Boolean(navigator.userAgent.match(/android/ig)),
+                isIphone: Boolean(navigator.userAgent.match(/iphone|ipod/ig)),
+                isIpad: Boolean(navigator.userAgent.match(/ipad/ig)),
+                isWeixin: Boolean(navigator.userAgent.match(/MicroMessenger/ig)),
+            }
+            return json;
+        }
+
+    }
+</script>
+
+</body>
+</html>

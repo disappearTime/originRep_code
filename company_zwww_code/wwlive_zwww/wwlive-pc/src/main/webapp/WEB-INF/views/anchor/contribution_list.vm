@@ -1,0 +1,73 @@
+#set($page_title="贡献榜")
+#set($head_nav=3)
+<form action="/anchor/contriblist" method="post">
+    <input id="pageIndex" name="pageIndex" value="$!page.pageIndex" type="hidden">
+</form>
+<div class="contribute">
+    #if(${page.total} == 0)
+        <br>
+        <div style="font-size:18px; text-align:center">暂时还没有用户贡献！</div>
+    #else
+    <table width="1200" cellpadding="0" class="contribute_list">
+        #foreach($map in $page.data)
+            #set($index = $page.start + $velocityCount)
+
+            <tr>
+                #if($!index < 4)
+                    <td width="100" class="t_c num_$!index">$!index</td>
+                #else
+                    <td width="100" class="t_c">NO.$!index</td>
+                #end
+                <td width="110" onclick="userInfo('${map.userId}')">
+                    <div class="userImgContainer">
+                <img class="userHeadImg" src="$!map.headImg" width="80" height="80"
+                onerror="this.src='/static/images/user_cover.png'"/>
+                    #if($!{map.nobleCode} == 6) <img class="nobleImg" src="/static/images/nobleImages/shendian-right.png"> #end
+                    #if($!{map.nobleCode} == 5) <img class="nobleImg" src="/static/images/nobleImages/zi-right.png"> #end
+                    #if($!{map.nobleCode} == 4) <img class="nobleImg" src="/static/images/nobleImages/mofa-right.png"> #end
+                    #if($!{map.nobleCode} == 3) <img class="nobleImg" src="/static/images/nobleImages/hei-right.png"> #end
+                    #if($!{map.nobleCode} == 2) <img class="nobleImg" src="/static/images/nobleImages/long-right.png"> #end
+                    #if($!{map.nobleCode} == 1) <img class="nobleImg" src="/static/images/nobleImages/sheng-right.png"> #end
+                    </div>
+                </td>
+                <td width="220">
+                    <p class="clearfix">
+                        #if(${map.acctType} == 1)
+                            <span class="user_name">
+                                <b class='b-cg'>超管</b>
+                            </span>
+                        #end
+                        #if(${map.isAdmin} == 1)
+                            <span class="user_name">
+                                <b class='b-fg'>房管</b>
+                            </span>
+                        #end
+                        <span class="user_name" onclick="userInfo('${map.userId}')">$!map.userName</span>
+                        #if(${map.sex} == 0)
+                        <img src="/static/images/woman.png" alt="" class="sex"/>
+                        #elseif(${map.sex} == 1)
+                        <img src="/static/images/man.png" alt="" class="sex"/>
+                        #end
+                        #if(${map.medals}!="" && ${map.medals}!= "undefined" && ${map.medals.size()}>0 && ${map.medals} != "null")
+                            #foreach($item in ${map.medals})
+                                #if($item == "土豪勋章")
+                                    <img class="localRich" src="${rc.contextPath}/static/images/localRich.png" alt="">
+                                #end
+                            #end
+                        #end
+                        #*<img class="localRich" src="${rc.contextPath}/static/images/localRich.png" alt="">*#
+                    </p>
+                </td>
+                <td width="200">礼品数：$!map.goodsNum</td>
+                <td>贡献值：${map.totalAmt}</td>
+            </tr>
+
+        #end
+    </table>
+    #end
+    #parse('layout/page.vm')
+    #parse("./user/user_info.vm")
+</div>
+
+<script>
+</script>

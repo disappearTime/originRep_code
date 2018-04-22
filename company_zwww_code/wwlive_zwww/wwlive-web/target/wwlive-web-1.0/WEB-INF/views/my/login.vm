@@ -1,0 +1,55 @@
+#set($page_title="登录")
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no;email=no">
+    <title></title>
+##    <link href="${rc.contextPath}/static/css/live.css" type="text/css" rel="stylesheet">
+</head>
+<body class="bg-f3">
+    <div class="loginWrapper">
+        <div class="logo"><img src="${rc.contextPath}/static/images/logo1.png" alt=""></div>
+        <ul>
+            <li class="loginName">
+##                <label for="">用户名</label>
+                <input type="text" placeholder="用户名">
+            </li>
+            <li class="loginPassword">
+##                <label for="">密码</label>
+                <input type="password" placeholder="密码">
+            </li>
+            <em class="pastip">密码错误</em>
+            <button class="bttn" type="button">登录</button>
+            <div class="thirdParty">
+                <i>或使用第三方登录</i>
+                <span>
+                    #*QQ登录
+                    <img class="qq" src="${rc.contextPath}/static/images/QQ.png" alt="">
+                    *#
+                    <img onclick="weChatLogin();" class="weixin" src="${rc.contextPath}/static/images/weixin.png" alt="">
+                </span>
+            </div>
+        </ul>
+        <p>忘记密码请联系客服：客服QQ：<em id="qq" class="copyQQ">3522400594</em></p>
+        <div class="unboundPopup">
+            <p>您输入的账号未绑定第三方登录平台，若您确认忘记密码，请联系客服--客服QQ:<em class="copyQQ">3522400594</em></p>
+        </div>
+        <div class="boundPopup">
+             <p>你输入的账号：<i></i>&nbsp;&nbsp;&nbsp;&nbsp;已绑定<em></em>账号：<span></span>.是否使用该<b></b>账号登录?</p>
+             <div>
+                <div class="cancelLeft">取消</div>
+                <div onclick="weChatLogin();" class="loginRight">登录</div>
+             </div>
+        </div>
+        <div class="toast"></div>
+        <div class="copy">已复制到剪切板</div>
+        <input type="hidden" value="$!{rc.contextPath}" id="web">
+    </div>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/my/login.js?$!application.getAttribute('/static/js/my/login.js')"></script>
+</body>
+
+</html>

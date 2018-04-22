@@ -1,0 +1,38 @@
+#set($page_title='礼品详细')
+<div id="gift-list">
+	
+</div>
+<p class="" id="autopbn" ></p>
+
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<input type="hidden" value="$!{listPage}" id="listPage"/>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" 
+src="${rc.contextPath}/static/js/launch/gift/giftList.js?$!application.getAttribute('/static/js/launch/gift/giftList.js')"></script>
+<div class="shadowUp-new" id="shadowUp" style="display:none;"></div>
+<div class="indexcard" id="indexcard" style="display:none;">
+	<!-- <div class="func"><span>禁言</span><span>设为房管</span></div> -->
+	<div class="data-card" id="data-card">
+	</div>
+</div>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<script type="text/javascript">   
+	//为滚动轴绑定图片懒加载事件
+	document.onscroll = function(){
+		Lazy.Load();
+	}
+	setTimeout(function() {
+		Lazy.Load()
+	},100);
+</script>
+<script type="text/javascript" src = "${rc.contextPath}/static/js/util/dateutil.js?$!application.getAttribute('/static/js/launch/util/dateutil.js')"></script>
+<script type="text/javascript" src = "${rc.contextPath}/static/js/launch/video/userinfo.js?$!application.getAttribute('/static/js/launch/video/userinfo.js')"></script>

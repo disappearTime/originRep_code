@@ -1,0 +1,68 @@
+#set($layout = '/layout/empty.vm')
+<div class="live_on" id="live_on">
+#if($!{videoCnt} != 0)
+<ul class="anchor clearfix">
+		#set($Integer = 0)
+	 	#foreach($map in $videoList)
+			<li onclick=
+				"livingInfo('$!{map.videoId}', '$!{map.chatroomId}', '$!{map.anchorId}', '$!{map.formatType}', '$!{map.coverImg}', '$!{map.version}', '$!{map.ext}');">
+				<div class="cover" data-id="$!{map.anchorId}">
+					<img src="$!{map.coverImg}" alt="" class="an_redio" />
+					#set($viewers = $Integer.parseInt($!{map.viewers}))
+					<div class="top_num"><span>#if($!viewers > 0) $viewers #else 0 #end</span></div>
+					<span class="live-title">
+						<em name="videoName">$!{map.videoName}</em>
+					</span>
+					<!-- <div class="small">
+						<img src="$!{map.headImg}" alt="" /><span>$!{map.userName}</span>
+					</div>
+					<div class="sex">
+						#if($!{map.sex} == 0)
+						<img src="${rc.contextPath}/static/images/woman.png" alt="" />
+						#else
+						<img src="${rc.contextPath}/static/images/man.png" alt="" />
+						#end
+					</div> -->
+					#if(${map.medals}!="" && ${map.medals}!="null" && ${map.medals.size()}>0 )
+						#foreach($item in ${map.medals})
+							#if($item == "女神勋章")
+                                <img id="goddessImg" src="${rc.contextPath}/static/images/goddessTop1.png" alt="">
+							#end
+						#end
+					#end
+				</div>
+			</li>
+	    #end
+</ul>
+#else
+<div class="no_live">
+	<p><img src="${rc.contextPath}/static/images/zbxx220.png" alt="">主播休息了，客官稍后再来！</p>
+</div>
+#end
+</div>
+#if($!{videoCnt} <= 4)
+<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?$ver=0"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/index/videoPage.js?$!application.getAttribute('/static/js/index/videoPage.js')"></script>
+<div class="live_on mt10">
+	<p class="recent-play">精彩回放</p>
+	<ul class="anchor clearfix" id="playback">
+	</ul>
+</div>
+<p class="" id="autopbn" ></p>
+<br id="anchor"/>
+#end
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var imgW = $(".cover img").width();
+        $(".anchor li").height(imgW);
+        $(".cover").height(imgW);
+        $(".cover img").height(imgW);
+
+        var ems = $("em[name='videoName']");
+        $.each(ems, function(i, item){
+        	var vname = $(item).text();
+        	$(item).text(getTrimedStr(vname, 20));
+        });
+    })
+</script>

@@ -1,0 +1,175 @@
+#set($page_title="成为主播")
+<style>
+    ._filelist li{/*这个选择器一定要有宽高，否则图片显示不出来，因为它里面的内容是绝对定位的*/
+        width: 180px;
+        height: 160px;
+    }
+    .choose-file-btn{
+        width: 180px;
+        height: 80px;
+        background-color: #f60;
+        overflow: hidden;
+    }
+    #tdRoomPicture{
+        width:100%;
+    }
+    .image_container {
+        display: inline-block;
+        float: left;
+        width:29%;
+        /*margin:0 6.5% 21.5px 0;*/
+    }
+    #tdRoomPicture a, .image_container a {
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+
+        position: relative;
+        /*margin:0 6.5% 21.5px 0;*/
+        float: left;
+    }
+    .image_container a{
+        width:100%;
+    }
+    a.addImg {
+        width: 29%;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom:21.5px;
+        background-color: #f5f5f5;
+    }
+
+    .image_container a.previewBox {
+        /*background-color: #dae6f3;*/
+
+        display: none;
+        /*display: inline-block;*/
+    }
+
+    .image_container .delImg {
+        position: absolute;
+        color: #f00;
+        margin: 0 0 0 84px;
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        vertical-align: middle;
+        background-color: #c3c3c3;
+    }
+
+    .defaultImg {
+        border: 1px solid #f90303;
+    }
+
+    .defaultImg:before {
+        content: "默认图片";
+        float: left;
+        position: absolute;
+        color: #f90303;
+        font-size: 14px;
+    }
+
+    .defaultImg:after {
+        content: "";
+    }
+</style>
+<div class="toAncWrapper">
+    <div class="intro">
+        <fieldset>
+            <legend>成为主播介绍</legend>
+            <span>
+            想成为万人瞩目的明星吗？只要你具备唱歌、跳舞、搞笑逗比、喊麦等方面的才艺、有时间，坐在家中就可以将一切梦想变成现实！
+            </span>
+                <p>主播家族招募QQ：1072322742</p>
+        </fieldset>
+    </div>
+    <form id="consForm" method="post" enctype="multipart/form-data">
+        <div class="applyCard">
+            <div class="realName borderBox bor-bott">
+                <label for="">真实姓名：</label>
+                <input class="checkName" type="text" placeholder="8个字以内（必填）">
+            </div>
+            <div class="sexOption borderBox bor-bott">
+                <label for="">性<em class="fontSpace"></em>别：</label>
+                <span><i>男</i><em><img src="${rc.contextPath}/static/images/changeSex.png" alt=""></em></span>
+            </div>
+            <div class="skill borderBox bor-bott">
+                <label for="">特<em class="fontSpace"></em>长：</label>
+                <input class="checkKill" type="text" placeholder="10个字以内（必填）">
+            </div>
+            <div class="liveExperience borderBox bor-bott">
+                <label for="">直播经验：</label>
+                <input type="text" placeholder="直播平台和时间（必填）">
+            </div>
+            <div class="contact borderBox bor-bott">
+                <label for="">联系方式：</label>
+                <input type="text" placeholder="手机号、微信号或QQ号（必填）">
+            </div>
+            <div class="others midBox">
+                <p>其他你想说的：</p>
+                <textarea class="txtArea" id="proTarget" name="" rows="8"></textarea>
+                <span class="wordLimit"><b>1</b>/100</span>
+            </div>
+
+
+            <div class="uploadPhoto midBox">
+                <p>上传照片：</p>
+                <div id="tdRoomPicture">
+
+
+                    <a href="javascript:;" class="addImg" data-picid="0">
+                        <img src="${rc.contextPath}/static/images/addPic.png" alt="" class="img_1"/>
+                    </a>
+                </div>
+            </div>
+           #* <!-- .webuploader-pick 这个类可以控制选择文件可点按钮的大小 -->
+            <div id="uploader"></div>
+            <!-- 千万不要使用button标签，否则在火狐和IE中点击会无效
+            <button type="button" id="choose_file">选择图片</button> -->
+            <div class="choose-file-btn" id="choose_file">选择图片</div>*#
+
+
+
+            <div class="mesSubmit midBox">
+                <button id="upload_now" type="button" disabled="disabled">提交</button>
+            </div>
+        </div>
+    <form>
+</div>
+#*<div class="chooseSex">
+    <div>
+        <ul>
+            <li><span>男</span><img class="boy" src="${rc.contextPath}/static/images/choose-sex.png" alt=""></li>
+            <li><span>女</span><img class="girl" src="${rc.contextPath}/static/images/choose-sex.png" alt=""></li>
+        </ul>
+        <div class="cancelBox">取消</div>
+    </div>
+</div>*#
+<div class="beAncToast">
+    提交成功，等待工作人员审核
+</div>
+<input type="hidden" id="web" value="${rc.contextPath}">
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/jquery.form.min.js?$!application.getAttribute('/static/js/jquery.form.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/toBeAnchor/toBeAnchor.js?$!application.getAttribute('/static/js/toBeAnchor/toBeAnchor.js')"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

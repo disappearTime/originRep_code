@@ -1,0 +1,89 @@
+
+#**
+ * enum message
+ *
+ * Macro to translate a enum into a message.
+ *#
+#macro( enumMessage $enum )
+#set( $enum_fullname = $enum.getClass().getName()+'.'+$enum.name() )
+$springMacroRequestContext.getMessage($enum_fullname)
+#end
+
+#**
+ * enum message
+ *
+ * Macro to translate a enum into a message.
+ * using the given default text if no message found.
+ *#
+#macro( enumMessageText $enum $text)
+#set( $enum_fullname = $enum.getClass().getName()+'.'+$enum.name() )
+$springMacroRequestContext.getMessage($enum_fullname, $text)
+#end
+
+#**
+ * port from springFormSingleSelect macro.
+ * formSingleSelect for enum instance, which must have value() method.
+ * @see com.jd.common.context.Convertable
+ *
+ * Show a selectbox (dropdown) input element allowing a single value to be chosen
+ * from a list of options.
+ *
+ * The null check for $status.value leverages Velocity's 'quiet' notation rather
+ * than the more common #if($status.value) since this method evaluates to the
+ * boolean 'false' if the content of $status.value is the String "false" - not
+ * what we want.
+ *
+ * @param $inst a enum instance, which contain all the available options through enum.values()
+ * @param $name the name of the field
+ * @param empty prompt text
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( enumFormSingleSelect $inst $name $empty $attributes )
+    <select id="$name" name="$name" ${attributes}>
+        #foreach($option in $inst.values())
+            <option value="$!option.value()"
+            #if("$!inst.value()" == "$!option.value()")
+                selected="selected"
+            #end>
+            #enumMessageText($option, $empty)</option>
+        #end
+    </select>
+#end
+
+
+#macro (markup $tag $visible $body $attributes)
+#if($visible)
+<${tag}#foreach($entry in $attributes.entrySet()) ${entry.key}="${entry.value}"#end
+#if(!$body) /#end>
+#end
+#if($body)$!bodyContent#if($visible)</${tag}>#end
+#end
+#end
+
+#macro (pagesbar $model $pageUrl $pageName $body $currentPageTag $class)
+#if($model)
+#set($attr = {"href" : $pageUrl.put($pageName, 1).build(), "title" : "第1页", "class": "first"})
+#@markup ("a" ${model.previousEnable} ${model.previousEnable} $attr)«#end
+#set($page = ${model.startPage} - 1 )
+#set($attr = {"href" : $pageUrl.put($pageName, $page).build(), "title" : "第${page}页", "class": "previous"})
+#@markup ("a" ${model.previousEnable} ${model.previousEnable} $attr)‹#end
+#foreach($x in  ${model.pageList})
+  #set($attr = {"href" : $pageUrl.put($pageName, $x).build()})
+  #set($isCurrent = ${model.isCurrent($x)} )
+  #set($isNotCurrent = !${model.isCurrent($x)} )
+  #@markup ("a" $isNotCurrent true $attr)
+    #set($attr = {"class": $class})
+    #@markup (${currentPageTag} $isCurrent true $attr)
+    ${x}
+    #end
+  #end
+#end
+#set($page = ${model.stopPage} + 1 )
+#set($attr = {"href" : $pageUrl.put($pageName, $page).build(), "title" : "第${page}页", "class": "next"})
+#@markup ("a" ${model.nextEnable} ${model.nextEnable} $attr)›#end
+#set($attr = {"href" : $pageUrl.put($pageName, ${model.lastPage}).build(), "title" : "第${model.lastPage}页", "class": "last"})
+#@markup ("a" ${model.nextEnable} ${model.nextEnable} $attr)»#end
+#if(!$body)(共 ${model.itemCount} 项)#else$!bodyContent#end
+#end
+#end

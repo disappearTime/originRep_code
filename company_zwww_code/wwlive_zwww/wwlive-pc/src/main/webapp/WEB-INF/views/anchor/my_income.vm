@@ -1,0 +1,130 @@
+#set($page_title="我的收入")
+#set($head_nav=2)
+
+<div class="income">
+	<div class="income_right">
+		<div class="amount_num">
+			<h3>我的累计收入</h3>
+			<div class="income_num">
+                <p>累计收到礼品数：#if(!${totalGoodsNum})0#else${totalGoodsNum}#end</p>
+                <p>收到的礼品总收入：<em id="totalIncome">#if(!${giftIncome})0#else#set($gIncome=$giftIncome / 100) ${gIncome}#end</em>元</p>
+                <p>累计开通贵族数：<em id="totalNoble">#if(!${nobleCnt})0#else${nobleCnt}#end</em></p>
+                <p>贵族总收入：<em id="nobleIncome">#if(!${nobleIncome})0#else#set($nIncome=$nobleIncome / 100) ${nIncome}#end</em>元</p>
+                <p>弹幕总收入：<em id="danmuIncome">#if(!${barrageIncome})0#else#set($bIncome=$barrageIncome / 100) ${bIncome}#end</em>元</p>
+                <p><span>总收入：<font id="realIncome">#if(!${totalIncome})0#else#set($Income=$totalIncome / 100) ${Income}#end</font>元</span></p>
+##				<p><span>总收入：<font id="realIncome">0</font>元</span></p>
+			</div>
+		</div>
+		<img src="/static/images/jiao.png" alt="" class="top_arrow" />
+	</div>
+	<div class="income_left">
+	    #if(${page.total} == 0)
+            <br>
+            <div style="font-size:18px; text-align:center">暂时还有任何收入！</div>
+	    #else
+	    <table width="1200" cellpadding="0" class="contribute_list">
+	        #foreach($map in $page.data)
+	            #set($index = $page.start + $velocityCount)
+	                #if($!index == 1)
+	                    <h3>${map.yearMonth} 收入</h3>
+	                #else
+	                    <h3  class="mt30">${map.yearMonth} 收入</h3>
+	                #end
+			        <div class="total">
+			            <span>收到礼品：${map.goodsCnt}</span><span class="total_val">收入：#set($income=$map.income / 100) ${income} &nbsp;&nbsp;元</span>
+			        </div>
+			        <ul class="gift_list">
+			            #foreach(${goods} in ${map.goodsList})
+			                #set($r = $velocityCount % 5)
+			                <li><img src="${goods.goodsImg}" alt="" width="70" height='72'/>
+                                    <p>    
+			                    #set($str=${goods.goodsName})
+			                    #if($str.length()>4)
+			                         #set($str=$str.substring(0,4))
+			                         $str ...
+			                    #else
+			                         $str
+			                    #end                       
+				                &nbsp;×&nbsp;${goods.goodsNum}</p>
+				                </li>
+			                #if($r == 0)</li>#end
+			            #end
+			        </ul>
+
+				##贵族礼物
+				#if(${map.nobleList})
+                    <div class="total">
+                        <span>贵族收到礼品：${map.nobleCnt}</span><span class="total_val">收入：#set($income2=$map.nobleIncome / 100) ${income2} &nbsp;&nbsp;元</span>
+                    </div>
+                    <ul class="gift_list">
+						#foreach(${goods} in ${map.nobleList})
+							#set($r = $velocityCount % 5)
+                            <li><img src="${goods.goodsImg}" alt="" width="70" height='72'/>
+                                <p>
+									#set($str=${goods.goodsName})
+									#if($str.length()>4)
+										#set($str=$str.substring(0,4))
+										$str ...
+									#else
+										$str
+									#end
+                                    &nbsp;×&nbsp;${goods.goodsNum}</p>
+                            </li>
+								#if($r == 0)</li>#end
+						#end
+                    </ul>
+				#end
+
+				##购买弹幕
+				#if(${map.levelList})
+                    <div class="total">
+                        <span>用户开通的贵族：${map.levelCnt}</span><span class="total_val">收入：#set($income2=$map.levelIncome / 100) ${income2} &nbsp;&nbsp;元</span>
+                    </div>
+                    <ul class="gift_list">
+						#foreach(${level} in ${map.levelList})
+							#set($r = $velocityCount % 5)
+                            <li style="width:239px;height: 260px;">
+                                <p onclick="userInfo('${level.userId}')" style="margin-top:20px;cursor: pointer;">${level.userName}</p>
+								<img src="${level.goodsImg}" alt="" height='128'/>
+                                <p>
+									#set($str=${level.goodsName})
+									#if($str.length()>4)
+										#set($str=$str.substring(0,4))
+										$str ...
+									#else
+										$str
+									#end
+                                    &nbsp;×&nbsp;1</p>
+                            </li>
+								#if($r == 0)</li>#end
+						#end
+                    </ul>
+				#end
+
+				##弹幕
+				#if(${map.barrageList})
+                    <div class="total">
+                        <span>贵族用户发送的弹幕：${map.barrageCnt}</span><span class="total_val">收入： #set($income2=$map.barrageIncome / 100) ${income2}&nbsp;&nbsp;元</span>
+                    </div>
+				#end
+			#end
+	    </table>
+	    #end	
+	    #parse('layout/page.vm')
+		#parse("./user/user_info.vm")
+	</div>
+</div>
+<script src="/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/userMesCard.js?$!application.getAttribute('/static/js/userMesCard.js')"></script>
+<script>
+    $(function(){
+//    	var income = $("#totalIncome").text();
+//        $("#realIncome").text(income);
+    });
+
+	$(".live_tab li").click(function() {
+		$(this).addClass("active").siblings().removeClass("active");
+		var _index = $(this).index();
+		$(".tab").eq(_index).show().siblings(".tab").hide();
+	})
+</script>

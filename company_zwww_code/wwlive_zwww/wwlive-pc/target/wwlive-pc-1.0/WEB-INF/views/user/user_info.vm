@@ -1,0 +1,27 @@
+	<!-----用户资料---->
+	<div class="anchor_data">
+		<span class="close" onclick="closeData();"></span>
+		<div class="data_con">
+			<img id="user_img" src="/static/images/rank_cover.png" onerror="this.src='/static/images/user_cover.png'" alt="" class="anchor_cover" width="80" height="80"/>
+			<p id="noble"></p>
+			<p id="user_name_sex"></p>
+			<p id="user_age"></p>
+			<div class="userFoo">
+				<p id="follower"></p>
+			<p id="contri"></p>
+			<p id="rankall"></p>
+			</div>
+		</div>
+	</div>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/userMesCard.js?$!application.getAttribute('/static/js/userMesCard.js')"></script>
+	<script type="text/javascript">
+		$("#end_live").bind("click", function() {
+    			$("#del_live").fadeIn();
+    			$(".shadowUp").fadeIn();
+    		});
+
+    		$("#cancleStop").bind("click", function() {
+    			$("#del_live").fadeOut();
+    			$(".shadowUp").fadeOut();
+    		});
+	</script>

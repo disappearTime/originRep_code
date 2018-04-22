@@ -1,0 +1,224 @@
+#set($page_title="女神活动")
+<link href="${rc.contextPath}/static/css/userCard.css?$!application.getAttribute('/static/css/userCard.css')" type="text/css" rel="stylesheet">
+<div class="actWrapper">
+    #*<div class="bannerImg">
+        <img src="" alt="">
+    </div>*#
+    #if(${isInEvent}==0)
+        <h2 class="actTitle"><img class="left" src="${rc.contextPath}/static/images/titlexg.png" alt="">性感女神，火热来袭<img class="right" src="${rc.contextPath}/static/images/titlexg.png" alt=""></h2>
+        <div class="actTip">
+            点亮女神活动首度上线，不仅有御姐热舞，还有萌音软妹，一起来点亮你心目中独一无二的女神吧！不仅能与美女主播们亲密互动，还有红包全天候等你来抢哟~
+        </div>
+        <div class="cutOff"></div>
+    #end
+        <div class="actDetail">
+            <img class="topLeft" src="${rc.contextPath}/static/images/topLeft.png" alt="">
+            <img class="bottomRight" src="${rc.contextPath}/static/images/bottomRight.png" alt="">#*使用定位*#
+            <div class="actRule">
+                <h3>活动规则：</h3>
+                <ul>
+                    <li>1、10月24日19点至10月30日24点，给主播打赏即可累积关卡进度，每打赏<span>满20钻</span>即可完成当前关卡；</li>
+                    <li>2、每次冲关成功，对应主播的直播间掉落红包，用户可领取冲关奖励，手快有手慢无哦；</li>
+                    <li>3、当累积到一定关卡，主播还有<span>“神秘礼物”</span>掉落！</li>
+                </ul>
+            </div>
+            <div class="actAward">
+                <h3>活动奖励：</h3>
+                <ul class="hidden">
+                    <li>1、活动结束时，最早冲到相关档位的主播可获得现金奖励，每位主播只能获取一档奖励，如达到多档标准，则获得达到的最高档奖励。</li>
+                    <li>奖励档位：</li>
+                    <li>冲至<span>5000关及以上</span>的主播，可获现金奖<span>10000元</span>；</li>
+                    <li>冲至<span>4000关</span>的主播，可获现金奖<span>8888元</span>；</li>
+                    <li>冲至<span>2500关</span>的主播，可获现金奖<span>4999元</span>；</li>
+                    <li>冲至<span>999关</span>的主播，可获现金奖<span>1999元</span>；</li>
+                    <li>冲至<span>888关</span>的主播，可获现金奖<span>1099元</span>；</li>
+                    <li>冲至<span>666关</span>的主播，可获现金奖<span>888元</span>；</li>
+                    <li>冲至<span>520关</span>的主播，可获现金奖<span>666元</span>；</li>
+                    <li>冲至<span>233关</span>的主播，可获现金奖<span>555元</span>；</li>
+                    <li>冲至<span>88关</span>的主播，可获现金奖<span>199元</span>；</li>
+                    <li>冲至<span>52关</span>的主播，可获现金奖<span>99元</span>；</li>
+                    <li>2、活动结束时，冲关排名第一的主播，可<span>永久点亮</span>女神徽章,并获得女神推荐位一周；冲关排名第二的主播，可获得尊享推荐位3天；冲关排名第三的主播，可获得专属推荐位2天；冲关排名4-10的主播，可获得优质推荐位1天。</li>
+                    <li>3、活动结束时，土豪打赏排行第一的用户，可获得专属活动勋章，有效期30天。</li>
+                </ul>
+             #if(${isInEvent} == 1 || ${isInEvent} == 2 )
+                 <div class="actSelect"><img src="${rc.contextPath}/static/images/select.png" alt=""></div>
+             #end
+            </div>
+        </div>
+        <div class="cutOff"></div>
+        #if( ${isInEvent}==1 || ${isInEvent}==2 )
+            <div class="ranking_list">
+                <div class="anchor_rank showThis"><span class="anchorS">主播冲关排行</span></div>#*背景图*#
+                <div class="user_rank"><span class="userS">土豪打赏排行</span></div>#*背景图*#
+            </div>
+            <div class="anchorRank10">
+                #if(${anchorRank}=="" || ${anchorRank}=="null" || ${anchorRank.size()}==0)
+                    <div class="actNothing"><span class="actListNone">现在还没有主播冲关成功噢快去帮主播冲关吧！</span></div>
+                #else
+                    <div class="rankTop3">
+                        #foreach($info in ${anchorRank})
+                            #if(${info.rank}<=3)
+                                <div class="anchorCard">
+                                    <div class="actImgbox">
+                                        #if(${info.isLive}==1)
+                                            <img onerror="this.src='${rc.contextPath}/static/images/user_cover.png'" onclick="livingInfo('$!{info.videoId}', '$!{info.chatroomId}', '$!{info.anchorId}', '$!{info.type}', '$!{info.coverImg}','$!{info.version}','$!{info.rtmpUrl}');" class="actAnchorTx" src="${info.headImg}" alt="">#*直播状态点击头像跳转直播*#
+                                        #else
+                                            <img onerror="this.src='${rc.contextPath}/static/images/user_cover.png'" onclick="toPersonalPage('$!{info.anchorId}');" class="actAnchorTx" src="${info.headImg}" alt="">#*点击进入个人主页*#
+                                        #end
+                                        #if(${info.rank}==1)
+                                            <img class="actHat1" src="${rc.contextPath}/static/images/godHat.png" alt="">#*金冠*#
+                                        #elseif(${info.rank}==2)
+                                            <img class="actHat2" src="${rc.contextPath}/static/images/silver.png" alt="">#*银冠*#
+                                        #else
+                                            <img class="actHat3" src="${rc.contextPath}/static/images/brass.png" alt="">
+                                        #end
+                                        #if(${info.isLive}==1)
+                                            <p class="actAncLiving"><span></span>直播中</p>
+                                        #end
+                                    </div>
+                                    <p class="actUserN">$!{info.userName}</p>
+                                    <p class="actLevel">当前关卡：$!{info.level}关</p>
+                                </div>
+                            #else
+                                #break
+                            #end
+                        #end
+                    </div>#*底部是边框还是背景图*#
+                    <div class="cutOff"></div>
+                    <ul>
+                        #foreach($info in ${anchorRank})
+                            #if( ${info.rank} >= 4 )
+                                #if(${info.isLive}==1 )
+                                    <li onclick="livingInfo('$!{info.videoId}', '$!{info.chatroomId}', '$!{info.anchorId}', '$!{info.type}', '$!{info.coverImg}','$!{info.version}','$!{info.rtmpUrl}');">
+                                        ${info.rank}.<img onerror="this.src='${rc.contextPath}/static/images/user_cover.png'" class="actSmallTx" src="${info.headImg}" alt=""><span id="${info.userName}"></span>
+                                        <img class="actLiveSign" src="${rc.contextPath}/static/images/isLiving.png" alt=""><span class="actRight">当前关卡：${info.level}关</span>
+                                    </li>#*点击跳转直播间*#
+                                #else
+                                    <li onclick="toPersonalPage('$!{info.anchorId}');">
+                                        ${info.rank}.<img onerror="this.src='${rc.contextPath}/static/images/user_cover.png'" class="actSmallTx" src="${info.headImg}" alt=""><span id="${info.userName}"></span>
+                                        <span class="actRight">当前关卡：${info.level}关</span>
+                                    </li>#*点击跳转主播个人页*#
+                                #end
+                            #end
+                        #end
+                    </ul>
+                #end
+            </div>
+            <div class="userRank50 hidden">
+            #*<div class="actNothing"><span class="actListNone">现在还没有土豪出现快来抢<br>占土豪榜首吧！</span></div>*#
+            #*<div class="rankTop1">
+                <div class="userCard">
+                    <div class="actImgbox">
+                        <img class="actUserTx" src="" alt="">
+                        <img class="actHat1" src="${rc.contextPath}/static/images/godHat.png" alt="">
+                    </div>
+                    <p class="actUserN">会飞的荷兰号</p>
+                    <p class="actLevel">打赏金额：10000钻</p>
+                </div>
+                <span>*活动结束时，土豪打赏排行第一的用户，可获得专属活动勋章，有效期30天。</span>
+            </div>*#
+                <ul>
+                #*<li onclick="">
+                    2.<img class="actSmallTx" src="" alt=""><span>无名</span>
+                    <span class="actRight">打赏金额：100钻</span>
+                </li>*##**##*点击弹出资料卡*##**##**#
+                </ul>
+            </div>
+        #end
+
+    <div class="footer">#*加载完才显示*#
+        <div class="actNoMore"><span class="actOver">OVER</span></div>
+    </div>
+    <p class="" id="autopbn" ></p>
+    #foreach($param in ${params.keySet()})
+        <input type="hidden" id="$param" value="${params.get($param)}">
+    #end
+    <input type="hidden" value="${rc.contextPath}" id="web"/>
+    <input type="hidden" value="${anchorRank}" id="aa"/>
+    <input type="hidden" value="${isInEvent}" id="actNoStart"/>
+    <input type="hidden" value="" id="way">
+        #*资料卡*#
+    #*<div class="shadowUp-new" id="shadowUp" style="display:none;"></div>*##*蒙层弹出框*#
+    #*<div class="indexcard" id="indexcard" style="display:none;">
+        <!-- <div class="func"><span>禁言</span><span>设为房管</span></div> -->
+        <div class="data-card" id="data-card">
+        </div>
+    </div>*##*资料信息*#
+</div>
+#*用户资料卡*#
+<!--用户资料卡-->
+<div class="userMesCard_">
+    <div class="mask-layer"></div>
+    <div class="card">
+        <div class="tx-box">
+            <img onerror="this.src='$!{rc.contextPath}/static/images/user_cover.png'" class="tx" src=""/>
+            <img class="close" src="$!{rc.contextPath}/static/images/nobleclose.png"/>
+            <div class="bg-box">
+
+            </div>
+        </div>
+        <div class="mes">
+            <p class="nickname">
+
+            </p>
+            <p class="noble-box">
+
+            </p>
+            <p class="personal-mes">年龄：<em></em>岁&nbsp;&nbsp;星座：<i></i></p>
+        </div>
+        <div class="contri">
+            <div class="gz">
+                <p></p>
+                <span>关注数</span>
+            </div>
+            <div class="gxz">
+                <p></p>
+                <span>全站贡献值</span>
+            </div>
+            <div class="ph">
+                <p></p>
+                <span>全站排行</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/util/urlparamutils.js?$!application.getAttribute('/static/js/util/urlparamutils.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+#*<script type="text/javascript" src="${rc.contextPath}/static/js/launch/video/userinfo.js?$!application.getAttribute('/static/js/launch/video/userinfo.js')"></script>*#
+<script type="text/javascript" src="${rc.contextPath}/static/js/appuserCard.js?$!application.getAttribute('/static/js/appuserCard.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/activity/goddess_activity.js?$!application.getAttribute('/static/js/activity/goddess_activity.js')"></script>
+<script type="text/javascript">
+    //为滚动轴绑定图片懒加载事件
+    /*var isInEvent = $("#actNoStart").val();
+    alert(isInEvent);*/
+    document.onscroll = function(){
+        Lazy.Load();
+    }
+    setTimeout(function() {
+        Lazy.Load()
+    },100);
+    /*var anchorRank = $("#aa").val();
+    console.log(anchorRank);*/
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

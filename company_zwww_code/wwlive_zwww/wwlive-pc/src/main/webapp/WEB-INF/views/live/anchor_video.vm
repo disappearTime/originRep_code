@@ -1,0 +1,340 @@
+#set($head_nav=1)
+<div class="content">
+	#if(${page.total} == 0) <br>
+	<div style="font-size: 18px; text-align: center">暂时还没有任何视频，快去发起直播！</div>
+	<br /> <br /> <br /> #else #foreach($map in $page.data)
+	#if($!{map.videoStatus} == 1)
+	<h3 class="title">正在直播</h3>
+	<div class="living">
+		<div class="anthor_con">
+			<div class="cover">
+				<img src="$!{map.coverImg}" alt="" width="330" height="250" />
+			</div>
+			<div class="live_infor">
+				<p class="live_title">${map.videoName}</p>
+				<p>观看人数：${map.viewers}</p>
+				<p>总收入：#if($!{map.income}) $!{map.income} #else 0 #end
+					&nbsp;&nbsp;元</p>
+				#if($!{map.formatType} == 0)
+				<a href="#" onclick="videoDetail($!{map.videoId});">进入直播间</a>
+				#end
+			</div>
+		</div>
+		<div class="operate"
+			onclick="editVideo($!{map.videoId}, '$!{map.videoName}', $!{map.videoType}, '$!{map.coverImg}')">
+			<img src="/static/images/icon_1.png" alt="" />
+			<p>编辑</p>
+		</div>
+	</div>
+	#elseif($!{map.videoStatus} == 2 || $!{map.videoStatus} == 4)
+	#if($!{map.videoStatus} == 4)
+	<h3 class="title mt30">历史直播</h3>
+	#end
+	<ul class="history">
+		<li>
+			<div class="living bot_dash">
+				<div class="anthor_con">
+					<div class="cover">
+						<img src="$!{map.coverImg}" alt="" width="330" height="250" />
+					</div>
+					<div class="live_infor">
+						<p class="live_title">${map.videoName}</p>
+						<p>观看人次：${map.viewers}</p>
+						<p>总收入：#if($!{map.income}) $!{map.income} #else 0 #end
+							&nbsp;&nbsp;元</p>
+						#if($!{map.videoStatus} == 4) <a href="#"
+							onclick="videoDetail($!{map.videoId});">直播回放</a> #end
+					</div>
+				</div>
+				<div class="handle">
+					<ul class="clearfix">
+						<li class="income_con" onclick="getIncomeDetail($!{map.videoId});"><img
+							src="/static/images/icon_2.png" alt="" />
+							<p>收益明细</p></li>
+						<li class="edit"
+							onclick="editVideo($!{map.videoId}, '$!{map.videoName}', $!{map.videoType}, '$!{map.coverImg}');">
+							<img src="/static/images/icon_1.png" alt="" />
+							<p>编辑</p>
+						</li>
+						<li class="del"
+							onclick="delVideo($!{map.videoId}, '$!{map.videoName}')"><img
+							src="/static/images/icon_3.png" alt="" />
+							<p>删除</p></li>
+					</ul>
+				</div>
+			</div>
+		</li>
+	</ul>
+	#end #end #end #parse('layout/page.vm')
+</div>
+
+<!-------收入弹窗------>
+<div class="shadowUp"></div>
+<div class="income_detail" id="income_detail"></div>
+
+<!---编辑直播--->
+<div class="set_live">
+	<input type="hidden" id="editVid" /> <input type="hidden" id="editImg" />
+	<ul class="set_con edit_con">
+		<li class="pt10 clearfix"><label>主题</label>
+			<input type="text" id="editName" value="直播直播直播" class="theme" onfocus="removeEditTheme();"/>
+			<div class="error" style="display: none;" id="edit_theme_msg_error"><font id="edit_theme_msg"></font><em></em>
+			</div>
+			</li>
+		<li class="pt10 clearfix"><label></label><label for="editType0"
+			class="choose"><input type="radio" name="game" id="editType0"
+				value="0" /><span>娱乐直播</span></label><label for="editType1" class="choose"><input
+				id="editType1" type="radio" name="game" value="1" /><span>游戏直播</span></label>
+			<div class="error" style="display: none;" id="game_msg"></div></li>
+		<li class="clearfix"><label>封面</label> <input type="text"
+			value="" class="live_cover" id="editCover" readonly="readonly" /> <input
+			type="button" value="浏览" class="browse" onclick="removeEditCover();"/><input type="file"
+			draggable="true" name="coverImg" onChange="previewImage1(this)"
+			id="file_inp1" />
+			<div class="error" style="display: none;" id="edit_cover_msg_error">
+                <font id="edit_cover_msg"></font><em></em>
+            </div>
+			<p>（建议图片大小比例为1:1(长:宽)，最大1M）</p></li>
+	</ul>
+	<div class="sure_cancel">
+		<input type="button" id="toEdit" value="确定" /><input type="button"
+			id="editCancle" value="取消" />
+	</div>
+</div>
+
+<!----删除直播----->
+<div class="del_live" id="del_live">
+	<input type="hidden" id="delVidoId" />
+	<p id="delMsg">
+		是否要删除“<font color="red" id="delName"></font>”？
+	</p>
+	<div class="del_inp">
+		<input type="button" id="toDel" value="确定" /><input type="button"
+			id="delCancle" value="取消" />
+	</div>
+</div>
+
+<form id="detailForm" action="/live/detail" method="post"
+	style="display: none">
+	<input type="text" name="videoId" value="" id="vid">
+</form>
+
+<script>
+
+    //收入明细弹窗
+    function getIncomeDetail(videoId) {
+        //
+        incomeDetail(videoId, 1);
+    }
+
+    function incomeDetail(videoId, pageNum) {
+        var reg = new RegExp("^[0-9]*$");
+        if (!reg.test(pageNum)) {
+            alert("请输入数字!");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/pc/order/detailList",
+            data: {"videoId": videoId, "pageIndex": pageNum},
+            dataType: "html",
+            success: function (result) {
+                if (result != null) {
+                    $("#income_detail").html(result);
+                    $(".shadowUp , .income_detail").fadeIn();
+                }
+            },
+            error: function () {
+                $(".sure_div p").text("系统异常请稍后。");
+                $(".sure_div , .shadowUp").show();
+                //$(".shadowUp , .income_detail").fadeOut();
+            }
+        });
+    }
+
+    <!-- 修改编辑视频列表 -->
+    function videoDetail(videoId) {
+        if (videoId == null && videoId == "") {
+            return;
+        }
+        $("#vid").val(videoId);
+        $("#detailForm").submit();
+
+    }
+    //调起编辑视频页面
+    function editVideo(videoId, videoName, videoType, oldImg) {
+        if (videoId == null && videoId == "") {
+            return;
+        }
+        $("#editVid").val(videoId);
+        $("#editImg").val(oldImg);
+        $("#editName").val(videoName);
+        if (videoType == 0) {
+            $("#editType0").attr("checked", "true");
+        } else {
+            $("#editType1").attr("checked", "true");
+        }
+
+        $("#edit_theme_msg_error").css({'display': 'none'});
+        $("#game_msg").css({'display': 'none'});
+        $(".set_live , .shadowUp").fadeIn();
+    }
+
+    function previewImage1(file) {
+        $("#edit_cover_msg_error").css({'display': 'none'});
+        $("#edit_cover_msg").text('');
+        var _val = $('#file_inp1').val();
+        var index = _val.lastIndexOf("\\");
+        var img = _val.substring(index + 1);
+        var tmp = img.split(".");
+        if (checkImgSuffix1(tmp, file)) {
+            $("#editCover").val(img);
+        }
+    }
+
+    function checkImgSuffix1(tmp, file) {
+        //判断图片格式
+        var photo = tmp[1].toLowerCase();
+        if (photo == 'gif' || photo == 'jpg' || photo == 'bmp'
+                || photo == 'png' || photo == 'jpeg') {
+            var imagSize = file.size;
+            if (imagSize <= 1024 * 1024) {
+                return true;
+            } else {
+                $("#edit_cover_msg_error").css({"display": "block"});
+                $("#edit_cover_msg").text("图片大于1M，为：" + imagSize / (1024 * 1024) + "M");
+                return false; 
+            }
+        } else {
+            $("#edit_cover_msg_error").css('display','block');               
+            $("#edit_cover_msg").text('请选择图片，比如：*.jpg、*.png格式文件');
+            return false;
+        }
+    }
+
+    //删除视频
+    function delVideo(videoId, videoName) {
+        $("#del_live").fadeIn();
+        $(".shadowUp").fadeIn();
+        $("#delName").text(videoName);
+        $("#delVidoId").val(videoId);
+    }
+
+    $("#toDel").bind("click", function () {
+        var videoId = $("#delVidoId").val();
+        if (videoId == null || videoId == "") {
+            $("#delMsg").text("无法删除，请联系客服。");
+            return;
+        }
+        toDelVideo(videoId);
+    });
+
+    $("#delCancle").bind("click", function () {
+        $("#del_live").fadeOut();
+        $(".shadowUp").fadeOut();
+    });
+
+    function toDelVideo(videoId) {
+        $.ajax({
+            type: "POST",
+            url: "/live/delete",
+            data: {"videoId": videoId},
+            dataType: "json",
+            success: function (result) {
+                if (result.data > 0) {
+                    $("#delMsg").text("删除成功。");
+                    $(".shadowUp").fadeOut();
+                    window.location.reload();
+                } else {
+                    $("#delMsg").text("未删除。");
+                    $("#delVidoId").val("");
+                    $("#delName").text("");
+
+                    //$("#del_live").fadeOut();
+                }
+            },
+            error: function () {
+                $("#delMsg").text("失败！");
+                $("#delVidoId").val("");
+                $("#delName").text("");
+            }
+        });
+    }
+
+    $("#editCancle").bind("click", function () {
+        $("#editName").val("");
+        $("#editVid").val("");
+        $("input[name='game']").attr("checked", false);
+        $("#editCover").val("");
+        $('#file_inp1').val("");
+        $("#editImg").val("");
+        $("#edit_theme_msg").text("");
+        $("#edit_theme_msg_error").css({'display': 'none'});
+        $("#edit_cover_msg").text("");
+        $("#edit_cover_msg_error").css({'display': 'none'});
+        $(".set_live , .shadowUp").fadeOut();
+    });
+     
+    function removeEditTheme() {
+        $("#edit_theme_msg_error").css({'display': 'none'});
+        $("#edit_theme_msg").text('');
+    }
+    
+    function removeEditCover() {
+        $("#edit_cover_msg_error").css({'display': 'none'});
+        $("#edit_cover_msg").text('');
+    }
+    
+    $("#toEdit").bind("click", function () {
+        var videoName = $.trim($("#editName").val());
+        var videoType = $("[name='game']").filter(":checked").val();
+        var coverImg = $('#file_inp1').val();
+        //var coverImg = $("#editCover").val();
+        var oldImg = $("#editImg").val();
+        var videoId = $("#editVid").val();
+        if (videoName == null || videoName == "") {
+            $("#edit_theme_msg_error").css({'display': 'block'});
+            $("#edit_theme_msg").text('主题不能为空');
+            return;
+        }
+		if (!videoName.match(/^[\u4E00-\u9FA5a-zA-Z0-9_]{3,20}$/)) {
+	    	$("#edit_theme_msg_error").css({"display":"block"});
+            $("#edit_theme_msg").text('主题不合法，由汉字字母数字或下划线组成，3-20位');
+            return;
+		}
+        if (videoType == null || videoType == "") {
+            $("#game_msg").css({'display': 'block'});
+            $("#game_msg").text('请选择视频类型');
+            return;
+        }
+
+        var formData = new FormData();
+        if (coverImg != null && coverImg != "") {
+            formData.append('coverImg', $('#file_inp1')[0].files[0]);
+            formData.append('oldImg', oldImg);
+        }
+        formData.append('videoName', videoName);
+        formData.append('videoType', videoType);
+        formData.append('videoId', videoId);
+        $.ajax({
+            url: '/live/modify.json',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (result) {
+                    if(result.data.result == 1){
+                    	//操作成功
+	                    window.location.reload();                    	
+                    } else{
+            	    	$("#edit_cover_msg_error").css({"display":"block"});
+                        $("#edit_cover_msg").text(result.info);
+                    }
+                }, 'json')
+                .fail(function (res) {
+                	$(".sure_div p").text("修改失败。");
+                    $(".sure_div , .shadowUp").show();
+                });
+    });
+</script>

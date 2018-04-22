@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false"
+         monitoring="autodetect" dynamicConfig="true">
+
+    <defaultCache maxElementsInMemory="5000" eternal="false"
+                  timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+                  diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+                  memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="single_cache" maxElementsInMemory="5000"
+           eternal="false" overflowToDisk="false" timeToIdleSeconds="300"
+           timeToLiveSeconds="60" memoryStoreEvictionPolicy="LFU"/>
+
+    <cache name="category_cache" maxElementsInMemory="5000"
+           eternal="false" overflowToDisk="false" timeToIdleSeconds="36000"
+           timeToLiveSeconds="36000" memoryStoreEvictionPolicy="LFU"/>
+
+</ehcache>

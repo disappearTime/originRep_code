@@ -1,0 +1,11 @@
+<div class="shadowUp"></div>
+<div class="sure_div">
+    <p></p>
+    <div class="sure_inp"><input type="button" value="确定" /></div>
+</div>
+<script type="text/javascript">
+	$(".sure_inp input").click(function(){
+        $(".sure_div p").text("");
+		$(".sure_div ,.shadowUp").hide();
+	})
+</script>

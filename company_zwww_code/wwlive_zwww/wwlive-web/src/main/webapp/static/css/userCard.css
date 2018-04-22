@@ -1,0 +1,154 @@
+/*资料卡样式*/
+@media all and (max-width:1200px){
+    html{font-size: 18px;}
+}
+@media all and (max-width:395px){
+    html{font-size: 16px;}
+}
+@media all and (max-width:360px){
+    html{font-size: 15px;}
+}
+@media all and (max-width:330px){
+    html{font-size: 14px;}
+}
+.overHidden{
+    overflow: hidden;
+}
+.userMesCard_{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: none;
+}
+.userMesCard_ .mask-layer{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+.userMesCard_ .card{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    background: #FFFFFF;
+}
+.userMesCard_ .card .tx-box{
+    text-align: center;
+    height: 3.125rem;
+    position: relative;
+}
+.userMesCard_ .card .tx-box .bg-box{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.userMesCard_ .card .tx-box  .bg-box .wg{
+    position: absolute;
+    left: 50%;
+    top: -3.2rem;
+    margin: -1.25rem;
+    width: 2.5rem;
+
+}
+.userMesCard_ .card .tx-box .bg-box .sdhb{
+    width: 100%;
+    position: absolute;
+    top: -3.6875rem;
+    left: 0;
+    z-index: -1;
+}
+.userMesCard_ .card .tx-box .bg-box .hb{
+    width: 100%;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    z-index: -1;
+}
+.userMesCard_ .card .tx-box .gag{
+    position: absolute;
+    display: inline-block;
+    left: 20px;
+    top: 15px;
+}
+.userMesCard_ .card .tx-box .gag img{
+    width: 13px;
+    height: 13px;
+    margin-bottom: 7px;
+}
+.userMesCard_ .card .tx-box .close{
+    position: absolute;
+    right: 1.25rem;
+    top: 2rem;
+    z-index: 999;
+    width: 1.41rem;
+}
+.userMesCard_ .card .tx-box .tx{
+    position: absolute;
+    width: 5.2rem;
+    height: 5.2rem;
+    left: 50%;
+    margin-left: -2.6rem;
+    -webkit-border-radius: 50%;
+    transform: translateY(-2.7rem);
+}
+.userMesCard_ .card .mes{
+    text-align: center;
+}
+.userMesCard_ .card .mes .nickname{
+    height: 0.938rem;
+    padding-top: 1.8rem;
+    font-size: 0.938rem;
+    color: #333333;
+}
+.card .mes .nickname img{
+    height: 15px;
+    margin-left: 7px;
+    margin-top: -4px;
+}
+.userMesCard_ .card .mes .noble-box{
+    padding: 1.038rem 0;
+}
+.userMesCard_ .card .mes .noble-box img{
+    height: 1.562rem;
+    margin: 0 2px;
+}
+.userMesCard_ .card .mes .personal-mes{
+    font-size: 0.875rem;
+    color: #333333;
+    padding-bottom: 1.038rem;
+}
+.userMesCard_ .card .contri{
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1.5625rem;
+}
+.userMesCard_ .card .contri div{
+    text-align: center;
+}
+.userMesCard_ .card .contri div p{
+    font-size: 0.9375rem;
+    color: #333333;
+    padding-bottom: 8px;
+}
+.userMesCard_ .card .contri div span{
+    font-size: 12px;
+    color: #999999;
+}
+.userMesCard_ .bort-box{
+    width: 100%;
+    height: 49px;
+    border-top: 1px solid #E3E3E3;
+}
+.userMesCard_ .bort-box span{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    color: #333333;
+    text-align: center;
+    line-height: 49px;
+    /*float: left;*/
+}

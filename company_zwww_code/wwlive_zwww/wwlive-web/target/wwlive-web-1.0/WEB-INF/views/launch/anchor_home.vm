@@ -1,0 +1,142 @@
+#set($page_title='我的')
+<div>
+	<div class="launchBgPer">
+		<img class="bigTx blur" src="$!{headImg}" alt="" onerror="this.src='${rc.contextPath}/static/images/userDefaultTxBg.png'">
+	<div class="personal">
+		<img src="$!{headImg}" alt="" onerror="${rc.contextPath}/static/images/tx_1.png" class="per-img" onclick="toModifyPage();"/>
+		<p>
+			#if(${medals}!="" && ${medals}!="null" && ${medals.size()}>0 )
+				#foreach($item in $medals)
+					#if($item=="女神勋章")
+                        <img class="goddessSmallImg" src="${rc.contextPath}/static/images/goddessSign.png" alt="">
+					#end
+				#end
+			#end
+			$!{userName} 
+			#if(${sex} == 0) 
+			<img src="${rc.contextPath}/static/images/women.png" alt="" />
+			#else
+			<img src="${rc.contextPath}/static/images/mans.png" alt="" />
+			#end
+		</p>
+		<p>
+			年龄:$!{age}岁&nbsp;&nbsp;#if($!{zodiac}) $!{zodiac} #else 双鱼座 #end
+			<input type="hidden" id="birthday" value="$!{birthday}"/>
+		</p>
+		<div class="notice">
+			<span>
+			#if ("$!{notice}" != "" && $!{notice.length()} > 0)
+				公告：$!{notice}
+			#else 
+				主播很懒，什么都没留下 
+			#end
+			</span>
+		</div>
+	</div>
+    </div>
+	<div class="per-bg">
+		<img src="${rc.contextPath}/static/images/huawen.png" alt="" />
+	</div>
+	<div class="live_on">
+		<ul class="income-list">
+			<li onclick="toIncomeListPage()" class="bor-bott">我的收入<span class="Rfont">(#if($!{totalAmt}) $!{totalAmt} #else 0 #end 元)</span><span class="fr"><img src="${rc.contextPath}/static/images/rtip.png" alt="" /></span></li>
+			<li onclick="toFansListPage()" class="bor-bott">我的粉丝<span class="Rfont">(#if($!{followerCnt}) $!{followerCnt} #else 0 #end 人)</span><span class="fr"><img src="${rc.contextPath}/static/images/rtip.png" alt="" /></span></li>
+		</ul>
+	</div>
+</div>
+<input type="hidden" value="$!{incomePage}" id="incomePage"/>
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<script type="text/javascript" src = "${rc.contextPath}/static/js/util/dateutil.js?$!application.getAttribute('/static/js/util/dateutil.js')"></script>
+<script type="text/javascript">
+	$(function() {
+		var birthday = $("#birthday").val();
+		if (!isBlank(birthday)) {
+			var date = str2Date(birthday);
+			var m = (date.getMonth() + 1);
+			var d = date.getDate();
+			var i = getAstro(m, d);
+			var path = $("#web").val();
+			//$("#zodiac").attr('src', path + "/static/images/zodiacs/" + i + ".png"); 
+		}
+	});
+	
+	function toFansListPage() {
+        var path = $("#web").val();
+        if (path == null || path == undefined) {
+            return;
+        }
+        var incomePage = $("#incomePage").val();
+        if (isBlank(incomePage)) {
+            return;
+        }
+        var url = "${rc.contextPath}/launch/anchor/follower/list?" + incomePage;
+        var obj = new Object();
+        obj.url = url;
+        var video = new Object();
+        video.fun = "newWebView";
+        video.data = obj;
+        window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(video));
+    }
+	
+	/* function setFollowerCnt(){
+		$.ajax({
+			url: "",
+			type: "POST",
+			data: $("#incomePage").val(),
+			success: function(returnData){
+				$("#followerCnt").text("(" + returnData.data.followerCnt + "人)");
+			}
+		});
+	} */
+	
+	function toIncomeListPage() {
+		var path = $("#web").val();
+		if (path == null || path == undefined) {
+			return;
+		}
+		var incomePage = $("#incomePage").val();
+		if (isBlank(incomePage)) {
+			return;
+		}
+		var url = path + "/launch/anchor/income?" + incomePage;
+		var obj = new Object();
+		obj.url = url;
+		var video = new Object();
+		video.fun = "newWebView";
+		video.data = obj;
+		window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(video));
+	}
+	/*function skipPage(pageUrl){
+	    var path = $("web").val();
+	    if(path == null || path == undefined){
+	        return;
+		}
+		var incomePage = $("#incomePage").val();
+	    if(isBlank(incomePage)){
+	        return;
+		}
+		var url = path + pageUrl + incomePage;
+	    var obj = new Object();
+	    obj.url = url;
+	    var video = new Object();
+	    video.data = obj;
+        window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(video));
+	}*/
+	function toModifyPage() {
+		var path = $("#web").val();
+		if (path == null || path == undefined) {
+			return;
+		}
+		var incomePage = $("#incomePage").val();
+		if (isBlank(incomePage)) {
+			return;
+		}
+		var url = path + "/launch/anchor/modify/page?" + incomePage;
+		var obj = new Object();
+		obj.url = url;
+		var video = new Object();
+		video.fun = "newWebView";
+		video.data = obj;
+		window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(video));
+	}
+</script>

@@ -1,0 +1,476 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>宝贝伴读</title>
+    <link href="${rc.contextPath}/static/css/mobileReset.css?$!application.getAttribute('/static/css/mobileReset.css')" rel="stylesheet"/>
+    <link href="${rc.contextPath}/static/css/babyreading/babybooks.css?$!application.getAttribute('/static/css/babyreading/babybooks.css')" rel="stylesheet"/>
+    <input type="hidden" id="web" value="$!{rc.contextPath}">
+</head>
+<body>
+<div class="babybook">
+    <ul>
+        <li class="orange">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/7.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：月野兔</h3>
+                    <p>《修罗武神》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/xlws.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.1-1.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-orange.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/1-1.png" alt="">
+                        </div>
+                        <div class="btn" >进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="orange">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/4.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：秘宝宝</h3>
+                    <p>《超级兵王》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/bw.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.2-2.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-orange.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/2-2.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="orange">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/3.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：燕baby</h3>
+                    <p>《女总裁的特种神医》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/tzsy.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.3-3.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-orange.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/3-3.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/8.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：琳哒</h3>
+                    <p>《校园全能高手》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/xygs.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.4-4.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/4-4.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/2.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：小芭比</h3>
+                    <p>《武神天下》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/wstx.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.5-5.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/5-5.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/6.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：小提莫</h3>
+                    <p>《合租医仙》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/yx.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.6-6.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/6-6.png" alt="">
+                        </div>
+                         <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/1.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：污主</h3>
+                    <p>《绝世武神》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/ws.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.7-7.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/7-7.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/5.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：云哥</h3>
+                    <p>《武道至尊》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/zz.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.8-8.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/8-8.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/10.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：潇潇</h3>
+                    <p>《异世灵武天下》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/yslw.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.9-9.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div>
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/9-9.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="blue">
+            <div class="clearfix book_card">
+                <div class="left">
+                    <img class="tx" src="$!{rc.contextPath}/static/images/babyreading/9.png"/>
+                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+                </div>
+                <div class="right">
+                    <div>
+                    <h3>读书宝贝：誮惜颜</h3>
+                    <p>《炎武战神》</p>
+                    <div class="book">
+                        <img class="" src="$!{rc.contextPath}/static/images/babyreading/ywzs.jpg"/>
+                        <img src="$!{rc.contentPath}/static/images/babyreading/NO.10-10.png" alt="">
+                    </div>
+                    </div>
+                    <div class="reading">
+                        <div class="imgTen">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/NO.-blue.png" alt="">
+                            <img src="$!{rc.contentPath}/static/images/babyreading/10-10.png" alt="">
+                        </div>
+                        <div class="btn">进入伴读</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <div>
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.11</i>
+##                    </div>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>11</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <div>
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.12</i>
+##                    </div>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>12</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.13</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>13</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.14</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>14</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.15</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>15</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.16</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>16</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.17</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>17</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.18</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>18</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.19</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>19</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+##        <li class="blue">
+##            <div class="clearfix book_card">
+##                <div class="left">
+##                    <img class="tx" src="../img/7.jpg"/>
+##                    <img class="zbicon" src="$!{rc.contextPath}/static/images/onlive.png"/>
+##                </div>
+##                <div class="right">
+##                    <h3>读书宝贝：阿锐</h3>
+##                    <p>《阿凡提的故事》</p>
+##                    <div class="book">
+##                        <img class="" src="../img/7.jpg"/>
+##                        <i>NO.20</i>
+##                    </div>
+##                    <div class="reading">
+##                        <span><em>NO.</em><i>20</i></span>
+##                        <button type="button">进入伴读</button>
+##                    </div>
+##                </div>
+##            </div>
+##        </li>
+    </ul>
+</div>
+<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+<script src="${rc.contextPath}/static/js/babyreading/babybooks.js?$!application.getAttribute('/static/js/babyreading/babybooks.js')"></script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+#set($layout = '/layout/empty.vm')
+#parse("./user/user_info.vm")
+#if(${page.total} != 0)
+<div class="fans">
+    <table border="0" cellspacing="0" cellpadding="0" class="fans-list" width="1200">
+    #foreach($map in $page.data)
+        <tr>
+            <td width="100">
+                <div class="fans-headImg">
+                <img src="${map.headImg}"
+                    onclick="userInfo('${map.userId}')" 
+                    onerror="this.src='/static/images/user_cover.png'"class="fans-tx"/>
+                    #if($!{map.nobleCode} == 6) <img class="fansNobleImg" src="/static/images/nobleImages/shendian-right.png"> #end
+                    #if($!{map.nobleCode} == 5) <img class="fansNobleImg" src="/static/images/nobleImages/zi-right.png"> #end
+                    #if($!{map.nobleCode} == 4) <img class="fansNobleImg" src="/static/images/nobleImages/mofa-right.png"> #end
+                    #if($!{map.nobleCode} == 3) <img class="fansNobleImg" src="/static/images/nobleImages/hei-right.png"> #end
+                    #if($!{map.nobleCode} == 2) <img class="fansNobleImg" src="/static/images/nobleImages/long-right.png"> #end
+                    #if($!{map.nobleCode} == 1) <img class="fansNobleImg" src="/static/images/nobleImages/sheng-right.png"> #end
+                </div>
+            </td>
+            <td width="233"><em onclick="userInfo('${map.userId}')" >$!{map.userName}</em>
+	            #if(${map.sex} == 1)
+	               <img src="${rc.contextPath}/static/images/man.png" alt="" />
+	            #elseif(${map.sex} == 0)
+	               <img src="${rc.contextPath}/static/images/woman.png" alt="" />
+	            #end	            
+            </td>
+            <td>全站贡献值：<b>$!{map.contrib}</b></td>
+	       <input type="hidden" name="timestamp" value="$!{map.timestamp}">
+        </tr>
+    #end
+    </table>
+</div>
+#else
+    <p class="no-manage">加油哦, 您现在还没有粉丝撒~</p>
+#end
+#if($page && $!page.pageTotal > 1)
+    <div class="pager-wraaper textR fr">
+        <div class="page fl mr5">
+        ## 定义区间大小
+            #set($range= 4 )
+            #set($nextPage = $!page.pageIndex + 1)
+            #set($prePage = $!page.pageIndex - 1)
+        ## 如果当前页大于1 显示上一页
+            #if($!page.pageIndex > 1)
+                <a class="pre " href="javascript:void(0);" onclick="setFollowerTable(0, $prePage)">上一页</a>
+            #else
+                <a class="pre disable" href="javascript:void(0);"></a>
+            #end
+        ## 如果总页数大于2页   默认显示 1、2页  否则默认显示1页
+            #*#if($!page.pageIndex > 2)
+                <a href="javascript:void(0);" onclick="setFollowerTable(1)">1</a>
+                <a href="javascript:void(0);" onclick="setFollowerTable(2)">2</a>
+            #end
+
+            #if($!page.pageIndex == 2)
+                <a href="javascript:void(0);" onclick="setFollowerTable(1)">1</a>
+            #end*#
+
+        ##判断前置.. 如果当前页大于 1+区间  显示..
+            #*#set($pageIndexTemp= $range +1)
+            #if($!page.pageIndex > 3)
+                <span>...</span>
+            #end*#
+
+        ## 遍历  当前页 至区间末端 的页码
+            #*#set($temp = $!page.pageIndex+$range)
+            #if($temp > $!page.pageTotal)
+                #set($temp = $!page.pageTotal)
+            #end
+            #foreach($i  in [$!page.pageIndex..$temp])
+                #if($i == $!page.pageIndex )
+
+                    #if($!{page.total} > 10 )
+                        <a class="active" href="javascript:void(0);" onclick="setFollowerTable($i)">$i</a>
+                    #end
+
+                #else
+                    <a href="javascript:void(0);" onclick="setFollowerTable($i)">$i</a>
+                #end
+            #end*#
+
+        ## 设置后端.. 如果区间末页 小于最终页 显示.....
+            #*#if($page.pageTotal - $page.pageIndex > $range)
+                <span>...</span>
+            #end*#
+        ##设置显示下一页
+            #if($page.pageTotal > $page.pageIndex)
+                <a class="next_page" href="javascript:void(0);" onclick="setFollowerTable(1, $nextPage)">下一页</a>
+            #else
+                <a class="next_page disable" href="javascript:void(0);"></a>
+            #end
+        </div>
+    </div>
+#end

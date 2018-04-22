@@ -1,0 +1,79 @@
+#set($page_title="我的房管")
+#set($head_nav=5)
+<div class="management">
+    <div id="adminTable"></div>
+</div>
+<div class="shadowUp"></div>
+<div class="sure_div">
+    <p></p>
+    <div class="sure_inp"><input type="button" value="确定" /></div>
+</div>
+<script>
+    $(function(){
+   	   $(".sure_inp input").click(function(){
+   	        $(".sure_div p").text("");
+   	        $(".sure_div ,.shadowUp").hide();
+   	    })
+   	    
+    	setAdminTable(1);   	   
+    	
+    });
+    
+    function setAdminTable(pageNo){
+    	$.ajax({
+            type: "POST",
+            url: "/anchor/adminTable",
+            data: {"pageIndex": pageNo},
+            dataType: "html",
+            success: function (result) {
+                if (result != null) {
+                    $("#adminTable").html(result);
+                }
+            }
+        });
+    }
+    
+    function ctrlAdmin(ctrlBtn, userId){
+    	var text = $(ctrlBtn).val();
+    	if(text == "解除房管"){
+    		removeAdmin(ctrlBtn, userId);
+    	} else {
+    		setAdmin(ctrlBtn, userId);
+    	}    	
+    }
+    
+    
+    function removeAdmin(ctrlBtn, userId){
+    	$.ajax({
+            type : "POST",
+            url : "/pc/user/removeAdmin",
+            data : {
+                "userId" : userId
+            },
+            dataType : "json",
+            success : function(returnData) {
+                if (returnData.data.result == 1) {
+                	$(ctrlBtn).val("设为房管");
+                	$(ctrlBtn).attr("class", "active");
+                }
+            }
+        });
+    }
+    
+    function setAdmin(ctrlBtn, userId){
+        $.ajax({
+            type : "POST",
+            url : "/pc/user/setAdmin",
+            data : {
+                "userId" : userId
+            },
+            dataType : "json",
+            success : function(returnData) {
+                if (returnData.data.result == 1) {
+                	$(ctrlBtn).val("解除房管");
+                	$(ctrlBtn).attr("class", "");
+                }
+            }
+        });
+    }
+</script>

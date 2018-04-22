@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           ">
+
+    <context:component-scan base-package="com.chineseall.iwanvi.*"></context:component-scan>
+
+    <context:property-placeholder location="classpath*:config/*.properties"/>
+
+    <import resource="classpath*:spring/application-db.xml"/>
+    
+    <import resource="classpath*:spring/application-redis.xml"/>
+    
+    <!-- 线程池 -->
+    <import resource="classpath*:spring/application-threadpool.xml"/>
+    
+    <!-- 事务控制 -->
+    <import resource="classpath*:spring/application-transaction.xml"/>
+
+    <!-- 加载扩展属性
+    <import resource="classpath*:spring/application-extendProperties.xml"/>
+    -->
+
+    <!--加载扩展属性-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath*:config/localExtend.properties">
+         <!--   <list>
+                <value>classpath*:config/localExtend.properties</value>
+            </list> -->
+        </property>
+    </bean>
+</beans>

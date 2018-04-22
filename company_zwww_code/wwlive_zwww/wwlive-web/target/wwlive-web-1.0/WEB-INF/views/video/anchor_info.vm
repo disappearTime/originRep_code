@@ -1,0 +1,27 @@
+#set($layout = '/layout/empty.vm')
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no;email=no">
+    <title>主播个人信息</title>
+    <link href="${rc.contextPath}/static/css/live.css" type="text/css" rel="stylesheet">
+</head>
+<body class="bg-f3">
+    <div class="anchor-data">
+        <ul>
+            <li><span>直播间号：</span><em>$!{anchor.roomNum}</em></li>
+            <li><span>年龄：</span><em>$!{anchor.age}</em></li>
+            <li><span>星座：</span><em>$!{anchor.zodiac}</em></li>
+        </ul>
+        <p>公告：</p>
+        <p class="anchor-notice">$!{anchor.notice}</p>
+    </div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/echo.min.js"></script>
+
+</body>
+
+</html>

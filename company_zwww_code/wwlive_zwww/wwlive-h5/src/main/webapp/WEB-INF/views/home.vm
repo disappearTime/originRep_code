@@ -1,0 +1,197 @@
+#set($page_title="cps流量池")
+
+#define($cssblock)
+<link rel="stylesheet" href="#springUrl('')/public/css/style.dev.css">
+#end
+
+#define($jsblock)
+
+<script src="//misc.360buyimg.com/jdf/lib/jquery-1.6.4.js"></script>
+<!--[if lte IE 7]><script type="text/javascript" src="//static.360buyimg.com/jshop/common/jquery/json2.js"></script><![endif]-->
+<script type="text/javascript" src="//misc.360buyimg.com/??jdf/1.0.0/unit/base/1.0.0/base.js"></script>
+<script type="text/javascript" src="//misc.360buyimg.com/product/good_things/1.0.0/widget/jshop-header-footer/jshop-header-footer.js" source="widget"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/underscore.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/focus.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/focusExtra.js"></script>
+
+<script type="text/javascript" src="#springUrl('')/public/js/2016/head_seatch.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/brand.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/brandpic.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/cps-base.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/discountEveryday.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/floor.js"></script>
+<script type="text/javascript" src="#springUrl('')/public/js/2016/hot.js"></script>
+
+#end
+
+<!--顶部通栏-->
+<div id="top-banner" clstag="firsttype|keycount|cps_topbanner|topbanner">
+    <div class="w" style="">
+        <a href="javascript:;" id="topbanner-close"></a>
+    </div>
+</div>
+
+<div class="w">
+    <div id="logo-2014" clstag="firsttype|keycount|cps_logo|relogo">
+        <a href="//www.jd.com/" class="logo">京东</a>
+    </div>
+    <div class="search_2015" id="search_2015" clstag="firsttype|keycount|cps_search|search_box">
+        <ul id="ma_shelper" class="hide"></ul>
+        <div class="search_box_2015 clearfix">
+            <div class="magnifier"></div>
+            <input type="text" class="txt" />
+            <a href="javascript:void(0);" class="btn">搜索</a>
+        </div>
+        <ul class="main_nav">
+
+        </ul>
+    </div>
+    <div id="settleup-2014" class="dorpdown" clstag="firsttype|keycount|cps_cart|cart">
+        <div class="cw-icon">
+            <i class="ci-left"></i>
+            <i class="ci-right">&gt;</i>
+            <a target="_blank" href="http://cart.jd.com/cart/cart.html">我的购物车</a>
+        </div>
+        <div class="dorpdown-layer">
+            <div class="spacer"></div>
+            <div id="settleup-content">
+                <span class="loading"></span>
+            </div>
+        </div>
+    </div>
+    <span class="clr"></span>
+</div>
+
+<!--类目-->
+#parse('inc/_category.vm')
+
+<!-- 焦点图 -->
+<div id="focus">
+    <div class="slider">
+
+    </div>
+</div>
+
+<!--首焦右侧-->
+<div class="w" id="focus-extra">
+
+</div>
+
+<div class="lazy-fn-wrap clearfix">
+    <div class="w lazy-fn lazy-fn-done">
+        <div class="m clearfix">
+
+        </div>
+    </div>
+</div>
+
+<!-- 京东大牌图文 -->
+<div class="w floor mt12 mb12" id="brand" data-elevator="大牌">
+
+</div>
+
+<!-- 品牌图标 -->
+<div class="w floor" id="brandpic" style="background: none">
+
+</div>
+
+<!-- 天天约惠 -->
+<div class="w floor mt12" id="discountEverydayMod" data-elevator="约惠">
+
+</div>
+
+<!-- 家电楼层 -->
+<div class="w floor mb5" id="electron" data-elevator="家电">
+
+</div>
+<script>
+    $(function() {
+        cpsFloor({
+            reqUrl:'/index/floor/electron',
+            templateType:'floor',
+            container:'electron',
+            clstag:{
+                "clstagList":[
+                    'firsttype|keycount|cps_1F|left-Npictext',
+                    'firsttype|keycount|cps_1F|left-pictext',
+                    'firsttype|keycount|cps_1F|goods',
+                    'firsttype|keycount|cps_1F|right-topic',
+                    'firsttype|keycount|cps_1F|right-query'
+                ]
+            }
+        });
+    })
+</script>
+
+<!-- 手机楼层 -->
+<div class="w floor mb5" id="phone" data-elevator="手机">
+
+</div>
+<script>
+    $(function() {
+        cpsFloor({
+            reqUrl:'/index/floor/phone',
+            templateType:'floor2',
+            container:'phone',
+            clstag:{
+                "clstagList":[
+                    'firsttype|keycount|cps_2F|left-topic',
+                    'firsttype|keycount|cps_2F|left-query',
+                    'firsttype|keycount|cps_2F|goods',
+                    'firsttype|keycount|cps_2F|right-Npictext',
+                    'firsttype|keycount|cps_2F|right-pictext'
+                ]
+            }
+        });
+    })
+</script>
+
+<!-- 服饰楼层 -->
+<div class="w floor mb5" id="clothes" data-elevator="服饰">
+
+</div>
+<script>
+    $(function() {
+        cpsFloor({
+            reqUrl:'/index/floor/clothes',
+            templateType:'floor',
+            container:'clothes',
+            clstag:{
+                "clstagList":[
+                    'firsttype|keycount|cps_3F|left-Npictext',
+                    'firsttype|keycount|cps_3F|left-pictext',
+                    'firsttype|keycount|cps_3F|goods',
+                    'firsttype|keycount|cps_3F|right-topic',
+                    'firsttype|keycount|cps_3F|right-query',
+                ]
+            }
+        });
+    })
+</script>
+
+<!-- 热卖楼层 -->
+<div class="bg-grayf5">
+    <div class="w floor lazy-fn mt12 mb12" id="hot" data-elevator="热卖">
+
+    </div>
+</div>
+
+<div id="elevator" class="elevator" clstag="firsttype|keycount|cps_right|nav">
+
+</div>
+
+<script type="text/javascript" src="//wl.jd.com/wl.js"></script>
+<script type="text/javascript">
+    // 直接printf json
+    globalScope = {};
+    globalScope.focusData = $.parseJSON('${bannerJson}');
+    globalScope.focusExtraData = $.parseJSON('${focusExtraJson}');
+
+    // debug
+    globalScope.debug = {
+        url: '',
+        dataType:'json'
+    }
+</script>
+
+#parse('inc/_footer.vm')

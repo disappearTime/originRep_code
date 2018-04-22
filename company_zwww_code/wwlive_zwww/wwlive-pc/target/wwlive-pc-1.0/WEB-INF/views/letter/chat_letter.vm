@@ -1,0 +1,122 @@
+#set($layout = '/layout/empty.vm')
+<input type="hidden" id="noRead" value="$!{notRead}"/>
+<div class="infor-con">
+	<h3 class="infor-title">
+		<span>我收到的消息</span>
+	</h3>
+	#if(${page.total} != 0)
+		<ul class="infor-list">
+    		#foreach($msg in $page.data)
+			<li style="position: relative;">
+                <img src="$!{msg.headImg}" alt="" width="80" onerror="this.src='/static/images/user_cover.png'" onclick="userInfo('${msg.sendId}')" />
+                #if($!{msg.nobleCode} == 6) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/shendian-right.png"> #end
+                #if($!{msg.nobleCode} == 5) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/zi-right.png"> #end
+                #if($!{msg.nobleCode} == 4) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/mofa-right.png"> #end
+                #if($!{msg.nobleCode} == 3) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/hei-right.png"> #end
+                #if($!{msg.nobleCode} == 2) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/long-right.png"> #end
+                #if($!{msg.nobleCode} == 1) <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="/static/images/nobleImages/sheng-right.png"> #end
+##                #if(1==1)
+##                    <img style="position: absolute;bottom: 32px;left: 80px;height: 25px;" src="${rc.contextPath}/static/images/localRich.png" alt="">
+##                #end
+				<div class="infor-detail">
+					<h3 class="user-name">
+						#if($!msg.acctType == 1)
+                            <b class='b-cg'>超管</b>
+                        #end
+                        #if($!msg.isAdmin == 1)
+                            <b class='b-fg'>房管</b>
+                        #end
+                        #if($!msg.acctType == 1 || $!msg.isAdmin == 1)
+						  <span style="color:red" onclick="userInfo('${msg.sendId}')">
+                              #if(${msg.medals}!="" && ${msg.medals}!= "undefined" && ${msg.medals.size()}>0 && ${msg.medals} != "null")
+                                  #foreach($item in ${msg.medals})
+                                      #if($item == "土豪勋章")
+                                          <img class="localRich" src="${rc.contextPath}/static/images/localRich.png" alt="">
+                                      #end
+                                  #end
+                              #end
+						      $!{msg.userName}
+						  </span>
+						#else 
+						  <span onclick="userInfo('${msg.sendId}')">
+                              #if(${msg.medals}!="" && ${msg.medals}!= "undefined" && ${msg.medals.size()}>0 && ${msg.medals} != "null")
+                                  #foreach($item in ${msg.medals})
+                                      #if($item == "土豪勋章")
+                                          <img class="localRich" src="${rc.contextPath}/static/images/localRich.png" alt="">
+                                      #end
+                                  #end
+                              #end
+						      $!{msg.userName}
+						  </span>
+						#end
+						<em>$!{msg.createTime}</em>
+					</h3>
+					<p>$!{msg.content}</p>
+				</div>
+			</li>
+			#end
+		</ul>
+	#end
+</div>
+#if($page && $!page.pageTotal > 1)
+<div class="data-table-pages clearfix">
+    <div class="pager-wraaper textR fr">
+        <div class="page fl mr5">
+        ## 定义区间大小
+            #set($range= 4 )
+            #set($nextPage = $!page.pageIndex + 1)
+            #set($prePage = $!page.pageIndex - 1)
+        ## 如果当前页大于1 显示上一页
+            #if($!page.pageIndex > 1)
+                <a class="pre " href="javascript:void(0);" onclick="showLetter($!{page.id}, $prePage, $!{page.total})">上一页</a>
+            #else
+                <a class="pre disable" href="javascript:void(0);"></a>
+            #end
+        ## 如果总页数大于2页   默认显示 1、2页  否则默认显示1页
+            #if($!page.pageIndex > 2)
+                <a  href="javascript:void(0);" onclick="showLetter($!{page.id}, 1, $!{page.total})">1</a>
+                <a  href="javascript:void(0);" onclick="showLetter($!{page.id}, 2, $!{page.total})">2</a>
+            #end
+
+            #if($!page.pageIndex == 2)
+                <a  href="javascript:void(0);" onclick="showLetter($!{page.id}, 1, $!{page.total})">1</a>
+            #end
+
+        ##判断前置.. 如果当前页大于 1+区间  显示..
+            #set($pageIndexTemp= $range +1)
+            #if($!page.pageIndex > 3)
+                <span>...</span>
+            #end
+
+        ## 遍历  当前页 至区间末端 的页码
+            #set($temp = $!page.pageIndex+$range)
+            #if($temp > $!page.pageTotal)
+                #set($temp = $!page.pageTotal)
+            #end
+            #foreach($i  in [$!page.pageIndex..$temp])
+                #if($i == $!page.pageIndex )
+
+                    #if($!{page.total} > 10 )
+                        <a class="active" href="javascript:void(0);" onclick="showLetter($!{page.id}, $i, $!{page.total})">$i</a>
+                    #end
+
+                #else
+                    <a  href="javascript:void(0);" onclick="showLetter($!{page.id}, $i, $!{page.total})">$i</a>
+                #end
+            #end
+
+        ## 设置后端.. 如果区间末页 小于最终页 显示.....
+            #if($page.pageTotal - $page.pageIndex > $range)
+                <span>...</span>
+            #end
+        ##设置显示下一页
+            #if($page.pageTotal > $page.pageIndex)
+                <a class="next_page" href="javascript:void(0);" onclick="showLetter($!{page.id}, $nextPage, $!{page.total})">下一页</a>
+            #else
+                <a class="next_page disable" href="javascript:void(0);"></a>
+            #end
+        </div>
+    </div>
+</div>
+
+#end

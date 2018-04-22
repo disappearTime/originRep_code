@@ -1,0 +1,239 @@
+#set($page_title="贵族中心")
+<link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" type="text/css" rel="stylesheet">
+<link href="${rc.contextPath}/static/css/nobleCenter/nobleCenter.css?$!application.getAttribute('/static/css/nobleCenter/nobleCenter.css')" type="text/css" rel="stylesheet">
+<div class="nobleCenter">
+    <div class="nobleContent1">
+        <div class="nobleTab"> <!-- 骑士tab -->
+            <ul class="nobleTabList bor-bott">
+                <li><span index="0">圣骑</span></li>
+                <li><span index="1">龙骑</span></li>
+                <li><span index="2">黑骑</span></li>
+                <li><span index="3">魔法</span></li>
+                <li><span index="4">紫荆</span></li>
+                <li><span index="5">神殿</span></li>
+            </ul>
+        </div>
+        <div class="nobleLogo">  <!-- 骑士logo图片 -->
+            <img class="nobleLogoImg" src="${rc.contextPath}/static/images/nobleCenter/sheng.png">
+        </div>
+    </div>
+    <div class="nobleLogoName"> <!-- 骑士名称图片 -->
+        <img src="${rc.contextPath}/static/images/nobleCenter/shengart.png">
+    </div>
+    <div class="timeLimit">
+        <p class="msqq">您的专属小秘QQ：3075881783，添加Ta,Ta将为您服务！</p>
+        <ul class="nobleTl">
+            <li class="nobleqs"><em>圣</em>骑士有效期至<i></i></li>
+            <li class="nobleDyq">抵用券：<em></em>元(有效期至<i></i>)</li>
+        </ul>
+    </div>
+    <div class="noblePrivileges">  <!-- 骑士特权 -->
+        <ul>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/xunzhang.png" width="30">
+                <span>贵族勋章</span>
+                <div class="introduce">
+                    <p class="noblename">圣骑士</p>
+                    <p>-最显赫的身份勋章</p>
+                </div>
+            </li>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/dengchang.png" width="30">
+                <span>华丽登场</span>
+                <div class="introduce">
+                    <p>贵族专属进场动效，</p>
+                    <p>万人行注目礼</p>
+                </div>
+            </li>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/gift.png" width="30">
+                <span>专属礼物</span>
+                <div class="introduce">
+                    <p>特别的礼物给特别</p>
+                    <p>的Ta，主播最爱</p>
+                </div>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/tongzhi.png" width="30">
+                <span>开通通知</span>
+                <div class="introduce">
+                    <p>开通时，房间内飘</p>
+                    <p>屏通知</p>
+                </div>
+            </li>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/zuoxi.png" width="30">
+                <span>贵宾坐席</span>
+                <div class="introduce">
+                    <p>房间内贵宾坐席</p>
+                    <p>力压众人</p>
+                </div>
+            </li>
+            <li>
+                <img src="${rc.contextPath}/static/images/nobleCenter/danmu.png" width="30">
+                <span>荣耀弹幕</span>
+                <div class="introduce">
+                    <p>震慑全场，你的喊话</p>
+                    <p>就要与众不同</p>
+                </div>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <img class="fanzuan" src="${rc.contextPath}/static/images/nobleCenter/fanzuan.png" width="30">
+                <span>开通返钻</span>
+                <div class="introduce">
+                    <p>从此走向一掷千金</p>
+                    <p>的人生巅峰</p>
+                </div>
+            </li>
+            <li>
+                <img class="youyan" src="${rc.contextPath}/static/images/nobleCenter/youyan-gray.png" width="30">
+                <span>有颜有料</span>
+                <div class="introduce">
+                    <p>尊贵头像卡片，以卡</p>
+                    <p>识人，让别人仰望</p>
+                </div>
+            </li>
+            <li>
+                <img class="caokong" src="${rc.contextPath}/static/images/nobleCenter/caokong-gray.png" width="30">
+                <span>操控全场</span>
+                <div class="introduce">
+                    <p>发射火箭，送你</p>
+                    <p>最爱的主播秒上热门</p>
+                </div>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <img class="zhaogao" src="${rc.contextPath}/static/images/nobleCenter/zhaogao-gray.png" width="30">
+                <span>昭告天下</span>
+                <div class="introduce">
+                    <p>开通时全站房间内</p>
+                    <p>飘屏广播</p>
+                </div>
+            </li>
+            <li>
+                <img class="xiaomi" src="${rc.contextPath}/static/images/nobleCenter/xiaomi-gray.png" width="30">
+                <span>专属小秘</span>
+                <div class="introduce">
+                    <p>拥有专属客服为您</p>
+                    <p>一对一贴心服务</p>
+                </div>
+            </li>
+            <li>
+                <img class="changyan" src="${rc.contextPath}/static/images/nobleCenter/changyan-gray.png" width="30">
+                <span>畅所欲言</span>
+                <div class="introduce">
+                    <p>不受房管禁言，</p>
+                    <p>你任性，凡人认命</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="white-bg">
+        <div class="nobleBtn" onclick="kaitong()">立即开通</div>
+    </div>
+    <div class="noblePayContainer"></div>
+    <div class="noblePay1 noblePay">
+        <img onclick="hidenoblePay()" class="pay-close" src="${rc.contextPath}/static/images/nobleCenter/noble-close.png" height="21" width="21">
+        <p class="money">开通<span class="nobleType"></span>：<span class="line-sp"></span>&nbsp;&nbsp;<span class="noblePrice"></span></p>
+        <p class="diyong"></p>
+        <p class="fanzuandiyong"><i class="ktfont">后续</i><span class="jin">仅<em class="discountprice palered" ></em><i class="palered">/月</i></span>，返<span class="givediamond"></span>钻<i class="zsfont">+</i><span class="givediyong"></span>抵用券</p>
+        <div class="payType">
+            <div class="weixinPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cz-wx.png" width="26">微信
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+            <div class="zhifubaoPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cx-zfb.png" width="26">支付宝
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+        </div>
+        #*<div class="zidongCheck"><img src="${rc.contextPath}/static/images/nobleCenter/check.png">到期自动续费一个月（<span class="xufei"></span>元/月）</div>*#
+        #*<p class="zidongCheck-p">若需要取消自动续费，请前往微信中的支付设置进行取消</p>*#
+        <div class="noblePayBtn" onclick="kaitongPay()">立即开通</div>
+    </div>
+    <div class="noblePay2 noblePay">
+        <img onclick="hidenoblePay()" class="pay-close" src="${rc.contextPath}/static/images/nobleCenter/noble-close.png" height="21" width="21">
+        #*#if( 1==2 )*##*非首次充值*##*
+            <p class="money">开通<span class="nobleType"></span>：<span class="line-sp">120000元/月</span>&nbsp;&nbsp;<span class="noblePrice"></span></p>
+            <p class="diyong">已使用：<span class="line-sp"></span></p>
+            <p class="fanzuandiyong">使用抵用券开通赠送<span class="givediamond"></span>钻石及<span class="givediyong"></span>抵用券</p>
+        #else
+            <p class="money">开通<span class="nobleType"></span>：<span class="line-sp"></span><span class="noblePrice"></span></p>
+            <p class="diyong">开通立返<span class="backdiamond"></span>钻石，<span class="backdiyong"></span>抵用券</p>
+            <p class="fanzuandiyong">使用抵用券开通赠送 <span class="givediamond"></span> 钻石及<span class="givediyong"></span>抵用券</p>
+        #end*#
+        <p class="money">开通<span class="nobleType"></span>：<span class="line-sp"></span>&nbsp;&nbsp;<span class="noblePrice"></span></p>
+        <p class="diyong">#*开通立返<span class="backdiamond"></span>钻石，<span class="backdiyong"></span>抵用券*#</p>
+        <p class="fanzuandiyong"><i class="ktfont">后续</i><span class="jin">仅<em class="discountprice palered" ></em><i class="palered">/月</i></span>，返<span class="givediamond"></span>钻<i class="zsfont">+</i><span class="givediyong"></span>抵用券</p>
+        <div class="payType">
+            <div class="weixinPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cz-wx.png" width="26">微信
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+            <div class="zhifubaoPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cx-zfb.png" width="26">支付宝
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+        </div>
+        <div class="limit">单笔最高限额<span></span>元</div>
+        <div class="noblePayBtn" onclick="kaitongPay()">立即开通</div>
+    </div>
+    <div class="noblePay3 noblePay">
+        <img onclick="hidenoblePay()" class="pay-close" src="${rc.contextPath}/static/images/nobleCenter/noble-close.png" height="21" width="21">
+        <p class="money">开通神殿骑士：<span class="line-sp"></span>&nbsp;&nbsp;<span class="noblePrice"></span></p>
+        <p class="diyong"></p>
+        <p class="fanzuandiyong"><b class="ktfont">后续</b><span class="jin" >仅<em class="discountprice palered" ></em><b class="palered">/月</b></span>，返<span class="givediamond"></span>钻<b class="zsfont">+</b><span class="givediyong"></span><i class="hidd">元</i>神殿骑士抵用券</p>
+        <div class="payType">
+            <div class="weixinPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cz-wx.png" width="26">微信
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+            <div class="zhifubaoPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/cx-zfb.png" width="26">支付宝
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+            <div class="zuanshiPay"><img class="payLogo" src="${rc.contextPath}/static/images/nobleCenter/diamond.png" width="26">钻石
+                <img class="noblePay-choose" src="${rc.contextPath}/static/images/nobleCenter/cz-choose.png">
+            </div>
+        </div>
+        <div class="limit">单笔最高限额<span></span>元</div>
+        <div class="noblePayBtn" onclick="kaitongPay()">立即开通</div>
+    </div>
+    #*<div class="uploadHeadImg">
+        <img onclick="hidenoblePay()" class="pay-close" src="${rc.contextPath}/static/images/nobleCenter/noble-close.png" height="21" width="21">
+        <p class="headImg-p">亲，您还没有头像呢，主播更喜欢“有头有脸”的人呦，快点去上传美照吧</p>
+        <div class="uploadBtn" onclick="uploadHeadImg()">上传头像</div>
+    </div>*#
+    <div class="nobleToast"><img src="$!{rc.contextPath}/static/images/nobleCenter/sure.png" alt=""><i></i></div>
+    <div class="errorToast">钻石不够</div>
+    <div class="nobleToast-loading">
+        <div class="noblespinner">
+            <div class="noblespinner-container noblecontainer1">
+                <div class="noblecircle1"></div>
+                <div class="noblecircle2"></div>
+                <div class="noblecircle3"></div>
+                <div class="noblecircle4"></div>
+            </div>
+            <div class="noblespinner-container noblecontainer2">
+                <div class="noblecircle1"></div>
+                <div class="noblecircle2"></div>
+                <div class="noblecircle3"></div>
+                <div class="noblecircle4"></div>
+            </div>
+            <div class="noblespinner-container noblecontainer3">
+                <div class="noblecircle1"></div>
+                <div class="noblecircle2"></div>
+                <div class="noblecircle3"></div>
+                <div class="noblecircle4"></div>
+            </div>
+        </div>
+        页面正在加载中，请稍候
+    </div>
+    #foreach($param in ${params.keySet()})
+        <input type="hidden" id="$param" value="${params.get($param)}">
+    #end
+    <input type="hidden" id="web" value="${rc.contextPath}">
+    <input type="hidden" value='$!{nobleEndTime}' id="nobleTime">
+</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/nobleCenter/noblecenter.js?$!application.getAttribute('/static/js/nobleCenter/noblecenter.js')"></script>

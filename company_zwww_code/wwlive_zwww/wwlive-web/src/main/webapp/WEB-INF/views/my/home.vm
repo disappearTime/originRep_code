@@ -1,0 +1,104 @@
+#set($page_title="我的")
+<div class="userMyWrap">
+    <div class="userTxBg">
+        <img class="blur" src="$!{headImg}" alt="" onerror="this.src='${rc.contextPath}/static/images/userDefaultTxBg.png'">
+        <div class="userMyMes">
+            <img onclick="toEditFile()" class="uerMyTx" src="$!{headImg}" onerror="this.src='${rc.contextPath}/static/images/user_cover.png'"/>
+            <p>
+                <i id="userName">$!{userName}</i>
+                #*<img src="${rc.contextPath}/static/images/zb_cg.png" alt="" />*##*超管*#
+                #if(${sex}==0)#*性别*#
+                    <img data-sex="0" class="sexold" src="${rc.contextPath}/static/images/women.png" alt="" />
+                #elseif(${sex}==1)
+                    <img data-sex="1" class="sexold" src="${rc.contextPath}/static/images/mans.png" alt="" />
+                #else
+                #end
+
+            </p>
+            <div class="userMyNum">
+                <div>
+                    <p id="myfollowNum">
+                        #set($gz = $!{followNum})
+                        #if($gz && $gz!="" && $gz!='null' && $gz!= 'undefined')
+                            $gz
+                        #else
+                            0
+                        #end
+                    </p>
+                    <p>关注数</p>
+                </div>
+                <div>
+                    <p id="mycontrib">
+                        #set($gxz = $!{contrib})
+                        #if($gxz && $gxz!="" && $gxz!='null' && $gxz!= 'undefined')
+                            $gxz
+                        #else
+                            0
+                        #end
+                    </p>
+                    <p>贡献值</p>
+                </div>
+                <div>
+                    <p id="myrank">
+                        #set($ph = $!{rank})
+                        #if($ph && $ph!="" && $ph!='null' && $ph!= 'undefined')
+                            $ph
+                        #else
+                            0
+                        #end
+                    </p>
+                    <p>全站排行</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="topLine"></div>
+    <ul>
+        <li onclick="chage()"><span class="leftleft"></span><span class="leftTip"><img src="${rc.contextPath}/static/images/userRecharge.png"/></span><span class="fontTip">充值</span><span class="rightTip">余额
+            <em id="diamonds">#if($!{diamond}) #set($strDiamond = $diamond + "") #set($tmp=$strDiamond.replace(".0","")) $!tmp #else 0 #end</em>
+            <img class="diamondNum" src="${rc.contextPath}/static/images/userDiamonds.png"/>
+            <img class="backTip" src="${rc.contextPath}/static/images/back11.png"/></span>
+        </li>
+        <li onclick="toconsume();"><span class="leftleft"></span><span class="leftTip"><img src="/static/images/userRecord.png"/></span><span class="fontTip">消费记录</span><span class="rightTip"><img class="backTip" src="/static/images/back10.png"/></span></li>
+        #*#if($!{origin} != "dl")
+            <li onclick=toNoble()><span class="leftleft"></span><span class="leftTip"><img src="/static/images/noblecenter.png"/></span><span class="fontTip">贵族中心</span><span class="rightTip"><img class="backTip" src="/static/images/back13.png"/></span></li>
+        #end*#
+        #*独立版也显示贵族中心*#
+        <li class="noble_center" onclick=toNoble()><span class="leftleft"></span><span class="leftTip"><img src="/static/images/noblecenter.png"/></span><span class="fontTip">贵族中心</span><span class="rightTip"><img class="backTip" src="/static/images/back13.png"/></span></li>
+        #if($!{origin} == "dl")#*独立版才显示个人资料、设置*#
+            <li class="personData" onclick="toEditFile();"><span class="leftleft"></span><span class="leftTip"><img src="/static/images/userPeosonData.png"/></span><span class="fontTip">个人资料</span><span class="rightTip"><i class="bindWerixinNow">绑定微信</i><img style="margin-left: 16px;" class="backTip" src="/static/images/back12.png"/></span></li>
+        #end
+        <li onclick="toBeAnc()"><span class="leftleft"></span><span class="leftTip"><img src="/static/images/toBeAnchor.png"/></span><span class="fontTip">成为主播</span><span class="rightTip"><img class="backTip" src="/static/images/back13.png"/></span></li>
+        #if( $!{origin} == "dl")
+            <li class="setSingle" onclick="toSetting()"><span class="leftleft"></span><span class="leftTip"><img src="/static/images/userSetup.png"/></span><span class="fontTip">设置</span><span class="rightTip">
+                #if($!{isNewVersion}==1)
+                    <i class="isNewVersion1">有新版本</i>
+                #end
+                    <img class="backTip" src="/static/images/back14.png"/></span>
+            </li>
+        #end
+    </ul>
+    #foreach($param in ${params.keySet()})
+        <input type="hidden" id="$param" value="${params.get($param)}">
+    #end
+    <input type="hidden" id="isNew" value="$!{isNewVersion}">
+    <input type="hidden" id="web" value="$!{rc.contextPath}">
+    <input type="hidden" id="is_dl" value="$!{origin}">
+##    <div class="bindWeixinBg"></div>
+##    <div class="bindWeixin">
+##        <p class="chargeSuccess">充值成功</p>
+##        <p class="bind-content">为保证您的账户安全，请立即绑定微信</p>
+##        <div class="bindWeixinBtns">·
+##            <span class="span1">取消</span>
+##            <span class="span2">立即绑定</span>
+##        </div>
+##    </div>
+    <div class="bindWeixinTip">为确保账户安全，<a onclick="toEditFile();">点击</a>绑定微信<span class="shuline"></span>
+        <img onclick="hideBindTip()" class="iconWechatClosed" src="${rc.contextPath}/static/images/icon_bound_wechat_closed.png">
+    </div>
+</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/recharge.js?$!application.getAttribute('/static/js/my/recharge.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/home.js?$!application.getAttribute('/static/js/my/home.js')"></script>
+

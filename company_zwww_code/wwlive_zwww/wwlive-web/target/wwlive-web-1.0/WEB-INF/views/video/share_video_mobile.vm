@@ -1,0 +1,144 @@
+#set($layout = '/layout/empty.vm')
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no;email=no">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0"> 
+<title>$!{shareModel.videoName}</title>
+<link href="${rc.contextPath}/static/css/video.css?$!application.getAttribute('/static/css/video.css')" rel="stylesheet">
+<link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" type="text/css" rel="stylesheet">
+<!--rem布局js-->
+<script src="${rc.contextPath}/static/js/rrr.js"></script>
+<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+<!-- <script src="${rc.contextPath}/static/js/video.js"></script>
+<script src="${rc.contextPath}/static/js/videojs-live.js"></script> -->
+<link rel="stylesheet"
+	href="${rc.contextPath}/static/css/wechat-shade.css?$!application.getAttribute('/static/css/wechat-shade.css')">
+<script type="text/javascript">
+	function downloadApp() {
+		var ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == "micromessenger") {
+			$("#main_content").css("display", "none");
+			$("#wechat_shade").css("display", "block");
+		} else {
+			location.href = "${shareModel.downloadLink}";
+		}
+	}
+</script>
+</head>
+<body>
+	$response.setHeader("Cache-Control","no-store")
+	$response.setHeader("Pragrma","no-cache") 
+	$response.setDateHeader("Expires",0) 
+	<div id="wechat_shade" style="background-color: #d7eefe; display: none">
+		<div class="wx-content">
+			<div class="wx-bg">
+				<div class="wx-font">
+					<p>
+						我很努力，但是无奈微信不让下载<br> 别担心，点击<b>右上角</b><br> 选择&nbsp;“<b>在浏览器打开</b>”&nbsp;就能下载啦
+					</p>
+				</div>
+			</div>
+			<div class="wx-pic">
+				<img src="/static/images/wx-02.png" alt="">
+			</div>
+		</div>
+	</div>
+	<div id="main_content">
+		<div class="more_live">
+			看更多直播<a href="javascript:;" onclick="downloadApp();"
+				class="free_book">下载星宇直播</a>
+		</div>
+		<div class="direct">
+			#if(${shareModel.videoStatus} != 1 && ${shareModel.videoStatus} != 4)
+			<img src="${rc.contextPath}/static/images/vedio.png" alt="" />
+			<div class="live_end">
+				<div class="end_cover">
+					<img src="${shareModel.headImg}" alt="" />
+					<p class="affiche">$!{shareModel.notice}</p>
+				</div>
+			</div>
+			#else
+			<!-- <video id="my_video_1" class="video-js vjs-default-skin"
+				controls="controls" style="width: 100%" height="250" data-setup='{}'>
+				<source src="$!{shareModel.playAddress}"
+					type="application/x-mpegURL">
+			</video> -->
+			<input type="hidden" id="source" value="$!{shareModel.playAddress}">
+			<input type="hidden" id="videoStatus" value="$!{shareModel.videoStatus}">
+			<div id="a1"></div>
+			<script type="text/javascript" src="${rc.contextPath}/static/ckplayer/ckplayer.js?$!application.getAttribute('/static/ckplayer/ckplayer.js')" charset="utf-8"></script>
+			<script type="text/javascript">
+				var source = $("#source").val();
+				var flashvars={
+					f:'${rc.contextPath}/static/ckplayer/m3u8.swf',
+					a:source,
+					s:4,
+					c:0
+				};
+				var videoStatus = $("#videoStatus").val();
+				if (videoStatus == 1) {
+					flashvars.lv = 1;
+				}
+				var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+				var video=[source];
+				CKobject.embed('${rc.contextPath}/static/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','100%',false,flashvars,video,params);
+			</script>
+			#end
+		</div>
+		<div class="live_list">
+			<div class="live_on anchor_name">
+				<h3 class="live_name">
+					<img src="${shareModel.headImg}" />${shareModel.userName}的其他视频
+				</h3>
+				<ul class="anchor clearfix">
+					 #if(!$!{shareModel.videoList} || $!{shareModel.videoList.size()} <= 0)
+						<div class="noElseVid">
+                            <img src="${rc.contextPath}/static/images/noElseVid.png" alt="">
+							<p>暂无其他视频</p>
+						</div>
+					#else
+						#foreach(${video} in ${shareModel.videoList})
+                            <li>
+                                <div class="cover">
+                                    <a href="javascript:;" onclick="downloadApp();"><img
+                                            data-echo="${video.coverImg}" alt="" class="an_redio" /></a>
+                                    <p class="tittleTip">
+										#set($str = $!{video.videoName})
+										#if($str.length() > 8)$str.substring(0, 8)... #else $str
+										#end
+                                    </p>
+                                </div>
+                            </li>
+						#end
+					#end
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="${rc.contextPath}/static/js/zepto.min.js"></script>
+	<script type="text/javascript"
+		src="${rc.contextPath}/static/js/touch.js"></script>
+	<script type="text/javascript"
+		src="${rc.contextPath}/static/js/echo.min.js"></script>
+	<script>
+		Echo.init({
+			offset : 0,
+			throttle : 0
+		});
+		
+	    $(document).ready(function(){
+            var imgW = $(".cover img").width();
+            $(".anchor li").height(imgW);
+            $(".cover").height(imgW);
+            $(".cover img").height(imgW);
+	    })
+	</script>
+</body>
+</html>

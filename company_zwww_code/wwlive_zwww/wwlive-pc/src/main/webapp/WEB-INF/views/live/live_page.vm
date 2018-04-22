@@ -1,0 +1,355 @@
+#set($head_nav=1)
+	<div class="income">
+		<div class="income_right vedio_right">
+			<input type="hidden" id="videoStatus" value="$!{videoInfo.videoStatus}"/>
+			<input type="hidden" id="_secret" value="$!{videoInfo.secret}"/>
+			<input type="hidden" id="rongToken" value="$!{videoInfo.rongToken}"/>
+			<input type="hidden" id="anchorId" value="$!{videoInfo.anchorId}"/>
+            <input type="hidden" id="diamondsSum" value="$!{videoInfo.diamonds}"/>
+            <input type="hidden" id="lev" value="$!{videoInfo.levels}"/>
+			#if($!{videoInfo.videoStatus} != 4)
+			<div class="top_inp">
+				<input type="button" value="播放广告" onclick="broadcast();"/>
+				<input type="button" value="结束直播" id="end_live" class="end_live"/>
+			</div>
+			#end
+			#if($!{videoInfo.videoStatus} != 4)
+				<div class="chat">
+				    <h3 class="spectator">聊天</h3>
+					<!-- <ul class="chat_tab clearfix">
+						<li class="active">聊天</li>
+						<li id="viewer_tab">观众</li>
+					</ul> -->
+					<div class="chat_content con">
+						<ul class="con_list" id="chatroom_con" style="overflow:auto;">
+						</ul>
+					</div>
+					<!-- <div class="viewer con" id="viewers">
+						
+					</div> -->
+					#*游戏*#
+                    <img class="game_card" src="$!{rc.contextPath}/static/images/game/card.png" alt="">
+					<div class="game">
+						<div class="game_nav">
+                            <img src="$!{rc.contextPath}/static/images/game/paihang.png" alt="">
+                            <img src="$!{rc.contextPath}/static/images/game/gamecard.png" alt="">
+                            <img src="$!{rc.contextPath}/static/images/game/back.png" alt="">
+						</div>
+						<div class="tab_card">
+                            <div class="upimg show">#*上传头像*#
+                                <div id="iscroll_wrap1"><!--只有wrap里的第一个元素可以滚动-->
+                                    <div class="iscroll">
+                                        <div class="upimg">
+                                            <div class="preview">
+                                                <div id="view"></div>
+                                            </div>
+                                            <div class="upload">#*通过类名更改背景图*#
+                                                <form id="form_upimg">
+                                                    <input name="imgFile" onchange="previewImg(this)" type="file" name="" id="file_ipt" accept="image/*" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <p>您的直播间中游戏消费高，则会将您的封面图展示在卡牌牌面上.
+											如此还可为您带来流量哟，去游戏左上角的[今日牌面]中看看是否上榜了吧。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="paihang">#*游戏排行*#
+								<p><img src="$!{rc.contextPath}/static/images/game/xyph.png" alt=""></p>
+                                <div id="iscroll_wrap2"><!--只有wrap里的第一个元素可以滚动-->
+                                    <div class="iscroll">
+                                        <ul>
+                                            #*<li>
+                                                <img class="tx" src="$!{rc.contextPath}/static/images/game/card.png"/>
+                                                <em>昵称位置</em>&nbsp;&nbsp;
+                                                <i>价值：</i><em>1000</em>&nbsp;&nbsp;
+                                                <i>大奖：</i><em>700</em>
+                                                <span>1</span>
+                                            </li>*#
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="paimian">#*今日牌面*#
+                                <p><img src="$!{rc.contextPath}/static/images/game/jrpm.png" alt=""></p>
+                                <div class="banner">
+                                    <span class="prev control_btn"></span>
+                                    <ul class="state">
+										<li class="center"><span>A</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li class="next"><span>K</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>Q</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>J</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>10</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>9</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>8</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>7</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>6</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>5</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>4</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li><span>3</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                        <li class="prev"><span>2</span><img src="/static/images/game/onlive.png" alt=""></li>
+                                    </ul>
+                                    <span class="next control_btn"></span>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			#else
+				<div class="audience">
+					<h3 class="spectator">观众</h3>
+					<div class="spe_num" id="viewers">
+						
+					</div>
+				</div>
+				<img src="/static/images/jiao.png" alt="" class="top_arrow"/>
+			#end
+			
+		</div>
+		<div class="income_left">
+            <p class="live_title levelP">$!videoInfo.videoName
+				#if($!{videoInfo.levels}>-1)
+                    <span class="levelMes">当前关卡：第<i>$!{videoInfo.levels}</i>关&nbsp;&nbsp;关卡进度：<i class="lev"></i>/20钻</span>
+				#end
+            </p>
+			#if($!{videoInfo.videoStatus} != 4)
+			<div class="look_num"><span>观看人数：<font id="realtimeViewers">$!videoInfo.viewers</font></span>
+			#else
+			<div class="look_num"><span>观看人次：<font id="realtimeViewers">$!videoInfo.viewers</font></span>
+			#end
+			<span>收入：<font id="realtimeIncome">#if($!{videoInfo.income})  #if($!{videoInfo.income} == 0.0) 0 #else $!{videoInfo.income} #end #else 0 #end&nbsp;&nbsp;元</font></span></div>
+			<input type="hidden" id="videoId1" value="$!{videoInfo.videoId}"/>
+			<input type="hidden" id="roomNum" value="${loginuser.roomNum}"/>
+			<input type="hidden" id="vdoid" value="$!{videoInfo.vdoid}"/>
+			<input type="hidden" id="standURL" value="$!{videoInfo.standURL}"/>
+			<!-- 视频页面 -->
+			 <div class="video">
+				<!-- <div id='mediaspace'></div> -->
+					#if($!{videoInfo.videoStatus} != 4)
+						    <div id='mediaspace' ></div>
+					#else
+					  <video id="my_video_1" class="video-js vjs-default-skin" controls="controls" width="800" height="500"
+					  data-setup='{}'>
+						    <source src="$!{videoInfo.vdoid}" type="application/x-mpegURL" id="video_source">
+					#end
+				  </video>
+			</div> 
+			
+			<!--
+			<div class="video">
+				<video width="100%" height="100%" id="playVideo">
+					<source src="" type="application/vnd.apple.mpegurl" id="video_source"></source>
+				</video>
+				<div class="playControll">
+					<div class="playPause"></div>
+					<div class="timebar">
+						<span class="currentTime">0:00:00</span>
+						<div class="progress">
+	  						<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: #;"></div>
+							</div>
+						<span class="duration">0:00:00</span>
+					</div>
+				</div>
+				<ul>
+					<li><a href="clarity">标清</a></li>
+				</ul>
+			</div>
+			-->
+		</div>
+	</div>
+	</div>
+	<!----结束直播----->
+	<div class="shadowUp"></div>
+	<div class="del_live" id="del_live">
+		<p>确定要停止直播？</p>
+		<div class="del_inp"><input type="button" onclick="stopVideo($!{videoInfo.videoId}, '$!{videoInfo.streamName}');" value="确定" /><input type="button" id="cancleStop" value="取消" /></div>
+	</div>
+	
+	<!----禁言----->
+	<div class="del_live" id="black_div">
+		<!-- <input type="hidden" id="black_id"/>
+		<input type="hidden" id="black_name"/> -->
+		<p>确定要禁止该用户？</p>
+		<div class="gag clearfix"><label>禁言时间:</label><input type="text"  onfocus="removeTimeError();"/>
+            <div class="error" style="display:none;" id="no_say_time_error"><font id="time_msg"></font><em></em></div><span>分钟</span></div>
+		<div class="del_inp pt30"><input type="button" value="确定" onclick="addBlackList();"/><input type="button" onclick="cancleAdd();" value="取消" /></div>
+	</div>
+	
+	<!-- 禁言/房管设置 -->
+	<div class="del_live" id="mute_admin_div">
+	    <input type="hidden" id="black_id"/>
+        <input type="hidden" id="black_name"/>
+        <input type="hidden" id="black_loginId"/>
+	    <span class="close-btn" onclick="closeMADiv();"><img src="${rc.contextPath}/static/images/close.png" alt="" /></span>
+        <p>你需要对该用户：</p>
+        <ul class="two-choose clearfix">
+            <li>
+                <input type="radio" name="maCheck" class="setfg" checked="checked" id="adminCheck"/><span id="adminSpan">解除房管</span>
+            </li>
+            <li>
+                <input type="radio" name="maCheck" id="muteCheck"/><span id="muteSpan">解禁</span>
+            </li>
+        </ul>
+        <div class="gag clearfix"><label>禁言时间:</label><input type="text" id="no_say_time"/><span>分钟</span></div>
+        <p class="p-notice">*设为房管后，该用户拥有禁言其他用户权限</p>
+        <p class="p-notice" style="display: none;">*禁言后，该用户不能在您的聊天室发言</p>
+        <div class="del_inp sure-btn"><input id="ctrlMABtn" type="button" value="确定" onclick="muteOrSetAdmin();"/></div>
+    </div>
+	
+	<!-----用户资料---->
+	#parse("./user/user_info.vm")
+	
+	<!--禁言 广告--->
+	<div class="gag_ad" id="gag_ad">
+		<h3 id="tips">选择要播放的广告</h3>
+		<ul class="choose_ad">
+			<li id="word_ad">
+				<label>顶部文字广告</label>
+				<select id="select_top" onchange="selected(this.options[this.options.selectedIndex].value, 'select_top', 0, 'word_ad2');">
+					<option>--请选择--</option>
+				</select>
+			</li>
+			<li id="word_ad1" style="display:none">
+				<div class="import_time" >
+					<span>播放时间：</span><input id="word_time" type="text" value="0.167" />
+					<span>分钟</span>
+					<span style="color:red;font-size:8px;display:none" id="word_error_msg"></span>
+				</div>
+			</li>
+			<li id="word_ad2">
+				<div class="play_time">
+					广告正在播放<!-- <input id="word_play" type="button" value="立即停止" onclick="stopAD(0);"/> -->
+				</div>
+			</li>
+			<li id="video_ad">
+				<label>中部视频广告</label>
+				<select id="select_middle" onchange="selected(this.options[this.options.selectedIndex].value, 'select_middle', 1, 'video_ad2');">
+					<option>--请选择--</option>
+				</select>
+				</li>
+			<li id="video_ad1">
+				<div class="import_time">
+					<span>播放时间：</span><input id="video_time" type="text" value="" onfocus="removeMsg('video_time', 'video_error_msg');"/>
+					<span>分钟</span>
+					<span style="color:red;font-size:8px;display:none" id="video_error_msg"></span>
+				</div>
+			</li>
+			<li id="video_ad2">
+				<div class="play_time">
+					已播：<em class="blue" id="video_play">2</em>分钟<input id="video_play" type="button" value="立即停止"  onclick="stopAD(1);"/>
+				</div>
+			</li>
+			<li id="url_ad">
+				<label>底部浮层广告</label>
+				<select id="select_bottom" onchange="selected(this.options[this.options.selectedIndex].value, 'select_bottom', 2, 'url_ad2');">
+					<option>--请选择--</option>
+				</select>
+			</li>
+			<li id="url_ad1">
+				<div class="import_time"  style="display:none">
+					<span>播放时间：</span><input id="url_time" type="text" value="1440"/>
+					<span>分钟</span>
+					<span style="color:red;font-size:8px;display:none" id="url_error_msg"></span>
+				</div>
+			</li>
+			<li id="url_ad2">
+				<div class="play_time">
+					需手动停止播放<input id="url_play" type="button" value="立即停止"  onclick="stopAD(2);"/>
+				</div>
+			</li>
+		</ul>
+		<div class="sure_cancel ad_inp">
+			<input type="button" value="确认" onclick="sendAD();" /><input
+				type="button" id="cancle_ad" onclick="cancleAD();" value="取消" />
+		</div>
+	</div>
+	<div class="uperrorToast">
+		<p class="tip1_error">上传失败，系统暂时</p>
+		<p class="tip2_error">只接受正方形照片</p>
+		<button onclick="closeUpImgToast()" type="button">知道了</button>
+	</div>
+	<!-- 聊天室ID  -->
+	<input type="hidden" id="chatroomId" value="$!videoInfo.chatroomId">
+	<input type="hidden" id="anchorId" value="${loginuser.userId}">
+	<script src="http://cdn.ronghub.com/RongIMLib-2.2.2.min.js"></script>
+	<script src="/static/js/jquery.jplayer.min.js"></script>
+	<script src="/static/js/jwplayer.js"></script>
+	<script src="/static/js/video/chatroom.js?$!application.getAttribute('/static/js/video/chatroom.js')"></script>
+	<script src="/static/js/video/control.js"></script>
+	#if($!{videoInfo.videoStatus} != 4)
+	<script src="/static/js/video/ad.js"></script>
+	#end
+	<script src="/static/js/video/blacklist.js?$!application.getAttribute('/static/js/video/blacklist.js')"></script>
+	<script src="/static/js/video/schedule.js"></script>
+	<script src="/static/js/iscroll.js?$!application.getAttribute('/static/js/iscroll.js')"></script>
+	<script src="/static/js/game/iscroll-zoom.js?$!application.getAttribute('/static/js/game/iscroll-zoom.js')"></script>
+	<script src="/static/js/game/jquery.form.min.js?$!application.getAttribute('/static/js/game/jquery.form.min.js')"></script>
+	<script src="/static/js/game/cardgame.js?$!application.getAttribute('/static/js/game/cardgame.js')"></script>
+	<!-- <script src="/static/js/willesPlay.js"></script> -->
+	<script>
+		//js减法精确计算
+        function accSub(arg1,arg2){
+            var r1,r2,m;
+            try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+            try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+            m=Math.pow(10,Math.max(r1,r2))
+            return (arg1*m-arg2*m)/m
+        }
+        var diamonds = $("#diamondsSum").val();
+        var lev = $("#lev").val();
+        var levN = accSub(diamonds,lev*20);
+        $(".lev").html(levN);
+		$(".live_tab li").click(function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			var _index =$(this).index();
+			$(".tab").eq(_index).show().siblings(".tab").hide();
+		})
+		$(".chat_tab li").click(function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			var _index =$(this).index();
+			$(".con").eq(_index).show().siblings(".con").hide();
+			/* if (_index == 1) {
+				var videoId = $("#videoId1").val();
+				viewersInfo(videoId, 1);
+			} */
+		})
+		$('#chatroom_con').scrollTop( $('#chatroom_con').height() );
+
+		//观看视频列表
+		function viewersInfo(videoId, pageNum) {			
+	    	var videoStatus1 = $("#videoStatus").val();
+			$.ajax({
+                type: "POST",
+                url: "/pc/anchor/watching?pageIndex=" + pageNum,
+                data: {"videoId":videoId, "videoStatus":videoStatus1},
+                dataType: "html",
+                success: function (result) {
+                    if (result != null) {
+                		$("#viewers").html(result);
+                    } 
+                },
+                error: function () {
+                    $(".sure_div p").text("获得观众列表异常请稍后。");
+                    $(".sure_div , .shadowUp").show();
+                }
+            });
+		}
+
+		$(".two-choose input").click(function(){
+            if($(".setfg").is(":checked")){
+                $(".p-notice").text("*设为房管后，该用户拥有禁言其他用户权限");
+                $(".gag").hide();
+            }else{
+            	var muteTxt = $("#muteSpan").text();
+            	if(muteTxt == "解禁"){
+            		$(".gag").hide();
+	                $(".p-notice").text("*禁言后，该用户不能在您的聊天室发言");
+            		return;
+            	}
+                $(".p-notice").text("*禁言后，该用户不能在您的聊天室发言");
+                $(".gag").show();
+            }
+            $(".p-notice").css("color", "");
+        })
+	</script>

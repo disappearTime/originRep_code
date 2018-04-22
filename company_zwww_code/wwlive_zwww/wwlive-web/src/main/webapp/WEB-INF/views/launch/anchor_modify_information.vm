@@ -1,0 +1,182 @@
+#set($layout = '/layout/empty.vm')
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no;email=no">
+		<title>修改资料</title>
+   		 <!-- css -->
+		<link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" type="text/css" rel="stylesheet"/>
+		<link href="${rc.contextPath}/static/css/lCalendar.css?$!application.getAttribute('/static/css/lCalendar.css')" type="text/css" rel="stylesheet">
+	    <!-- end css -->
+	    <!-- js -->
+	    <script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+		<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+	</head>
+
+	<body>
+<input type="hidden" value="$!{modifyUrl}" id="modifyUrl"/>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<div class="edit-infor">
+	<div class="edit-list">
+		<dl class="edit-con lh58" onclick="takePhotoForApp();">
+			<dt>头像</dt>
+			<dd>
+				<img src="$!{anchor.headImg}" alt="">
+			</dd>
+		</dl>
+	</div>
+	<div class="edit-list mt10">
+		<dl class="edit-con" onclick="newWebView('/launch/anchor/modify/name/page?$!{modifyUrl}&userName=$!{anchor.userName}');">
+			<dt>昵称</dt>
+			<dd>$!{anchor.userName}</dd>
+		</dl>
+		<dl class="edit-con" onclick="modifySex();">
+			<dt>性别</dt>
+			<dd>#if($!{anchor.sex} == 0) 女 #else 男 #end</dd>
+		</dl>
+	</div>
+	<div class="edit-list mt10">
+		<dl class="edit-con">
+			<dt>生日</dt>
+			<dd><input id="birthday" type="text" readonly="" name="input_date" value="$!{anchor.birthday}" data-lcalendar="1900-01-1,2099-12-31"></dd>
+		</dl>
+		<dl class="edit-con">
+			<dt>年龄</dt>
+			<dd class="dd-no">$!{anchor.age}</dd>
+		</dl>
+		<dl class="edit-con">
+			<dt>星座</dt>
+			<dd class="dd-no">$!{anchor.zodiac}</dd>
+		</dl>
+	</div>
+	<div class="edit-list mt10">
+		<dl class="edit-con" onclick=
+			"newWebView('/launch/anchor/modify/notice/page?$!{modifyUrl}&notice=$!anchor.notice');">
+			<dt>公告</dt>
+			<dd>
+			    #set($str=$!{anchor.notice})
+                #if("$!{anchor.notice}" != "" && $!{anchor.notice.length()} > 10)
+                    #set($str=$str.substring(0,10))
+                    $str ...
+                #elseif($!{anchor.notice.length()} > 0 && $!{anchor.notice.length()} <= 10)
+                    $!{anchor.notice}
+                #else 
+                                                        主播很懒，什么都没留下 
+                #end
+			</dd>
+		</dl>
+		<dl class="edit-con" onclick="newWebView('/launch/anchor/modify/passwd/page?$!{modifyUrl}');">
+			<dt>密码</dt>
+			<dd>立即重置</dd>
+		</dl>
+	</div>
+</div>
+<input type="hidden" value="$!{anchor.sex}" id="sex"/>
+<input type="hidden" value="$!{anchor.birthday}" id="originBirthday"/>
+<!--修改性别-->
+<div class="shadowUp" style="display:none"></div>
+<div class="sex-set" style="display:none">
+	#if($!{anchor.sex} == 0)
+		<ul>
+			<li><input type="hidden" value="1"/><span>男</span></li>
+			<li class="active"><input type="hidden" value="0"/><span>女</span></li>
+		</ul>
+	
+	 #else 
+		<ul>
+			<li class="active"><input type="hidden" value="1"/><span>男</span></li>
+			<li><input type="hidden" value="0"/><span>女</span></li>
+		</ul>
+	 #end
+	
+	<p>取消</p>
+</div>
+	<input type="hidden" value="${rc.contextPath}" id="web"/>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<!-- <script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script> -->
+<script type="text/javascript" src="${rc.contextPath}/static/js/base-new.js?$!application.getAttribute('/static/js/base-new.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/lCalendar.min.js?$!application.getAttribute('/static/js/lCalendar.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/anchor/modify_info.js?$!application.getAttribute('/static/js/launch/anchor/modify_info.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/anchor/ios_info_interaction.js?$!application.getAttribute('/static/js/launch/anchor/ios_info_interaction.js')"></script>
+<script>
+	$(".edit-list dl").touchFn();
+	
+	var calendar = new lCalendar();
+	calendar.init({
+		'trigger': '#birthday',
+		'type': 'date'
+	});
+	//$(".sex-set , .shadowUp").hide();
+	$(".edit-list dl").touchFn();
+
+	$(".sex-set li").click(function () {
+		$(this).addClass("active").siblings().removeClass("active");
+		var sex = $(this).children("input").val();
+		var anchorSex = $.trim($("#sex").val());
+		if (sex == anchorSex) {
+			$(".sex-set , .shadowUp").hide();
+			return;
+		}
+		var anchorId = $.trim($("#anchorId").val());
+		if (isBlank(anchorId)) {
+			$(".sex-set , .shadowUp").hide();
+			return;
+		}
+		var submitData = new Object();
+		submitData.anchorId = anchorId;
+		submitData.sex = sex;
+		var modifyUrl = $.trim($("#modifyUrl").val());
+		$.ajax({
+	        type: "POST",
+	        url: "$!{rc.contextPath}/launch/anchor/modify/sex.json?" + modifyUrl,
+	        data:submitData,
+	        timeout: 9000,
+			dataType : 'json',
+	        success: function(data) {
+	        	if (data == null) {
+	                return;
+	        	}
+	        	var value = data.data;
+	        	if (value == 1) {
+	        		reloadWebView();
+	        		return;
+	        	}
+	        },
+	        error: function(k, j) {
+	        	console.log("异常：" + k + " " + j);
+	        },
+	    });
+	})
+	
+	$(".sex-set p").click(function () {
+		$(".sex-set , .shadowUp").hide();
+	})
+	
+	function modifySex() {
+		$(".sex-set , .shadowUp").show();
+	}
+	
+	$("#birthday").focus(function(){
+		$(this).blur();
+	})
+	
+	function takePhotoForApp(){
+        var obj = new Object();
+		var operation = new Object();
+	    operation.fun = "takePhoto";
+	    operation.data = obj;
+	    window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(operation));
+	}
+	$(".edit-con").bind("touchstart",function(){
+		$(this).children("dd").find("input").css("background-color","#d9d9d9");
+	});
+	$(".edit-con").bind("touchmove , touchend ,swipe",function(){
+		$(this).children("dd").find("input").css("background-color","#fff");
+	});
+</script>
+</body>
+</html>

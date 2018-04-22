@@ -1,0 +1,254 @@
+#set($page_title="修改资料")
+#set($head_nav=4) 
+<script src="/static/js/birthday.js"></script> 
+<script type="text/javascript">
+    $(function () {
+        $("#userName_msg").css({"display": "block"});
+        $(".data_list li").addClass("clearfix");
+        //初始化生日选择器
+        $.ms_DatePicker({
+            YearSelector: ".yearSel",
+            MonthSelector: ".monthSel",
+            DaySelector: ".daySel"
+        });
+
+        var userNameFlag = true;//昵称验证标识
+        var noticeFlag = true;//公告验证标识
+        var newPasswdFlag = true;//修改密码验证标识
+        
+        function formVld(){
+        	//验证昵称
+        	var userName = $.trim($("#userName").val());
+            if (userName == "") {
+                $("#userName").siblings(".error").css("display", "block");
+                $("#userNameVld").text("*: 请填写昵称~");
+                //$("#userName").val("");
+                userNameFlag = false;//验证失败
+            } else if (userName.length > 8) {
+                $("#userName").siblings(".error").css("display", "block");
+                $("#userNameVld").text("*: 昵称长度在1-8个字符之间~");
+                //$("#userName").val("");
+                userNameFlag = false;//验证失败
+            } else {
+                var reg = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+                if (!reg.test(userName)) {
+                    $("#userName").siblings(".error").css("display", "block");
+                    $("#userNameVld").text("*: 昵称只能包含汉字、英文字母和数字~");
+                    userNameFlag = false;
+                } else {
+                    $("#userName").siblings(".error").css("display", "none");
+                    userNameFlag = true;
+                }
+            }
+            
+            //验证公告
+            var notice = $.trim($("#notice").val());
+            if (notice.length > 25) {
+                $("#notice").siblings(".error").css("display", "block");
+                $("#noticeVld").text("*: 公告最多只能写25个字哦~");
+                noticeFlag = false;
+            } else {
+                $("#notice").siblings(".error").css("display", "none");
+                noticeFlag = true;
+            }            
+            
+
+           //验证新密码, 只需要两次密码输入一致即可
+           var newPasswd = $.trim($("#newPasswd").val());
+           var passwdCfm = $.trim($("#passwdCfm").val());
+           console.log(newPasswd);
+           if(newPasswd != passwdCfm){
+               $("#newPasswd").siblings(".error").css("display", "block");
+               $("#newPasswdVld").text("*: 两次输入不一致...");
+               newPasswdFlag = false;
+           } else{
+        	   $("#newPasswd").siblings(".error").css("display", "none");
+               newPasswdFlag = true;
+           }
+            
+            var flag = userNameFlag && noticeFlag &&  newPasswdFlag;           
+            return flag;
+        }
+
+        //表单提交
+        $("#anchorInfoForm").ajaxForm({
+            url: "/anchor/modifyinfo.json",
+            type: "POST",
+            beforeSubmit: formVld,
+            success: function (data) {
+                if (data.result == 1) {
+                    $(".sureDiv p").html("修改完成~<br><font color='red'>如果修改了密码, 请记得下次使用新密码登录!</font>");
+                    $(".sureDiv , .shadowUp").show();
+                } else {
+                    $(".sureDiv p").text("修改失败!");
+                    $(".sureDiv , .shadowUp").show();
+                }
+            }
+        });
+    });
+</script>
+<div class="person_data">
+  <form id="anchorInfoForm" enctype="multipart/form-data">
+    <input type="hidden" name="anchorId" value="33" />
+    <ul class="data_list">
+      <li>
+        <label>主播ID：</label>
+        <span>${anchor.anchorId}</span></li>
+      <li style="position:relative">
+        <label>昵称：</label>
+        <input type="text" id="userName" value="${anchor.userName}" name="userName" class="pet_name" />
+        <div class="error"><font id="userNameVld"></font><em></em></div>
+      </li>
+      <li>
+        <label>性别：</label>
+        <select name="sex" class="choose_sex">
+          <option value="1">男</option>
+          <option value="0" #if(${anchor.sex} == 0)selected#end>女</option>
+        </select>
+      </li>
+      <li>
+        <label>生日：</label>
+        <select class="yearSel" name="birthYear" rel="${anchor.selYear}">
+        </select>
+        <span>年</span>
+        <select class="monthSel"
+                name="birthMonth" rel="${anchor.selMonth}">
+        </select>
+        <span>月</span>
+        <select class="daySel"
+                name="birthDay" rel="${anchor.selDay}">
+        </select>
+        <span>日</span></li>
+      <li>
+        <label>年龄：</label>
+        <span>${anchor.age}岁</span>
+        <label
+                class="constell">星座：</label>
+        <span>${anchor.zodiac}</span></li>
+      <li>
+        <label>房间号：</label>
+        <span>${anchor.roomNum}</span></li>
+      <li style="position:relative">
+        <label>公告：</label>
+        <textarea name="notice" id="notice">${anchor.notice}</textarea>
+        <div class="error"><font id="noticeVld"></font><em></em></div>
+        <!-- <div class="error" id="noticeVld" style="display:none"></div> -->
+      </li>
+      <li class="head_cover">
+        <label>头像：</label>
+        <input type="hidden" name="oldImg" value="$!{anchor.headImg}"/>
+        <div id="preview"><img
+                src="$!{anchor.headImg}" alt="" width="80" height="80"/></div>
+        <input type="button"
+                value="更换头像" class="replace" />
+        <input type="file" draggable="true"
+                name="headImg" onChange="previewImage(this)" id="file_inp1" />
+      </li>
+      
+      <li style="position:relative">
+        <label>新密码：</label>
+        <input type="password" id="newPasswd" name="newPasswd" class="pet_name" />&nbsp;&nbsp;<font color="#666">[请勿包含空格]</font>
+        <div class="error"><font id="newPasswdVld"></font><em></em></div>
+      </li>
+      <li style="position:relative">
+        <label>确认密码：</label>
+        <input type="password" id="passwdCfm" class="pet_name" />
+        <div class="error"><font id="passwdCfmVld"></font><em></em></div>
+      </li>
+      
+      <li class="modify">
+        <input style="cursor: pointer" type="submit" value="保存" />
+        <input type="button" onclick="toInfoPage();"
+                class="cancel" value="取消">
+      </li>
+    </ul>
+  </form>
+</div>
+<div class="shadowUp"></div>
+<div class="sureDiv">
+    <p></p>
+    <div class="sureInp"><input type="button" value="确定" /></div>
+</div>
+<script>
+
+    function toInfoPage(){
+    	window.location.href = "${rc.contextPath}/anchor/detail";
+    }
+
+    $(".live_tab li").click(function() {
+        $(this).addClass("active").siblings().removeClass("active");
+        var _index = $(this).index();
+        $(".tab").eq(_index).show().siblings(".tab").hide();
+    })
+    
+    $(".sureInp input").click(function(){
+        $(".sureDiv p").text("");
+        $(".sureDiv ,.shadowUp").hide();
+        window.location.href = "${rc.contextPath}/anchor/detail";
+    })  
+    
+    //收入明细弹窗
+    $(".income_con").click(function() {
+        $(".shadowUp , .income_detail").fadeIn();
+    })
+    $(".close").click(function() {
+        $(".shadowUp , .income_detail").fadeOut();
+    })
+
+    //上传照片
+    $(".replace").click(function() {
+        $('#file_inp1').click();
+    });
+    function previewImage(file) {
+        var MAXWIDTH = 80;
+        var MAXHEIGHT = 80;
+        var div = document.getElementById('preview');
+        if (file.files && file.files[0]) {
+            div.innerHTML = "<img id='imghead'>";
+            var img = document.getElementById('imghead');
+            img.onload = function() {
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT,
+                        img.offsetWidth, img.offsetHeight);
+                img.width = rect.width;
+                img.height = rect.height;
+            }
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                img.src = evt.target.result;
+            }
+            reader.readAsDataURL(file.files[0]);
+        } else if ((navigator.userAgent.indexOf('MSIE') >= 0)
+                && (navigator.userAgent.indexOf('Opera') < 0)) {
+            var _val = $('#file_inp2').val();
+            $('#preview').attr("src", function() {
+                return _val
+            });
+            $('#preview').css({
+                "width" : "80px",
+                "height" : "80px"
+            });
+        }
+    }
+    function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+        var param = {
+            top : 0,
+            left : 0,
+            width : width,
+            height : height
+        };
+        if (width > maxWidth || height > maxHeight) {
+            rateWidth = width / maxWidth;
+            rateHeight = height / maxHeight;
+            if (rateWidth > rateHeight) {
+                param.width = maxWidth;
+                param.height = Math.round(height / rateWidth);
+            } else {
+                param.width = Math.round(width / rateHeight);
+                param.height = maxHeight;
+            }
+        }
+        param.left = Math.round((maxWidth - param.width) / 2);
+        param.top = Math.round((maxHeight - param.height) / 2);
+        return param;
+    }
+</script>

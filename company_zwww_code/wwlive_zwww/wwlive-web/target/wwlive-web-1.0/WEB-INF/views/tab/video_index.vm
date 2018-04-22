@@ -1,0 +1,275 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en" class="root61">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="address=no;email=no">
+	<title>直播</title>
+    <meta charset="UTF-8"/>
+    <!-- rrr.js rem布局 -->
+    <input type="hidden" value="${rc.contextPath}" id="web"/>
+    <link href="${rc.contextPath}/static/css/swiper-3.4.2.min.css?$!application.getAttribute('/static/css/swiper-3.4.2.min.css')" rel="stylesheet"/>
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/rrr.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+    <script type="text/javascript" src="${rc.contextPath}/static/js/swiper-3.4.1.min.js?$!application.getAttribute('/static/js/swiper-3.4.1.min.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/util/urlparamutils.js?$!application.getAttribute('/static/js/util/urlparamutils.js')"></script>
+	<script type="text/javascript">
+	//为滚动轴绑定图片懒加载事件
+		document.onscroll = function(){
+			Lazy.Load();
+		}
+		setTimeout(function() {
+			Lazy.Load()
+		},100);
+	</script>
+    <!-- end js -->
+</head>
+    <body>
+		<script type="text/javascript" src="${rc.contextPath}/static/js/util/urlparamutils.js?$!application.getAttribute('/static/js/util/urlparamutils.js')"></script>
+	    #foreach($param in ${params.keySet()})
+	    	<input type="hidden" id="$param" value="${params.get($param)}">
+	    #end
+	   	<div class="page_bg" id="page_bg">
+			<div class="index-scroll">
+			  <div class="swiper-wrapper" id="home_banner">
+			  </div>
+			  <!-- 如果需要分页器 -->
+			  <div class="index-dots swiper-pagination"></div>
+			</div>
+			    #if($!{livingVideoCnt} <= 4 && $!{livingVideoCnt} > 0)
+					<!-- 旧版 -->
+					<script type="text/javascript" src="${rc.contextPath}/static/js/tab/video_index.js?$!application.getAttribute('/static/js/tab/video_index.js')"></script>
+					<script type="text/javascript" src="${rc.contextPath}/static/js/tab/video_index_lived.js?$!application.getAttribute('/static/js/tab/video_index_lived.js')"></script>
+				    <div class="live_on padd-0" id="live_on"><ul class="anchor clearfix" id="living"></ul>
+				    </div>
+					<div class="live_on mt10">
+						<p onclick="updateHomePage()" class="recent-play">精彩回放</p>
+						<ul class="anchor" id="playback"></ul>
+					</div>
+					<p class="" id="autopbn" ></p>
+			    #elseif($!{livingVideoCnt} > 4)
+			    	<!-- 直播分页 -->
+			    	<script type="text/javascript" src="${rc.contextPath}/static/js/tab/video_index_living.js?$!application.getAttribute('/static/js/tab/video_index_living.js')"></script>
+					<div class="live_on padd-0" id="live_on"><ul class="anchor clearfix" id="living"></ul>
+			    	</div>
+			    	<p class="" id="autopbn" ></p>
+			    #else
+			    	<!-- 无直播有公告 -->
+			    	<script type="text/javascript" src="${rc.contextPath}/static/js/tab/video_index_pulic_notice.js?ver=04&$!application.getAttribute('/static/js/tab/video_index_pulic_notice.js')"></script>
+					<script type="text/javascript" src="${rc.contextPath}/static/js/tab/video_index_lived.js?$!application.getAttribute('/static/js/tab/video_index_lived.js')"></script>
+					<div class="live_on mt10 live220" >
+						<p><img src="/static/images/zbxx220.png" alt="">主播休息了，客官稍后再来！</p>
+						<ul id="notice"></ul>
+					</div>					
+					<div class="live_on mt10">
+						<p class="recent-play">精彩回放</p>
+						<ul class="anchor clearfix" id="playback"></ul>
+					</div>
+					<p class="" id="autopbn" ></p>
+			    #end
+			    <!-- <br id="anchor"/> -->
+		</div>
+        <div class="nobleEndTime" style="z-index: 100px;">
+            <div>
+                <img src="$!{rc.contextPath}/static/images/nobleCenter/closetc.png" alt="">
+                <h3>贵族到期提示</h3>
+                <p>您开通的<em></em>已到期，是否重新开通?</p>
+                <button type="button">确定</button>
+            </div>
+        </div>
+        <script src="${rc.contextPath}/static/js/index/banner.js?$!application.getAttribute('/static/js/index/banner.js')"></script>
+		<script type="text/javascript">
+            //确保多次点击时只有最后一次点击的请求能够成功
+            var pendingRequests = {};
+            $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                var key = options.url;
+                console.log(key);
+                if (!pendingRequests[key]) {
+                    pendingRequests[key] = jqXHR;
+                }else{
+                    //jqXHR.abort(); //放弃后触发的提交
+                    pendingRequests[key].abort(); // 放弃先触发的提交
+                }
+                var complete = options.complete;
+                options.complete = function(jqXHR, textStatus) {
+                    pendingRequests[key] = null;
+                    if ($.isFunction(complete)) {
+                        complete.apply(this, arguments);
+                    }
+                };
+            });
+            //进入页面是否有过期贵族
+            var params = getAllParam();
+            var path = $("#web").val();
+            var nobleIndex;//跳转到贵族中心带的参数
+            var oUrl_ = path + "/external/app/user/check?" + params;
+            $.ajax({
+                url : oUrl_,
+                type : "post",
+                data : {},
+                dataType : "json",
+                success : function (result) {
+                    if (result.data!=null && result.data!=undefined){
+                        if (result.data.result == 1){//有过期贵族
+                            $(".nobleEndTime").show();
+                            if (result.data.nobleName == "圣骑士"){
+                                $(".nobleEndTime em").html("圣骑士")
+                                nobleIndex = 0;
+                            }else if (result.data.nobleName == "龙骑士"){
+                                $(".nobleEndTime em").html("龙骑士")
+                                nobleIndex = 1;
+                            }else if (result.data.nobleName == "黑骑士"){
+                                $(".nobleEndTime em").html("黑骑士")
+                                nobleIndex = 2;
+                            }else if (result.data.nobleName == "魔法骑士"){
+                                $(".nobleEndTime em").html("魔法骑士")
+                                nobleIndex = 3;
+                            }else if (result.data.nobleName == "紫荆骑士"){
+                                $(".nobleEndTime em").html("紫荆骑士")
+                                nobleIndex = 4;
+                            }else if (result.data.nobleName == "神殿骑士"){
+                                $(".nobleEndTime em").html("神殿骑士")
+                                nobleIndex = 5;
+                            }
+                        }
+                    }
+                },
+                error : function (k,i) {
+                    console.log(k,i)
+                }
+            })
+            //关闭过期弹窗
+            $(".nobleEndTime>div").click(function (ev) {
+                ev.stopPropagation();
+            })
+            $(".nobleEndTime").on("click",function (ev) {
+                $(this).hide();
+            })
+            $(".nobleEndTime img").on("click",function () {
+                $(".nobleEndTime").hide();
+            })
+            //跳转到贵族中心
+            console.log(nobleIndex == undefined)
+            $(".nobleEndTime button").on("click",function () {
+                $(".nobleEndTime").hide();
+                if (nobleIndex == undefined){
+                    /*window.location.href = path + "/app/nobility/my/nobilitypage?" + params;*/
+                    var obj = new Object();
+                    var toNoblePage = new Object();
+                    toNoblePage.fun = "toNoblePage";
+                    toNoblePage.data = obj;
+                    window.stub.jsClient(JSON.stringify(toNoblePage));
+                }else {
+                    /*window.location.href = path + "/app/nobility/my/nobilitypage?" + params + "&nobleIndex=" + nobleIndex;*/
+                    /*var needUpdateVersion=220;*/
+                    /*var appN = "dl";*/
+                   /* var appName = getUrlParam("app");*/
+                   /* var version = $("#version").val();//注意引入的页面要有这个控件*/
+                    /*var verS = toNum(version);*/
+
+                    var obj = new Object();
+                    obj.videoId = "";
+                    obj.chatroomId = "";
+                    obj.anchorId = "";
+                    var startTime=new Date().getTime();
+                    obj.startTime = startTime;
+                    var live = new Object();
+                    live.fun = "live";
+                    obj.type = 5;
+                    obj.cover = "";
+                    obj.nobleIndex = nobleIndex;
+                    obj.toNoblePage = "toNoblePage"
+                    live.data = obj;
+                    window.stub.jsClient(JSON.stringify(live));
+                }
+            })
+            //直播首页是否需要更新，当直播间主播id一样时不刷新页面
+            /*var isAjax = true;*/
+            function updateHomePage(){
+                var anchorIdStr = '';
+                var cover = $("#living li .cover");
+                var coverLen = cover.length;
+                for(var i=0;i<coverLen;i++){
+                    var anchorId = cover.eq(i).attr("data-id");
+                    anchorIdStr+=anchorId;
+                }
+                /*alert(anchorId);*/
+                var pageNo = 1;
+                var totalCnt = 0;
+                var pageSize = 10;
+                var d = 0;
+                var extra = {};
+                var path =$("#web").val();
+                if (path == null || path == undefined) {
+                    return;
+                }
+                var cnid = getUrlParam("cnid");
+                var i = path + "/external/tab/video/living.json?" + "t=" + parseInt(( + new Date() / 1000) / (Math.random() * 1000)) + "&cnid=" + cnid;
+                $.ajax({
+                    type: "POST",
+                    url: i,
+                    data:{"pageSize" : pageSize, "pageNo" : pageNo, "IMEI" : "0", "userId" : "0", "extra": extra},
+                    timeout: 9000,
+                    dataType : 'json',
+                    success: function(data) {
+                        /*alert("会话成功")*/
+                        var videoList = data.data.videoList;
+                        /*if (videoList == null
+                            || videoList == undefined
+                            || videoList.size <= 0) {
+                            return;
+                        }*/
+                        var newAnchorIdStr = "";
+                        for(var i=0;i<videoList.length;i++){
+                            var anchorId = videoList[i].anchorId;
+                            newAnchorIdStr+=anchorId;
+                        }
+                        if(!anchorIdStr&&!newAnchorIdStr){
+                            return;
+                        }
+                        if(anchorIdStr==newAnchorIdStr){
+                            return;
+                        }else{
+                            window.location.reload();
+                        }
+                    },
+                    /*error: function(jqXHR, textStatus,errorThrown) {
+                        if(errorThrown != 'abort') {
+                            //ajax被调用abort后执行的方法
+                        }else{
+                            alert("网络超时，请刷新重试");
+                        }
+                    },*/
+                });
+            }
+            function getAllParam() {
+                var url = window.location.href;
+                /*console.log(url);*/
+                var backStr = "";
+                var arr = url.split("?");
+                var arr1 = [];
+                for(var i=0;i<arr.length;i++){
+                    if(i>0){
+                        arr1.push(arr[i]);
+                    }
+                }
+                backStr = arr1.join("?");
+                return backStr;
+            }
+		</script>
+    </body>
+</html>
+
+
+
+
+
+

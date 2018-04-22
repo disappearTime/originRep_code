@@ -1,0 +1,116 @@
+#set($page_title='收入详细')
+<div id="detail-list">
+	#*<div class="income-box">
+		<h3>直播标题直播标题<span>2017-22-22</span></h3>
+		<div class="gift-box">
+			<p>普通礼品收入<span>￥000000</span></p>
+			<p>贵族礼品收入<span>￥000000</span></p>
+			<ul>
+				<li>弹幕收入<span>￥000000</span></li>
+                <li>贵族收入<span>￥000000</span></li>
+			</ul>
+			<div class="control-btn"><span>收起</span><img src="$!{rc.contextPath}/static/images/updowntoggle.png" alt=""></div>
+		</div>
+		<div class="totalIncome bor-bott"><span>直播总收入：999999</span></div>
+		<div class="giftDetail">礼品详细<img src="$!{rc.contextPath}/static/images/back1.png" alt=""></div>
+		<div class="income-cut"></div>
+	</div>*#
+</div>
+<p class="" id="autopbn" ></p>
+
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<input type="hidden" value="$!{listPage}" id="listPage"/>
+<input type="hidden" value="$!{giftPage}" id="giftPage"/>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript"
+        src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript"
+src="${rc.contextPath}/static/js/launch/anchor/income.js?$!application.getAttribute('/static/js/launch/anchor/income.js')"></script>
+<script type="text/javascript" 
+src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+<script type="text/javascript">   
+	//为滚动轴绑定图片懒加载事件
+	document.onscroll = function(){
+		Lazy.Load();
+	}
+	setTimeout(function() {
+		Lazy.Load()
+	},100);
+	
+	function videoGift(videoId) {
+		var path = $("#web").val();
+		if (path == null || path == undefined) {
+			return;
+		}
+		var giftPage = $("#giftPage").val();
+    	if (giftPage == null || giftPage == undefined) {
+    		return;
+    	}
+    	
+		//window.location.href = path + "/launch/anchor/goods/list?" + giftPage + "&videoId=" + videoId;
+		
+		var url = path + "/launch/anchor/goods/list?" + giftPage + "&videoId=" + videoId;
+        var obj = new Object();
+        obj.url = url;
+        var video = new Object();
+        video.fun = "newWebView";
+        video.data = obj;
+        window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(video));
+		
+	}
+	//直播收入的下拉和收起
+	/*var isDown = true;*/
+	var current = 0;
+	$("#detail-list").delegate(".control-btn","click",function () {
+        current = (current+180)%360;
+        var Bl = $(this).attr('data-booleans');
+		$(this).parent().find("ul").slideToggle();
+		$(this).find("img").css({
+            "transform":"rotate("+current+"deg)"
+		})
+		/*console.log(typeof Bl) Bl为字符串类型*/
+		if (Bl == "false"){//下拉状态-
+			$(this).find("span").html("收起");
+            $(this).attr('data-booleans',true);
+		}else if(Bl == "true"){
+		    $(this).find("span").html("下拉");
+            $(this).attr('data-booleans',false);
+		}
+    })
+    //跳转到礼品详细页
+    $("#detail-list").delegate(".giftDetail","click",function () {
+		/*alert(1);*/
+        var path = $("#web").val();
+        var listPage = $("#listPage").val();
+        var videoId = $(this).attr("data-vid");
+        console.log(videoId);
+        if (path == null || path == undefined){
+            return;
+        }
+        if (listPage == null || listPage == undefined){
+            return;
+        }
+        if (videoId && videoId!="" && videoId!=null && videoId!=undefined){
+            /*var obj = new Object();
+            obj.videoId = videoId;
+            var giftDetail = new Object();
+            giftDetail.fun = "giftDetail";
+            giftDetail.data = obj;
+            window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(giftDetail));*/
+            window.location.href = path + "/launch/anchor/toDetails?videoId=" + videoId + "&" + listPage;
+		}else {
+            return;
+		}
+    })
+</script>
+

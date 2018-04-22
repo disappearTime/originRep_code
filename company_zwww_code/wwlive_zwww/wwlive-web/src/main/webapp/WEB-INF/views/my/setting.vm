@@ -1,0 +1,24 @@
+#set($page_title="设置")
+<div class="settingWrap">
+    <ul>
+        <li onclick="emptyCache();"><span class="leftTip">清空缓存</span><span class="rightTip"><em class="cache"></em></span></li>
+        <li onclick="checkUpdate();">
+            <span class="leftTip">检查更新</span><span class="rightTip">
+            #if($!{isNewVersion}==1)
+                <i>检查到有新版本</i>
+            #end
+                <img class="backTip" src="${rc.contextPath}/static/images/back10.png"/>
+            </span>
+        </li>
+        <li onclick="toLawPage();"><span class="leftTip">法律法规</span><span class="rightTip"><img class="backTip" src="${rc.contextPath}/static/images/back2.png" alt="" /></span></li>
+    </ul>
+    <div class="server">
+        <p>客服QQ：3522400594</p>
+        <p>服务时间：每周一至五9:00-18:00</p>
+    </div>
+    <div class="toast"></div>
+    <input type="hidden" id="isNew" value="$!{isNewVersion}">
+    <input type="hidden" value="$!{rc.contextPath}" id="web">
+</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/setting.js?$!application.getAttribute('/static/js/my/setting.js')"></script>

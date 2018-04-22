@@ -1,0 +1,44 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="address=no;email=no">
+	<title>消费记录</title>
+    <meta charset="UTF-8"/>
+    <!-- css -->
+##    <link href="${rc.contextPath}/static/css/live.css" rel="stylesheet"/>
+    <!-- end css -->
+##	<link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="${rc.contextPath}/static/css/consumeList.css?$!application.getAttribute('/static/css/consumeList.css')">
+    <!-- js -->
+    <script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/util/urlparamutils.js?$!application.getAttribute('/static/js/util/urlparamutils.js')"></script>
+    <script type="text/javascript">   
+	//为滚动轴绑定图片懒加载事件
+		document.onscroll = function(){
+			Lazy.Load();
+		}
+		setTimeout(function() {
+			Lazy.Load()
+		},100);
+	</script>
+    <!-- end js -->
+</head>
+<body>
+	<input type="hidden" value="${rc.contextPath}" id="web"/>
+	<ul class="dh-record" id="dh-record">
+	</ul>
+	<p class="" id="autopbn" ></p>
+	<input type="hidden" value="$!{userId}" id="userId"/>
+	
+	<script type="text/javascript" src="${rc.contextPath}/static/js/my/consumeList.js?$!application.getAttribute('/static/js/my/consumeList.js')"></script>
+	
+</body>
+</html>   

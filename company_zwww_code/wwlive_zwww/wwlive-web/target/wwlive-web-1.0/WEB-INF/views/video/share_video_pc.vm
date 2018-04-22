@@ -1,0 +1,104 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0"> 
+    <title>$!{shareModel.videoName}</title>
+    <link rel="stylesheet" href="${rc.contextPath}/static/css/landing_page.css?var=11493">
+    <link href="${rc.contextPath}/static/css/video.css" rel="stylesheet">
+	<link href="${rc.contextPath}/static/css/live.css?var=11454" type="text/css" rel="stylesheet">
+	<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+	<!-- <script src="${rc.contextPath}/static/js/video.js"></script>
+	<script src="${rc.contextPath}/static/js/zepto.min.js"></script>
+	<script src="${rc.contextPath}/static/js/videojs-live.js"></script>
+	<script src="${rc.contextPath}/static/js/html5media.min.js?$!application.getAttribute('/static/js/html5media.min.js')"></script>	 -->
+</head>
+<body>
+	$response.setHeader("Cache-Control","no-store")
+	$response.setHeader("Pragrma","no-cache") 
+	$response.setDateHeader("Expires",0) 
+    <div class="land_head">
+        <div class="land_logo">
+            <a href="#"><img style="width: 63px;margin-top: 7px;" src="${rc.contextPath}/static/images/xingyulogo.png" alt="logo" /></a>
+            <span>下载星宇直播，美女直播随便看</span>
+            <div class="top_code">
+                <img src="${rc.contextPath}/static/images/xy-code.png?ver=00" alt="" style="width:80px;height:80px"/>
+                <div class="load_book">
+                    <p>下载星宇直播</p>
+                    <p>(仅支持Android)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="land_content">
+        <div class="land_con">
+            <div class="land_left">
+                #if(${shareModel.videoStatus} != 1 && ${shareModel.videoStatus} != 4)
+	                <h3>$!{shareModel.videoName}</h3>
+	                <div class="land_bg">
+	                    <div class="land_code">
+	                        <img src="${rc.contextPath}/static/images/xy-code.png?ver=00" alt="" />
+	                        <p>扫描二维码下载星宇直播APP，看更多美女直播</p>
+	                        <p>(仅支持Android)</p>
+	                    </div>
+	                </div>
+			    #else
+			      <h3>$!{shareModel.videoName}</h3>
+			      <!-- <video id="my_video_1" class="video-js vjs-default-skin" controls="controls" style="width:100%" height="500" 
+			      data-setup='{}'>
+			        <source src="$!{shareModel.playAddress}" type="application/x-mpegURL">
+			      </video> -->
+			<input type="hidden" id="source" value="$!{shareModel.playAddress}">
+			<input type="hidden" id="videoStatus" value="$!{shareModel.videoStatus}">
+			<div id="a1" class="pc-video"></div>
+			<script type="text/javascript" src="${rc.contextPath}/static/ckplayer/ckplayer.js?$!application.getAttribute('/static/ckplayer/ckplayer.js')" charset="utf-8"></script>
+			<script type="text/javascript">
+				var source = $("#source").val();
+				var flashvars={
+					f:'${rc.contextPath}/static/ckplayer/m3u8.swf',
+					a:source,
+					s:4,
+					c:0
+				};
+				var videoStatus = $("#videoStatus").val();
+				if (videoStatus == 1) {
+					flashvars.lv = 1;
+				}
+				var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+				var video=[source];
+				CKobject.embed('${rc.contextPath}/static/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','100%',false,flashvars,video,params);
+			</script>
+			    #end
+            </div>
+            
+            <div class="land_right">
+                <div class="land_cover"><img src="${shareModel.headImg}" alt="" width="220" height="220"/></div>
+                <h3><span>${shareModel.userName}</span>
+                    <img src=#if(${shareModel.sex} == 1)"${rc.contextPath}/static/images/boy.png"
+                        #elseif(${shareModel.sex} == 0)"${rc.contextPath}/static/images/girl.png"
+                        #else"${rc.contextPath}/static/images/unknown.png"
+                        #end alt="" />
+                    <!-- <img id="zodiacImg" alt="" /></h3> -->
+                <p>房号：${shareModel.roomNum}</p>
+                <p>$!{shareModel.notice}</p>
+                <img src="${rc.contextPath}/static/images/jiao.png" alt="" class="gray_horn"/>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    /* var zodiacs = new Array("白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座","水瓶座","双鱼座");
+    var zodiac = "";
+    for(var i=0;i<zodiacs.length;i++){
+    	if(zodiac == zodiacs[i]){
+    		var zodiacImg = document.getElementById("zodiacImg");
+    		zodiacImg.src = "/static/images/zodiacs/" + i + ".png"
+    		break;
+    	}
+    } */
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>$!page_title</title>
+    <link href="/static/css/base.css" rel="stylesheet"/>
+    <link href="/static/css/live_pc.css?ver=2" rel="stylesheet"/>
+    <script src="/static/js/jquery-1.8.3.min.js"></script>
+    <script src="/static/js/jquery.form.min.js"></script>
+	<link href="/static/css/video.css" rel="stylesheet">
+	<script src="/static/js/video.js"></script>
+	<script src="/static/js/videojs-live.js"></script>
+    <!-- css -->
+    #if($cssblock)$cssblock#end
+    <!-- end css -->
+    <!-- js -->
+    #if($jsblock)$jsblock#end
+    <!-- end js -->
+</head>
+    <body>
+    <!-- header -->
+    #parse('layout/header.vm')
+    <!-- end header -->
+    <!-- content -->
+    $screen_content
+    <!-- end content -->
+    <!-- footer -->
+    #parse('layout/footer.vm')
+    <!-- end footer -->
+    </body>
+</html>

@@ -1,0 +1,144 @@
+.babybook{
+	width: 91%;
+	padding-top: 0.94rem;
+	margin: 0 auto;
+}
+ul{
+	width: 100%;
+}
+ul li{
+	width: 100%;
+	margin-bottom: 1.25rem;
+}
+
+ul li.orange{
+	box-shadow: -2px 2px 26px rgba(255,139,67,0.2);
+}
+ul li.blue{
+	box-shadow: -2px 2px 26px rgba(74,178,243,0.2);
+}
+ul .book_card{
+	position: relative;
+	width: 100%;
+	padding: 10px 8px 10px 10px;
+	box-sizing: border-box;
+	-webkit-border-radius: 3px;
+}
+ul li.orange .book_card{
+	box-shadow: -2px 1px 1px rgba(255,139,67,0.2);
+}
+ul li.blue .book_card{
+	box-shadow: -2px 1px 1px rgba(74,178,243,0.2);
+}
+ul li .left{
+	float: left;
+	/*width: 22%;*/
+	position: relative;
+}
+ul li .left .tx{
+	height: 5.15rem;
+}
+ul li .left .zbicon{
+	width: 2rem;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+}
+ul li .right{
+	width: 74.3%;
+	float: right;
+	position: relative;
+}
+ul li .right h3{
+	font-size: 0.94rem;
+	color: #333333;
+}
+ul li .right p{
+	font-size: 0.81rem;
+	color: #666666;
+	margin-left: -0.3rem;
+	line-height: 1.56rem;
+}
+ul li .right .book{
+	height: 2.45rem;
+}
+ul li .right .book img{
+	width: 1.72rem;
+	height: 2.45rem;
+	vertical-align: middle;
+	margin-right: 0.125rem;
+	float: left;
+}
+ul li .right .book i{
+	font-family: impact;
+	display: inline-block;
+	height: 2.45rem;
+	vertical-align: middle;
+	font-style: italic;
+	font-size: 3rem;
+	line-height: 2.45rem;
+	float: left;
+	transform: scaleX(0.8) translateX(-1rem);
+}
+ul li.orange .right .book i{
+	color: rgba(255,139,67,0.1);
+}
+ul li.blue .right .book i{
+	color: rgba(74,178,243,0.1);
+}
+ul li .right .reading{
+	font-family: impact;
+	width: 4.14rem;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+ul li.orange .right .reading span{
+	color: #FF8B43;
+}
+ul li.blue .right .reading span{
+	color: #4AB2F3;
+}
+ul li .right .reading em{
+	font-style: italic;
+	font-size: 1.125rem;
+}
+ul li .right .reading i{
+	font-style: italic;
+	font-size: 2rem;
+}
+ul li .right .reading button{
+	width: 100%;
+	height: 1.5rem;
+	border: 1px solid;
+	-webkit-border-radius: 0.75rem;
+	font-size: 0.81rem;
+	background: none;
+	margin-top: 1.18rem;
+}
+ul li.orange .right .reading button{
+	color: #FF8B43;
+}
+ul li.blue .right .reading button{
+	color: #4AB2F3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,318 @@
+<script type="text/javascript">
+	$.ajax({
+	    url: "${rc.contextPath}/anchor/headerInfo.json",
+	    type: "POST",
+	    success:function(data){
+	    	if(data.result == 1){
+	    		$("#videoCnt").text(data.videoCnt + "  个");
+	    		$("#myIncome").text((Math.round(data.income) / 100) + "  元");
+	    		var noRead = data.noRead;
+				if (noRead != undefined && noRead > 0) {
+					$("#letter_msg").show();
+					$("#letter_msg").text(noRead);
+				} else {
+					$("#letter_msg").hide();
+				}
+	    	} else{
+	    		$("#videoCnt").text("暂无");
+                $("#myIncome").text("暂无");
+	    	}
+	    }
+	});
+</script>
+<script src="/static/js/letter/schedule.js"></script>
+<div class="head">
+    <div class="logo"><a href="#"><img src="/static/images/live_logo.png"/></a>
+        <!-- <input type="button" value="系统通知" class="sign_out" />
+        <input type="button" value="退出" class="sign_out" onclick="window.location.href='/login/out';"/> -->
+		<ul class="top-infor">
+			<li class="infor-notice" onclick="window.open('/pc/letter/page')"><a href="#" >消息通知</a><em id="letter_msg" style="display:none;"></em></li>
+			<li class="exit" onclick="window.location.href='/login/out.json';" ><a href="#">退出</a></li>
+		</ul>
+    </div>
+</div>
+<div class="anchor">
+    <div class="anchor_con">
+        <div class="con_left"><img src="${loginuser.headImg}"/></div>
+        <div class="con_right">
+            <h3>
+                <span>${loginuser.userName}</span>
+                <img src="#if(${loginuser.sex} == 1)/static/images/sex-man.png#else/static/images/sex-woman.png#end"/>
+                #if(1==1)
+                    <img style="height: 17px;" src="$!{rc.contextPath}/static/images/play_vedio.png" alt="">
+                #end
+                <em>(ID:${loginuser.userId})</em>
+            </h3>
+            <p>房号：${loginuser.roomNum}</p>
+            <p>${loginuser.notice}</p>
+        </div>
+    </div>
+    <div class="launch_live">
+        <ul class="clearfix">
+            <li>我的视频<p id="videoCnt"></p></li>
+            <li>我的收入<p id="myIncome"></p></li>
+        </ul>
+        <div class="live_inp"><a href="#" id="create_video">发起直播</a></div>
+    </div>
+</div>
+<div class="live_tab">
+    <ul class="clearfix">
+        <li  #if($!head_nav==1) class="active" #end><a href="/live/index">我的视频</a></li>
+        <li  #if($!head_nav==6) class="active" #end><a href="/anchor/follower/list">我的粉丝</a></li>
+        <li  #if($!head_nav==2) class="active" #end><a href="/anchor/income">我的收入</a></li>
+        <li  #if($!head_nav==3) class="active" #end><a href="/anchor/contriblist">贡献榜</a></li>
+        <li  #if($!head_nav==4) class="active" #end><a href="/anchor/detail">个人资料</a></li>
+        <li  #if($!head_nav==5) class="active" #end><a href="/anchor/adminList">我的房管</a></li>
+    </ul>
+</div>
+
+<div class="shadowUp" id="shadowUp"></div>
+
+<!---创建直播前提示--->
+<div class="create_msg">
+    <span class="close"></span>
+    <p id="errMsg"></p>
+</div>
+
+<!---创建直播--->
+<div class="create_live">
+    <span class="close" id="close_create"></span>
+    <ul class="set_con">
+        <li class="pt10 clearfix"><label>主题</label><input onfocus="in_theme();" type="text" value="" class="theme"/>
+            <div class="error" style="display:none;" id="theme_msg_error"><font id="theme_msg"></font><em></em></div>
+        </li>
+        <li class="pt10 clearfix"><label></label>
+            <label class="choose" for="game1_0"><input type="radio" value="0" name="game1" id="game1_0" checked="checked"/><span>娱乐直播</span></label>
+            <label class="choose" for="game1_1"><input type="radio" value="1" name="game1" id="game1_1"/><span>游戏直播</span></label>
+            <div class="error" style="display:none;" id="game1_msg_error"><font id="game1_msg"></font><em></em></div>
+        </li>
+        <li class="clearfix"><label>封面</label><input type="text" id="" value="" class="live_cover" readonly="readonly"/><input
+                type="button" value="浏览" class="browse"/><input type="file" draggable="true"
+                                                                name="coverImg" onChange="Javascript:corverImage(this);"
+                                                                id="file_inp"/>
+            <div class="error" style="display:none;" id="file_inp_msg_error"><font id="file_inp_msg"></font><em></em></div>
+        </li>
+        <li class="clearfix"><label>是否录制</label><select id="needRecord">
+            <option value="1">是</option>
+            <option value="0">否</option>
+        </select></li>
+        <li class="clearfix"><label>串码流</label>
+            <input type="button" value="生成码流" class="make" id="createBtn" style="display:display">
+            <div class="code">
+                <textarea class="code_con" id="rtmpURL"></textarea>
+                <input type="button" value="复制串码流" class="make" id="copyRtmp" style="display:none"/>
+            </div>
+        </li>
+    </ul>
+<!--     <div style="text-align:center;margin-bottom:10px;display:none" id="addrCopiedInfo">
+        <span style="color:red;">*: 串码流复制之后才可以创建直播哦~</span>
+    </div> -->
+    <div class="establish"><input class="not_click" type="button" value="创建" id="govideo" disabled/></div>
+    <!-- <div class="establish"><input type="button" value="gogo" id="gogo"/></div> -->
+</div>
+
+<form id="target" action="/live/detail" method="post" style="display:none">
+    <input type="text" name="videoId" value="" id="videoId">
+</form>
+<script>
+    $(".live_tab li").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        var _index = $(this).index();
+        $(".tab").eq(_index).show().siblings(".tab").hide();
+    })
+
+    <!-- 创建视频 start -->
+    $(function () {
+        $("#create_video").bind("click", function () {
+            $("#createBtn").css({"display": "block"});
+            $("#copyRtmp").css({"color": "#333"});
+            $("#copyRtmp").val("复制串码流");
+            $("#copyRtmp").css({"display": "none"});
+            $("#rtmpURL").css({"display": "none"});
+            $.ajax({
+                type: "POST",
+                url: "/live/livingcnt",
+                data: "",
+                dataType: "json",
+                success: function (result) {
+                    if (result.data > 0) {
+                        $("#errMsg").text("正在直播请不要重复创建。");
+                        $(".shadowUp , .create_msg").fadeIn();
+                        $(".theme").val("");
+                        $(".live_cover").val("");
+
+                        $("#rtmpURL").css({"display": "none"});
+                        $("#createBtn").css({"display": "block"});
+                        $("#copyRtmp").css({"display": "none"});
+
+                        $(".close").click(function () {
+                            $(".shadowUp , .create_msg").fadeOut();
+                        })
+                    } else {
+                        $(".shadowUp , .create_live").fadeIn();
+                        $(".theme").val("");
+                        $(".live_cover").val("");
+                        $("#close_create").click(function () {
+                            $(".shadowUp , .create_live").fadeOut();
+                        })
+                    }
+                },
+                error: function () {
+                    alert("失败");
+                }
+            });
+        });
+    });
+	
+    function corverImage(file) {
+        $(".live_cover").val("");
+        var _val = $('#file_inp').val();
+        $("#file_inp_msg_error").css({"display": "none"});
+        if (_val == null || _val == "") {
+            $("#file_inp_msg_error").css({"display": "block"});
+            $("#file_inp_msg").text("此处不能为空");
+            return;
+        }
+        var index = _val.lastIndexOf("\\");
+        var img = _val.substring(index + 1);
+        var tmp = img.split(".");
+        if (checkImgSuffix(tmp, file)) {
+            $(".live_cover").val(img);
+        }
+    }
+
+    function checkImgSuffix(tmp, file) {
+        //判断图片格式
+        var photo = tmp[1].toLowerCase();
+        if (photo == 'gif' || photo == 'jpg' || photo == 'bmp'
+                || photo == 'png' || photo == 'jpeg') {
+            var imagSize = file.size;
+            if (imagSize <= 1024 * 1024) {
+                return true;
+            } else {
+                $("#file_inp_msg_error").css({"display": "block"});
+                $("#file_inp_msg").text("图片大于1M，为：" + imagSize / (1024 * 1024) + "M");
+                return false;
+            }
+        } else {
+            $("#file_inp_msg_error").css('display','block');               
+            $("#file_inp_msg").text('请选择图片，比如：*.jpg、*.png格式文件');
+            return false;
+        }
+    }
+
+
+    $(".browse").click(function () {
+        $('#file_inp').click();
+    });
+    function leave_theme() {
+    }
+    function in_theme() {
+        $("#theme_msg_error").css({'display': 'none'});
+        $("#theme_msg").text('');
+    }
+    $("#createBtn").click(function () {
+        var videoName = $(".theme").val();
+        var videoType = $("[name='game1']").filter(":checked").val();
+        //var coverImg = $('#file_inp').val();
+        var coverImg = $(".live_cover").val();
+        var needRecord = $("#needRecord").val();
+        $("#theme_msg_error").css({'display': 'none'});
+        $("#game1_msg_error").css({'display': 'none'});
+        $("#file_inp_msg_error").css({'display': 'none'});
+        if (videoName == null || videoName == "") {
+	    	$("#theme_msg_error").css({"display":"block"});
+            $("#theme_msg").text('主题不能为空');
+            return;
+        }
+		if (!videoName.match(/^[\u4E00-\u9FA5a-zA-Z0-9_]{3,20}$/)) {
+	    	$("#theme_msg_error").css({"display":"block"});
+            $("#theme_msg").text('主题不合法，由汉字字母数字或下划线组成，3-20位');
+            return;
+		}
+        
+        if (videoType == null || videoType == "") {
+            //showErrMsg("请选择视频类型");
+            $("#game1_msg_error").css({'display': 'block'});
+            $("#game1_msg").text('请选择视频类型');
+            return;
+        }
+        if (coverImg == null || coverImg == "") {
+            $("#file_inp_msg_error").css({"display": "block"});
+            $("#file_inp_msg").text('封面不能为空');
+            return;
+        }
+        
+        /* if (needRecord == null || needRecord == "") {
+            showErrMsg("请选择是否录制");
+            return;
+        } */
+
+        var formData = new FormData();
+        formData.append('coverImg', $('#file_inp')[0].files[0]);
+        formData.append('videoName', videoName);
+        formData.append('videoType', videoType);
+        formData.append('needRecord', needRecord);
+        $.ajax({
+            url: '/live/create.json',
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (result) {
+        	        if(result.data.result == 0){
+        	        	$("#file_inp_msg_error").css({"display": "block"});
+        	            $("#file_inp_msg").text(result.info);
+        	        	return;
+        	        }
+       	        	$("#file_inp_msg_error").css({"display": "none"});
+                    var rtmpURL = result.data.rtmpURL;
+                    var videoId = result.data.videoId;
+                    localStorage.setItem("videoId",videoId);
+                    $("#rtmpURL").css({"display": "block"});
+                    $("#rtmpURL").text(rtmpURL);
+                    $("#videoId").val(videoId);
+                    $("#createBtn").css({"display": "none"});
+                    $("#copyRtmp").css({"display": "block"});
+                }, 'json')
+                .fail(function (res) {
+                    showErrMsg("上传失败");
+                });
+    });
+
+    var addressIsCopied = false;//串码流是否复制标志
+
+    //复制串码流
+    $('#copyRtmp').unbind('click').on('click', function () {
+        var linkAddress = $(this).siblings('#rtmpURL')[0];
+        linkAddress.select();
+        document.execCommand("Copy");
+        $("#copyRtmp").css({"color": "#2dbaf3"});
+        $("#copyRtmp").val("复制成功");
+        addressIsCopied = true;
+        $("#govideo").removeClass("not_click");
+        $("#govideo").attr("disabled", false);
+    });
+
+    //创建视频
+    $("#govideo").click(function () {
+        var videoId = $("#videoId").val();
+        if (videoId == null || videoId == "") {
+            return;
+        }
+        $("#target").submit();
+    });
+    function showErrMsg(msg) {
+        $("#errMsg").text(msg);
+        $(".shadowUp , .create_msg").fadeIn();
+        $(".close").click(function () {
+            $(".shadowUp , .create_msg").fadeOut();
+            $("#errMsg").text("");
+        })
+    }
+    <!-- 创建视频 end -->
+    /* function letterPage() {
+    	window.open("");
+    } */
+</script>

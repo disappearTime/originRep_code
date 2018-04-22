@@ -1,0 +1,197 @@
+#set($page_title=$!{anchorInfo.userName})
+<div>
+	<div class="anchorTxBg_per">
+        <img class="bigTx blur" src="$!{anchorInfo.headImg}" alt="" onerror="this.src='${rc.contextPath}/static/images/userDefaultTxBg.png'">
+##        <div class="personalBgTx"></div>
+##		<div style="width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: absolute;top: 0;left: 0;"></div>
+		<div class="personal perSelf">
+            <input id="preImg" type="hidden" value="$!{anchorInfo.headImg}">
+            <div style="width: 75px;height: 80px;background: none;display: inline-block;">
+				<img style="display: none;" src="" alt="" class="per-img"/>
+			</div>
+			#*<canvas width="76" height="76" style="margin-top: 5px;" id="canv"></canvas>*#
+            <p>
+				#if(${anchorInfo.medals}!="" && ${anchorInfo.medals}!="null" && ${anchorInfo.medals.size()}>0 )
+					#foreach($item in $anchorInfo.medals)
+						#if($item=="女神勋章")
+                            <img class="goddessSmallImg" src="${rc.contextPath}/static/images/goddessSign.png" alt="">
+						#end
+					#end
+				#end
+				$!{anchorInfo.userName}
+                <input type="hidden" id="ancNickName" value="$!{anchorInfo.userName}">
+                    <img src=#if(${anchorInfo.sex} == 1)"${rc.contextPath}/static/images/boy.png"
+			#elseif(${anchorInfo.sex} == 0)"${rc.contextPath}/static/images/girl.png"
+			#else"${rc.contextPath}/static/images/unknown.png"
+			#end alt="" />
+            </p>
+            <!-- <p>年龄:$!{anchorInfo.age}岁&nbsp;&nbsp;<img src="${rc.contextPath}/static/images/cons.png" alt="" />&nbsp;&nbsp;$!{anchorInfo.zodiac}</p> -->
+            <div class="notice"><!-- <img src="${rc.contextPath}/static/images/per-icon.png" alt="" /> -->
+                <span><b>Ta说：
+					#if ("$!{anchorInfo.notice}" != "" && $!{anchorInfo.notice.length()} > 0)
+						$!{anchorInfo.notice}
+					#else
+                        主播很懒，什么都没留下
+					#end
+					</b>
+			</span>
+            </div>
+			#if($!{videoInfo})
+                <a href="#" class="live-going"
+                   onclick="livingInfo('$!{videoInfo.videoId}', '$!{videoInfo.chatroomId}', '$!{videoInfo.anchorId}', '$!{videoInfo.formatType}', '$!{videoInfo.coverImg}');">
+                    <span>正在直播</span>
+                    <img src="${rc.contextPath}/static/images/living.gif" alt="" />
+                </a>
+			#end
+            <ul class="isShow hidden">
+				<span class="leftleft"></span>
+				<li><span>粉丝<em id="followerCnt" class="fansNum"></em></span></li>
+				<li id="followLi" onclick="followAnchor(this, '$!{userId}');"><span>+关注</span></li>
+            </ul>
+        </div>
+	</div>
+	<input type="hidden" value="${rc.contextPath}" id="web"/>
+	<input type="hidden" value="$!{listPage}" id="listPage"/>
+	<input type="hidden" value="$!{anchorInfo.anchorId}" id="anchorId"/>
+	<input type="hidden" value="$!{userId}" id="userId"/>
+	<div class="live_on par-top0">
+	    <ul class="data-devote">
+            <li class="bor-bott" onclick="toAnchorInfo($!{anchorInfo.anchorId});">
+                <img class="titleTip" src="${rc.contextPath}/static/images/personalMes.png" alt="">
+                <span>个人信息</span>
+				<img src="${rc.contextPath}/static/images/back2.png" alt="">
+			</li>
+            <li onclick="toContribList();">
+                <img class="titleTip" src="${rc.contextPath}/static/images/contribute.png" alt="">
+                <span>贡献榜</span>
+				<img src="${rc.contextPath}/static/images/back10.png" alt="">
+			</li>
+        </ul>
+		#*<p id="relive_p" class="p15-20 invisible playBack">Ta的回放<p>*#
+		<div class="greyCutOff"></div>
+		#if($!{videoInfo})#*正在直播*#
+			<div class="isLivingBox bor-bott" onclick="livingInfo('$!{videoInfo.videoId}', '$!{videoInfo.chatroomId}', '$!{videoInfo.anchorId}', '$!{videoInfo.formatType}', '$!{videoInfo.coverImg}');">
+                <img class="coverImg" src="$!{videoInfo.coverImg}" alt="">
+				<span><img src="${rc.contextPath}/static/images/pep_num.png" alt=""><i>$!{videoInfo.viewers}</i></span>
+                <img class="livingTip" src="${rc.contextPath}/static/images/onlive.png" alt="">
+                <img class="livingfoot" src="${rc.contextPath}/static/images/liveartBg.png" alt="">
+				<p>$!{videoInfo.videoName}</p>
+			</div>
+		#end
+		#*<li class="playBackLi">
+			<div class="left"><img src="" alt=""></div>
+            <div class="right">
+				<h3>莫名奇妙喝了一杯苏打</h3>
+				<span><em>2017年4月25日</em>&nbsp;&nbsp;&nbsp;&nbsp;<i>13:58</i><img src="$!{re.contextPath}/static/images/toplay.png" alt=""></span>
+				<p>时长<em>161</em>分钟&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i>99999</i>人看过</p>
+			</div>
+		</li>*#
+		#*缺省页*#
+		<div class="noAnchorPb">
+            <img src="$!{rc.contextPath}/static/images/ancDefult.png" alt="">
+			<p>主播宝宝最近没有来直播</p>
+		</div>
+		<ul class="anchorSelfPb clearfix pt15" id="live_on"></ul>
+	</div>
+	<p class="" id="autopbn" ></p>
+    <input type="hidden" value="$!{videoInfo}" id="dd">
+</div>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript"
+	src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/echo.min.js?$!application.getAttribute('/static/js/echo.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/anchor/videoList.js?$!application.getAttribute('/static/js/anchor/videoList.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/follow/follow.js?$!application.getAttribute('/static/js/follow/follow.js')"></script>
+<div class="gagTip">您的账号已违规</div>
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')">
+<script type="text/javascript" src="${rc.contextPath}/static/js/follow/gagTip.js?$!application.getAttribute('/static/js/follow/gagTip.js')"></script>
+<script>
+    //版本2.2.0一下不显示中间的粉丝，关注
+    $(function(){
+        //使用canvas处理图片解决小米2a手机适配问题
+		setTimeout(function () {
+            $(".per-img").attr("src",$("#preImg").val());
+            $(".per-img").show();
+        },200)
+        $(".live_on .isLivingBox .livingfoot").css("width",$(window).width()-40);
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var version = getUrlParam("version");
+        function toNum(str){
+            var str1 = str;
+            var arr = str1.split(".");
+            var newStr = arr.join("");
+            var newNum = Number(newStr);
+            return newNum;
+        }
+        var verS = toNum(version);
+        if(verS>=220){
+            $(".isShow").removeClass("hidden")
+        }else{
+            var isSingleApp = getUrlParam("app");
+            if(isSingleApp && isSingleApp == "dl"){
+                $(".isShow").removeClass("hidden");
+			}else{
+                $(".isShow").addClass("hidden");
+			}
+
+        }
+	})
+
+	Echo.init({
+		offset: 0,
+		throttle: 0
+	});
+	
+	$(".live-title").each(function(){
+		if($(this).text().length>8){
+		str = $(this).text().substr(0,8) + "...";
+		$(this).text(str);
+		}
+	});
+
+    function toAnchorInfo(){
+        var phoneType = getMobileType();
+        if(phoneType=="iphone"){
+            var obj = new Object();
+            var ancMesCenter = new Object();
+            ancMesCenter.fun = "toAncMesCenter";
+            ancMesCenter.data = obj;
+            window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(ancMesCenter));
+        }else {
+            window.location.href =
+                    "${rc.contextPath}/external/app/anchor/info/page?anchorId=$!{anchorInfo.anchorId}&"
+                    + $("#listPage").val()
+                    + "&target=blank";
+        }
+
+    }
+
+    function toContribList(){
+	    var phoneType = getMobileType();
+	    if(phoneType == "iphone"){
+	        var obj = new Object();
+	        var contribList = new Object();
+	        contribList.fun = "toContribute";
+	        contribList.data = obj;
+            window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(contribList));
+		}else {
+            window.location.href =
+                    "${rc.contextPath}/app/video/consInfo?anchorId=$!{anchorInfo.anchorId}&"
+                    + $("#listPage").val()
+                    + "&target=blank";
+		}
+	}
+
+
+</script>

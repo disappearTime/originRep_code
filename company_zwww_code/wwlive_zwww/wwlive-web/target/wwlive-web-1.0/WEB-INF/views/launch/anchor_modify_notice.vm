@@ -1,0 +1,69 @@
+#set($page_title= "修改公告")
+<div class="edit-infor pt10">
+	<div class="set-infor"><input type="text" value="$!{notice}" onfocus="cleanInfo();" id="notice" placeholder="公告最多只能写25个字" maxlength="25"/><span></span></div>
+	<p id="info" class="wrong"></p>
+	<div class="hold-infor"><input type="button" value="保存" onclick="modifyNotice();"></div>
+</div>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<input type="hidden" value="$!{modifyUrl}" id="modifyUrl">
+<input type="hidden" value="$!{rc.contextPath}" id="web">
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/anchor/ios_info_interaction.js?$!application.getAttribute('/static/js/launch/anchor/ios_info_interaction.js')"></script>
+<script type="text/javascript">
+
+    $(function(){
+    	var notice = "$!{notice}";
+    	if(notice == ""){
+    		$("#notice").val("主播很懒，什么都没留下");
+    	}
+    });
+
+	$(".set-infor span").click(function () {
+		$(this).siblings("input").attr("value","").focus();
+	});
+	function cleanInfo() {
+        $("#info").text("");
+	}
+	function modifyNotice() {
+    	var anchorId = $.trim($("#anchorId").val());
+		if (isBlank(anchorId)) {
+			return;
+		}
+		 var notice = $.trim($("#notice").val());
+         if (notice.length > 25) {
+            $("#info").css("opacity","1").text("公告最多只能写25个字哦~");
+            return;
+         }       
+        var submitData = new Object();
+        submitData.anchorId = anchorId;
+        submitData.notice = notice;
+    	var modifyUrl = $.trim($("#modifyUrl").val());
+		$.ajax({
+	        type: "POST",
+	        url: "${rc.contextPath}/launch/anchor/modify/notice.json?" + modifyUrl,
+	        data:submitData,
+	        timeout: 9000,
+			dataType : 'json',
+	        success: function(data) {
+	        	if (data == null) {
+	                $("#info").css("opacity","1").text("修改失败，请刷新页面。");
+	                return;
+	        	}
+	        	var value = data.data;
+	        	if (value == 1) {
+	        		reloadWebView();
+		        	closeWebView();
+	        		return;
+	        	}
+                $("#info").css("opacity","1").text("修改失败，请刷新页面。");
+	        	
+	        },
+	        error: function(k, j) {
+	        	console.log("异常：" + k + " " + j);
+	        },
+	    });
+	}
+</script>

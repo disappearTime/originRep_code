@@ -1,0 +1,116 @@
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+	-moz-tap-highlight-color: rgba(0, 0, 0, 0);
+	-moz-touch-callout: none;
+}
+body, div, p, blockquote, hr, ul, ol, h1, h2, h3, h4, h5, h6, menu, dd, dl, form, fieldset, input, textarea, caption, select, button, input, pre, hr, td, th, address, section, article, aside, header, footer, nav, dialog, figure, hgroup {
+	margin: 0;
+	padding: 0
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block
+}
+html, body {
+	width: 100%;
+	height: 100%
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	font-size: 14px;
+}
+b {
+	font-weight: normal;
+}
+em, address {
+	font-style: normal
+}
+i{
+	font-style: normal;
+}
+ul, ol, li {
+	list-style: none
+}
+img {
+	vertical-align: middle;
+}
+img, a {
+	border: 0 none
+}
+a {
+	text-decoration: none;
+	color: #4a4a4a;
+	background: transparent
+}
+a:focus, a:active, a:hover {
+	outline: 0
+}
+input, *:focus, input, button, select, textarea {
+	outline: 0
+}
+:focus {
+	outline: 0
+}
+input{-webkit-appearance:none;}
+del {
+	margin: 0 3px
+}
+.underline {
+	text-decoration: underline;
+}
+body {
+	font-family: Helvetica, "Microsoft YaHei";
+	/*background: #f4f4f4;*/
+	font-size: 14px;
+	line-height: 1.2;
+	color: #4a4a4a;
+}
+/*解决一像素边框问题*/
+.bor_bott{
+	position: relative;
+}
+.bor_bott:after{
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1px;
+	background: #aaaaaa;
+	-webkit-transform: scaleY(0.5);	
+}
+/*清除浮动*/
+.clearfix{zoom: 1;}
+.clearfix:after{
+	clear:both;
+	content:'.';
+	display:block;
+	width: 0;
+	height: 0;
+	visibility:hidden;
+}
+/*rem布局媒体查询*/
+@media screen and (min-width: 320px) {
+    html {font-size: 14px;}
+}
+ 
+@media screen and (min-width: 360px) {
+    html {font-size: 16px;}
+}
+ 
+@media screen and (min-width: 400px) {
+    html {font-size: 18px;}
+}
+ 
+@media screen and (min-width: 440px) {
+    html {font-size: 20px;}
+}
+ 
+@media screen and (min-width: 480px) {
+    html {font-size: 22px;}
+}
+ 
+@media screen and (min-width: 640px) {
+    html {font-size: 28px;}
+}

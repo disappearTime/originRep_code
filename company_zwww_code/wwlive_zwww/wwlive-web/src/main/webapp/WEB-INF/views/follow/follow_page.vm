@@ -1,0 +1,115 @@
+#set($layout = '/layout/empty.vm')
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no;email=no">
+    <title>关注</title>
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+</head>
+<body>
+<input type="hidden" id="commonParams" value="$!{commonParams}">
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<input type="hidden" value="${followCnt}" id="followCnt"/>
+<input type="hidden" id="version" value="$!{version}">
+
+<div class="follow-list">
+    <ul id="followList">
+    </ul>
+</div>
+
+<p class="" id="autopbn" ></p>
+<script type="text/javascript" src="${rc.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/echo.min.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/myself.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/follow/follow_list.js?ver=0"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+#*<script type="text/javascript" src="${rc.contextPath}/static/js/follow/followCommon.js?$!application.getAttribute('/static/js/follow/followCommon.js')"></script>*#
+<script type="text/javascript" src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+</body>
+<script type="text/javascript">
+    //确保多次点击时只有最后一次点击的请求能够成功
+    var pendingRequests = {};
+    $.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+        var key = options.url;
+        if (!pendingRequests[key]) {
+            pendingRequests[key] = jqXHR;
+        }else{
+            //jqXHR.abort(); //放弃后触发的提交
+            pendingRequests[key].abort(); // 放弃先触发的提交
+        }
+        var complete = options.complete;
+        options.complete = function(jqXHR, textStatus) {
+            pendingRequests[key] = null;
+            if ($.isFunction(complete)) {
+                complete.apply(this, arguments);
+            }
+        };
+    });
+    //关注列表页是否需要刷新，获取到的数据和原有数据一样时不再刷新页面
+    function updateFollowPage() {
+        if(arguments.length==0){
+            var anchorIdStr = '';
+            var oLi = $("#followList li");
+            var oLiLen = oLi.length;
+            for(var i=0;i<oLiLen;i++){
+                var anchorId = oLi.eq(i).attr("data-id");
+                anchorIdStr+=anchorId;
+            }
+
+            var loginId = getUrlParam("loginId")
+            var path =$("#web").val();
+            if (path == null || path == undefined) {
+                return;
+            }
+            var cnid = getUrlParam("cnid");
+            var i = path + "/external/app/user/follow/page1.json?" + "t=" + parseInt(( + new Date() / 1000) / (Math.random() * 1000)) + "&cnid=" + cnid;
+            $.ajax({
+                type: "GET",
+                url: i,
+                dataType:"text",
+                data:{"loginId" : loginId},
+                timeout: 9000,
+                success: function(data) {
+                    var str = data;
+                    var arr = str.split(",");
+                    var newAnchorIdStr = arr.join("");
+                    if(anchorIdStr==newAnchorIdStr){
+                        return;
+                    }else{
+                        window.location.reload();
+                    }
+                },
+            });
+        }else{
+            var number = arguments[3];
+            var anchorId = arguments[2];
+            if(number>0){
+                var newNum = number - 1;
+                $("#view_"+anchorId).html("&nbsp;&nbsp;"+newNum);
+            }
+            updateFollowPage();
+        }
+    }
+    //为滚动轴绑定图片懒加载事件
+    document.onscroll = function(){
+        Lazy.Load();
+    }
+    setTimeout(function() {
+        Lazy.Load()
+    },100);
+
+    $("#followList").on("touchstart",".follow-box",function(){
+        $(this).addClass("v3_cur");
+    });
+
+    $("#followList").on("touchmove , touchend , swipe",".follow-box",function(){
+        $(this).removeClass("v3_cur");
+    });
+</script>
+</html>

@@ -1,0 +1,91 @@
+#set($layout = '/layout/empty.vm')
+#if(${page.total} != 0)
+<table cellspacing="0" cellpadding="0" class="viewer_list" width="320">
+    #foreach($map in $page.data)
+	<tr>
+		<td width="50" onclick='userInfo($!{map.userId})'><img src="$!{map.headImg}" alt="" width="40" onerror="this.src='/static/images/user_cover.png'" height="40" class="td_pic"/> 
+		#if($!{map.follower} > 0)<img src="../static/images/star.png" alt="" class="star">
+		#end</td>
+		#set($nickname=$!{map.userName})
+		#if($nickname.length()>6)
+		#set($nickname=$nickname.substring(0, 6) + '...')
+		#end		
+		<td width="150" onclick='userInfo($!{map.userId})'>$!{nickname}&nbsp;
+		<input type="hidden" id="userName$!{map.userId}" value="$!{map.userName}"/>
+		#if($!{map.sex} == 0)
+		<img src="/static/images/use_women.png" alt="" />
+		#elseif($!{map.sex} == 1)
+		<img src="/static/images/user_man.png" alt="" />
+		#end
+		</td>
+		<td width="60"><img src="/static/images/edit.png" onclick="userInfo($!{map.userId})" alt="" /></td>
+		#if($!{videoStatus} != 4) 
+			#if($!{map.isBlack} == 0)
+			<td class="say" onclick="isBlack($!{map.userId}, '$!{map.userName}');" id="sayTd$!{map.userId}"><input type="hidden" id="say$!{map.userId}" value="$!{map.isBlack}"/></td>
+			#elseif($!{map.isBlack} == 1)
+			<td class="say_no" onclick="isBlack($!{map.userId}, '$!{map.userName}');" id="sayTd$!{map.userId}"><input type="hidden" id="say$!{map.userId}" value="$!{map.isBlack}"/></td>
+			#end
+		#end
+	</tr>
+	#end
+</table>
+#end
+#if($page && $!page.pageTotal > 1)
+<div class="pager-wraaper textR fr">
+    <div class="page fl mr5">
+    ## 定义区间大小
+        #set($range= 4 )
+        #set($nextPage = $!page.pageIndex + 1)
+        #set($prePage = $!page.pageIndex - 1)
+    ## 如果当前页大于1 显示上一页
+        #if($!page.pageIndex > 1)
+            <a class="pre " href="javascript:void(0);" onclick="viewersInfo($!{page.id}, $prePage)">上一页</a>
+        #else
+            <a class="pre disable" href="javascript:void(0);"></a>
+        #end
+    ## 如果总页数大于2页   默认显示 1、2页  否则默认显示1页
+        #if($!page.pageIndex > 2)
+            <a  href="javascript:void(0);" onclick="viewersInfo($!{page.id}, 1)">1</a>
+            <a  href="javascript:void(0);" onclick="viewersInfo($!{page.id}, 2)">2</a>
+        #end
+
+        #if($!page.pageIndex == 2)
+            <a  href="javascript:void(0);" onclick="viewersInfo($!{page.id}, 1)">1</a>
+        #end
+
+    ##判断前置.. 如果当前页大于 1+区间  显示..
+        #set($pageIndexTemp= $range +1)
+        #if($!page.pageIndex > 3)
+            <span>...</span>
+        #end
+
+    ## 遍历  当前页 至区间末端 的页码
+        #set($temp = $!page.pageIndex+$range)
+        #if($temp > $!page.pageTotal)
+            #set($temp = $!page.pageTotal)
+        #end
+        #foreach($i  in [$!page.pageIndex..$temp])
+            #if($i == $!page.pageIndex )
+
+                #if($!{page.total} > 10 )
+                    <a class="active" href="javascript:void(0);" onclick="viewersInfo($!{page.id}, $i)">$i</a>
+                #end
+
+            #else
+                <a  href="javascript:void(0);" onclick="viewersInfo($!{page.id}, $i)">$i</a>
+            #end
+        #end
+
+    ## 设置后端.. 如果区间末页 小于最终页 显示.....
+        #if($page.pageTotal - $page.pageIndex > $range)
+            <span>...</span>
+        #end
+    ##设置显示下一页
+        #if($page.pageTotal > $page.pageIndex)
+            <a class="next_page" href="javascript:void(0);" onclick="viewersInfo($!{page.id}, $nextPage)">下一页</a>
+        #else
+            <a class="next_page disable" href="javascript:void(0);"></a>
+        #end
+    </div>
+</div>
+#end

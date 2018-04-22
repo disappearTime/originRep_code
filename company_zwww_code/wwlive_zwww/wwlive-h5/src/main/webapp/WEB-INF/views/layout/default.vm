@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" class="root61">
+<head>
+    <title>$!page_title</title>
+    <meta charset="UTF-8"/>
+    <!-- css -->
+    #if($cssblock)$cssblock#end
+    <!-- end css -->
+    <!-- js -->
+    #if($jsblock)$jsblock#end
+    <!-- end js -->
+</head>
+    <body>
+    <!-- header -->
+    #parse('layout/header.vm')
+    <!-- end header -->
+    <!-- content -->
+    $screen_content
+    <!-- end content -->
+    <!-- footer -->
+    #parse('layout/footer.vm')
+    <!-- end footer -->
+    </body>
+</html>

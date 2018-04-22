@@ -1,0 +1,151 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en" class="root61">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no;email=no">
+<title>充值</title>
+<meta charset="UTF-8" />
+<!-- css -->
+<link href="${rc.contextPath}/static/css/live.css" rel="stylesheet" />
+<!-- end css -->
+<!-- js -->
+	<script
+	src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+	<script type="text/javascript" 
+	src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+<!-- end js -->
+</head>
+<body>
+	<div class="shadowUp" style="display:none" id="shadowUp"></div>
+	<div class="tip_success" style="display:none" id="tip_success">去微信付款...</div>
+	<div class="page_bg rechargeWrap">
+		<input type="hidden" id="jsonRecharges" value="${jsonRecharges}">
+		<ul class="recharge-nav">
+			<li class="active">充值</li>
+			<li onclick="window.location.href='${rc.contextPath}/app/my/exchange/page?$!{exchargeUrl}&trace=clear';">免费兑换</li>
+		</ul>
+		<div class="regCut"></div>
+		<ul class="recharge-num">
+		#foreach($param in ${rechargeList})
+			#if($velocityCount == 1)
+			<li class="active">
+			#else
+			<li>
+			#end
+			<span>$!{param.goodsName}</span>
+				<input type="hidden" value="$!{param.goodsId}"/>
+					#set($realPrice= $param.realPrice / 100)
+				<input type="hidden" value="$!{realPrice}"/>
+				<p>
+					<em>$!{param.goodsName}元</em><i>$!{realPrice}</i>元
+				</p> 
+				#if($velocityCount == 1)
+					<b class="right-mark"></b>
+				#end
+			</li>
+			
+		#end
+			<li class="other-num">
+			<font>其他金额</font> 
+				<input type="hidden" value="0"/>
+				<input type="hidden" value="0"/>
+			<input type="text" id="other-amt" oninput="otherChange();" 
+				onkeyup="otherCheck(this);" 
+				onafterpaste="this.value=this.value.replace(/^0|\D/g,'')" maxlength="5"
+				placeholder="请输入金额" />
+				<p id="real"></p>
+				</li>
+				
+		</ul>
+		<div class="recharge-way mt10">
+			<h3>请选择支付方式</h3>
+			<ul class="way-list">
+				<li class="cz-wx active"><a href="#" >微信</a> <input type="hidden" value="2"/> <b class="mark"></b></li>
+				<li class="cz-zfb"><a href="#" >支付宝</a> <input type="hidden" value="3"/></li>
+			</ul>
+			<input type="button" value="确认充值" class="recharge-btn" onclick="choice();"/> 
+			<a href="${rc.contextPath}/external/excharge/page?origin=2&userId=$!{userId}&target=blank" class="recharge-record">充值记录</a>
+		</div>
+        <i class="chargeToast"></i>
+	</div>
+	
+    #foreach($param in ${params.keySet()})  
+    	<input type="hidden" id="$param" value="${params.get($param)}">
+    #end
+
+	<input type="hidden" value="${rc.contextPath}" id="web"/>
+	<script type="text/javascript" 
+	src="${rc.contextPath}/static/js/my/recharge.js?$!application.getAttribute('/static/js/my/recharge.js')"></script>
+	<script type="text/javascript"
+	src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+	<script type="text/javascript"
+		src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+	<script type="text/javascript"
+		src="${rc.contextPath}/static/js/my/chargeChoice.js?$!application.getAttribute('/static/js/my/chargeChoice.js')"></script>
+    <script type="text/javascript"
+            src="${rc.contextPath}/static/js/packedFun.js?$!application.getAttribute('/static/js/packedFun.js')"></script>
+	<script type="text/javascript">
+        var isSingleApp = getUrlParam("app");
+        if(isSingleApp && isSingleApp == "dl"){
+            $(".recharge-nav").css("display","none");
+        }else{
+            $(".recharge-nav").css("display","-webkit-box");
+        }
+		var rechareges = ${jsonRecharges};
+		var map = {
+			keys : new Array(),
+			values : new Array(),
+			init : function() {
+				for (var i = 0; i < rechareges.length; i++) {
+					this.keys[i] = rechareges[i].goodsPrice;
+					this.values[i] = rechareges[i].discount;
+				}
+			},
+			get : function(key) {
+				for (var i = 0; i < this.keys.length; i++) {
+					if (key == this.keys[i]) {
+						return this.values[i];
+					}
+				}
+
+			}
+		};
+		map.init();
+		
+		function otherCheck(other) {
+			other.value = other.value.replace(/^0|\D/g, '');
+			var val = other.value;
+			if (val == null || val == "") {
+				$("#real").hide();
+				return;
+			}
+			var discount = showDiscount(val);
+			var origin = val;
+			var real = discount * val / 100;
+			console.log(origin + " " + real);
+			$("#real").html("<em>" + origin + "元</em><i>"+ real +"</i>元");
+			$("#real").show();
+		}
+		function showDiscount(val) {
+			var coin = val * 100;
+			var keys = map.keys;
+			var values = map.values;
+			var lower = 0;
+			var discount = 100;
+			for (var i = 0; i < keys.length; i++) {
+				if (coin >= keys[i]) {
+					discount = values[i];
+					continue;
+				} else {
+					break;
+				}
+			}
+			return discount;
+		}
+	</script>
+</body>
+</html>

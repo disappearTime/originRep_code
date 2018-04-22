@@ -1,0 +1,46 @@
+#set($page_title="我的粉丝")
+#set($head_nav=6)
+<div class="fans">
+    <div id="followerTable"></div>
+    <input id="timestamps" type="hidden" value="0">
+</div>
+<script>
+    $(function(){
+    	setFollowerTable(1);   	   
+    	
+    });
+    
+    function setFollowerTable(isNext, pageNo){
+    	var timestamp = $("input[name='timestamp']").last().val();
+        var timestamps = $("#timestamps").val();
+    	if (isNext == 1){ // 如果是往后翻页, 记录当前页的最后一个timestamp
+    	    timestamps += "," + timestamp;
+            $("#timestamps").val(timestamps);
+        } else if (isNext == 0) { // 往前翻页
+            var timeArray = new Array();
+    	    timeArray = timestamps.split(",");
+    	    if (pageNo == undefined) {
+    	        pageNo = 1;
+            }
+    	    timestamp = timeArray[pageNo - 1];
+        }
+    	if(pageNo == 1 || pageNo == undefined){
+    		timestamp = 0;
+            $("#timestamps").val("0");
+    	}
+    	$.ajax({
+            type: "GET",
+            url: "${rc.contextPath}/anchor/follower/page",
+            data: {
+            	"pageIndex": pageNo,
+            	"timestamp": timestamp
+            	},
+            //dataType: "html",
+            success: function (result) {
+                if (result != null) {
+                    $("#followerTable").html(result);
+                }
+            }
+        });
+    }
+</script>

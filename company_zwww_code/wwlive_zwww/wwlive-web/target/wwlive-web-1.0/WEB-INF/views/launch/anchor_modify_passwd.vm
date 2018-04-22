@@ -1,0 +1,106 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en" class="root61">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no;email=no">
+    <title>修改密码</title>
+    <meta charset="UTF-8"/>
+    <!-- css -->
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+    <!-- end css -->
+    <!-- js -->
+    <script src="${rc.contextPath}/static/js/util/strutil.js?$!application.getAttribute('/static/js/util/strutil.js')"></script>
+    <!-- end js -->
+</head>
+    <body> 
+<div class="edit-infor">
+	<div class="reset-psw">
+		<h3>新密码：</h3>
+		<div class="see"><input type="password" placeholder="6-16位，至少含数字/字母/字符2种组合" id="passwd" onfocus="cleanInfo();"><em class="active"></em></div>
+		<h3>确认密码：</h3>
+		<div class="see"><input type="password" placeholder="6-16位，至少含数字/字母/字符2种组合" id="passwdConfirm" onfocus="cleanInfo();"><em class="active"></em></div>
+	</div>
+	<p id="info" class="wrong"></p>
+	<div class="hold-infor"><input type="button" value="保存" onclick="modifyPwd();"></div>
+</div>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<input type="hidden" value="$!{modifyUrl}" id="modifyUrl">
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/anchor/ios_info_interaction.js?$!application.getAttribute('/static/js/launch/anchor/ios_info_interaction.js')"></script>
+<script type="text/javascript">
+
+	 $(".see em").click(function () {
+	    var that =$(this);
+	    $(this).toggleClass("active");
+	    if(!$(this).hasClass("active")){
+	        that.siblings("input").attr("type","text");
+	    }else{
+	        that.siblings("input").attr("type","password");
+	    }
+	}) 
+
+	function cleanInfo() {
+        $("#info").text("");
+	}
+	function modifyPwd() {
+    	var anchorId = $.trim($("#anchorId").val());
+		if (isBlank(anchorId)) {
+			return;
+		}
+    	 //验证新密码, 只需要两次密码输入一致即可
+        var passwd = $.trim($("#passwd").val());
+        var passwdConfirm = $.trim($("#passwdConfirm").val());
+        if (isBlank(passwd)) {
+            $("#info").css("opacity","1").text("密码不能为空!");
+			return;
+		}
+        if(passwd != passwdConfirm){
+            $("#info").css("opacity","1").text("两次输入不一致!");
+            return;
+        }
+        if (passwd.length < 6 || passwd.length > 16) {
+            $("#info").css("opacity","1").text("密码长度在6至16位之间！");
+        	return;
+        }
+        var regex = /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/;
+        if (!regex.test(passwd)) {
+            $("#info").css("opacity","1").text("密码格式不正确！");
+        	return;
+        }
+        var submitData = new Object();
+        submitData.anchorId = anchorId;
+        submitData.passwd = passwd;
+    	var modifyUrl = $.trim($("#modifyUrl").val());
+		$.ajax({
+	        type: "POST",
+	        url: "${rc.contextPath}/launch/anchor/modify/passwd.json?" + modifyUrl,
+	        data:submitData,
+	        timeout: 9000,
+			dataType : 'json',
+	        success: function(data) {
+	        	if (data == null) {
+	                $("#info").css("opacity","1").text("修改失败，请刷新页面。");
+	                return;
+	        	}
+	        	var value = data.data;
+	        	if (value == 1) {
+	        		reloadWebView();
+		        	closeWebView();
+	        		return;
+	        	}
+                $("#info").css("opacity","1").text("修改失败，请刷新页面。");
+	        },
+	        error: function(k, j) {
+	        	console.log("异常：" + k + " " + j);
+	        },
+	    });
+	}
+</script>
+</body>
+</html>

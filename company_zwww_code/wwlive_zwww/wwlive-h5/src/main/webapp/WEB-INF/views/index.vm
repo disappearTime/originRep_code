@@ -1,0 +1,6 @@
+#define($jsblock)
+<script type="text/javascript" >
+
+</script>
+#end
+hello:$!user.name

@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ckplayer播放器</title>
+</head>
+<body>
+<div>召唤视频</div>
+<div id="a1"></div>
+<script type="text/javascript" src="${rc.contextPath}/static/ckplayer/ckplayer.js?$!application.getAttribute('/static/ckplayer/ckplayer.js')" charset="utf-8"></script>
+<script type="text/javascript">
+	var flashvars={
+		f:'${rc.contextPath}/static/ckplayer/m3u8.swf',
+		a:'http://wwlive.ks3-cn-beijing.ksyun.com/record/livetest/LIVE0004213/hls/LIVE0004213-0003891.m3u8',
+		s:4,
+		c:0
+	};
+	var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+	var video=['http://wwlive.ks3-cn-beijing.ksyun.com/record/livetest/LIVE0004213/hls/LIVE0004213-0003891.m3u8'];
+	CKobject.embed('${rc.contextPath}/static/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','100%',false,flashvars,video,params);
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+#set($page_title="修改昵称")
+<div class="setNickWrap">
+    <div class="newNickname">
+        <input type="text" id="nickName" value="$!{nickname}">
+        <img src="${rc.contextPath}/static/images/empty.png" alt="">
+    </div>
+    <p><i>支持1-10个字的汉字、字母、数字</i><span><em>0</em>/10</span></p>
+    <button type="button">保存</button>
+    <div class="toast">昵称修改成功</div>
+</div>
+<input type="hidden" id="web" value="$!{rc.contextPath}">
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/setData/setNickname.js?$!application.getAttribute('/static/js/my/setData/setNickname.js')"></script>

@@ -1,0 +1,13 @@
+just for test~
+<input type="button" value="上传图片" onclick="takePhotoForApp();">
+<script type="text/javascript">
+	function takePhotoForApp(){
+		var url = "/launch/common/img/upload.json";
+        var obj = new Object();
+        obj.url = url;
+		var operation = new Object();
+	    operation.fun = "takePhoto";
+	    operation.data = obj;
+	    window.webkit.messageHandlers.jsClient.postMessage(JSON.stringify(operation));
+	}	
+</script>

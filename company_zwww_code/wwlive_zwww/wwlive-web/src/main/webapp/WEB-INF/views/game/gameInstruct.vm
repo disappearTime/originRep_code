@@ -1,0 +1,105 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="${rc.contextPath}/static/css/mobileReset.css?$!application.getAttribute('/static/css/mobileReset.css')" rel="stylesheet"/>
+    <style type="text/css">
+        .gameWrap{
+            width: 84.4%;
+            /*height: 100%;*/
+            padding: 0 7.8%;
+            background: url("/static/images/game/gamebg.png") repeat center center;
+            background-size: 100%;
+        }
+        .gameWrap img{
+            height: 1rem;
+            margin: 7px 0;
+        }
+        .honor img{
+            height: 0.9rem!important;
+        }
+        .lianji img{
+            height: 0.85rem!important;
+        }
+        .award img{
+            height: 0.9rem!important;
+        }
+        .gameWrap p{
+            font-size: 0.625rem;
+            color: #FFFFFF;
+            line-height: 0.85rem;
+            text-indent: 2em;
+            letter-spacing: 2px;
+            font-family: FZLTHJW--GB1-0!important;
+        }
+    </style>
+</head>
+<body>
+<div class="gameWrap">
+    <div class="game-ntroduction">
+        <img src="$!{rc.contentPath}/static/images/game-ntroduction.png" alt="">
+        <p>翻江龙是一款纸牌博彩游戏，在游戏中为玩家准备了三套纸牌,不同颜色的套牌所包含的奖品价值有所不同，单价越高的纸牌爆奖的价值也越高。抽出不同种类的纸牌，会消耗不同数量的钻石数。</p>
+    </div>
+    <div class="drawCard">
+        <img src="$!{rc.contentPath}/static/images/drawCard.png" alt="">
+        <p>游戏开始后，光标会在纸牌间反复游移，点击抽牌按钮来揭开相应的纸牌，获得对应的奖品。</p>
+    </div>
+    <div class="lianji">
+        <img src="$!{rc.contextPath}/static/images/game/lianji.png"/>
+        <p>玩家可选择在一局中连抽多张（最多8张）或一次抽出8张牌，来增加爆大奖的几率。</p>
+    </div>
+    <div class="award">
+        <img src="$!{rc.contextPath}/static/images/game/award.png"/>
+        <p>您参与游戏获得的奖品将收藏在礼物背包中，背包中的礼物与普通礼物等值。</p>
+    </div>
+    <div class="honor">
+        <img src="$!{rc.contextPath}/static/images/game/honor.png"/>
+        <p>您获得Q、K、A大奖的次数及中奖总金额会被系统记录，展示在游戏的幸运榜中可被全站的用户看到（数据每周更新）；若您在游戏中中得超跑还会播报全站，与众人分享喜悦。</p>
+    </div>
+##    <div class="changeCard">
+##        <img src="$!{rc.contextPath}/static/images/game/changeCard.png"/>
+##        <p>翻江龙是一款纸牌游戏，在游戏中为玩家准备了三套纸牌，不同颜色的套牌所包含的奖品价值有所不同，单价越高的纸牌爆奖的价值也越高。选定套牌后，每次切牌会消耗不同数量的钻石数。
+##        </p>
+##    </div>
+##
+##    <div class="start">
+##        <img src="$!{rc.contextPath}/static/images/game/start.png"/>
+##        <p>游戏开始后，牌会反复游移，点击开始按钮来揭开相应的纸牌，获得对应的奖品。</p>
+##    </div>
+        <div class="exclusive">
+            <img src="$!{rc.contextPath}/static/images/exclusive.png"/>
+            <p>游戏由13张纸牌组成，纸牌的牌面也是主播MM们的战场，获得更多疼爱的主播，会等待在牌面上展示自己封面图的机会，同时受到更多的关注机会。</p>
+        </div>
+        <div class="help-exclusive">
+            <img src="$!{rc.contextPath}/static/images/help-exclusive.png"/>
+            <p>您在游戏中抽牌所花费的钻石数会计入当前直播间的游戏贡献值，当天直播间游戏贡献值前13名的主播会在隔天登上纸牌的牌面</p>
+        </div>
+        <div class="Game-record">
+            <img src="$!{rc.contextPath}/static/images/Game-record.png"/>
+            <p>您每一局的游戏内容均会罗列在“我的”-“消费记录”中，即使在网络不稳定的情况下，只要系统真实扣费便会给您完成返奖并加以记录，有据可查，安心、放心。</p>
+        </div>
+
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

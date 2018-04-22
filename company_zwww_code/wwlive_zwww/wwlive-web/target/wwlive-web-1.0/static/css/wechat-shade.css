@@ -1,0 +1,53 @@
+body,div,ul,ol,li,dl,dt,dd,form,input,textarea,p,th,td,h1,h2,h3,h4{margin:0;padding:0;}
+img{border:0;}
+body,th,td,input,select,textarea,h1,h2,h3,h4,i,em{font:14px Helvetica, "Microsoft YaHei"; font-style:normal;font-weight:normal;}
+/*html,body{height:100%;}*/
+body{background-color:#fff;color:#333;_background-attachment:fixed;}
+ul,ol{list-style-type:none;}
+input,select,textarea{outline:none;resize:none;}
+input[type=button]{ cursor: pointer;}
+input::-ms-clear{display:none;}
+a{text-decoration:none;color:#333; cursor: pointer;}
+/* initial */
+.clearfix:after{display:block;content:"";clear:both;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+.hide{display:none;}
+
+
+
+.wx-bg{
+    background-color: #ebebeb;
+    padding-bottom: 10px;
+}
+.wx-font{
+    background-color: #fff;
+    padding: 10px 16px;
+    position: relative;
+}
+.wx-font::after{
+    content: "";
+    display: block;
+    background-image: url("../images/wx-01.png");
+    background-size: 20px 23px;
+    width: 20px;
+    height: 23px;
+    line-height: 22px;
+    text-align: center;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+.wx-font b{
+    font-weight: normal;
+    color: #ff8b46;
+}
+.wx-pic{
+    width: 100%;
+    height: auto;
+}
+.wx-pic img{
+    width: 100%;
+    height: auto;
+}

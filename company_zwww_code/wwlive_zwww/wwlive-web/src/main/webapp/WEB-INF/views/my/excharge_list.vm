@@ -1,0 +1,39 @@
+#set($layout = '/layout/empty.vm')
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no;email=no">
+#if($!{origin} == 1)
+<title>兑换记录</title>
+#else
+<title>充值记录</title>
+#end
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+</head>
+<body class="page_bg">
+<script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/swiper.min.js?$!application.getAttribute('/static/js/swiper.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/my/exchargeList.js?$!application.getAttribute('/static/js/my/exchargeList.js')"></script>
+<script type="text/javascript">   
+	//为滚动轴绑定图片懒加载事件
+	document.onscroll = function(){
+		Lazy.Load();
+	}
+	setTimeout(function() {
+		Lazy.Load()
+	},100);
+</script>
+<div id="data-div">
+</div>
+<p class="" id="autopbn" ></p>
+<input type="hidden" value="${rc.contextPath}" id="web"/>
+<input type="hidden" value="$!{origin}" id="origin"/>
+<input type="hidden" value="$!{userId}" id="userId"/>
+</body>
+</html>
+

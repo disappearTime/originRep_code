@@ -1,0 +1,34 @@
+body,div,ul,ol,li,dl,dt,dd,form,input,textarea,p,th,td,h1,h2,h3,h4{margin:0;padding:0;}
+img{border:0;}
+body,th,td,input,select,textarea,h1,h2,h3,h4,i,em{font:14px Helvetica, "Microsoft YaHei"; font-style:normal;font-weight:normal;}
+html,body{height:100%;}
+body{background-color:#fff;color:#333;_background-attachment:fixed;_background-image:url(about:blank);}
+ul,ol{list-style-type:none;}
+input,select,textarea{outline:none;resize:none;border:0;}
+input[type=button]{ cursor: pointer;}
+input::-ms-clear{display:none;}
+a{text-decoration:none;color:#333; cursor: pointer;}
+
+.land_head{ width: 100%; background-color: #33383b;}
+.land_logo{ width: 1200px; margin:0 auto; padding: 20px 0; overflow: hidden;}
+.land_logo a{ display: block; float: left;}
+.land_logo span{ color:#fff; display: block; float: left; height:78px; line-height: 78px; padding-left: 15px; font-size: 24px;}
+.land_content{ width: 100%; background-color: #f5f5f5; padding-top: 30px; height: 100%;}
+.land_con{ width: 1200px; margin: 0 auto; background-color: #fff; overflow: hidden;}
+.land_left{ padding: 0 20px 80px 20px; width: 800px; float: left; border-right: 1px dashed #d9d9d9;}
+.land_left h3{ padding: 30px 10px; font-size: 20px;}
+.land_bg{ background: url(../images/pc_bg1.png) no-repeat; height: 500px;}
+.land_code{ text-align: center; padding-top: 120px;}
+.land_code img{ margin-bottom: 30px;}
+.land_code p{ font-size: 20px; color:#fff;;}
+.land_right{ margin-left: 840px; padding: 87px 20px 0 20px; position: relative;}
+.land_cover{ height: 236px; width:220px; background: url(../images/shadow.png) no-repeat bottom;}
+.land_right h3{ height: 30px; padding-top: 10px;}
+.land_right span{ display: inline-block;line-height: 30px; font-size: 20px;}
+.land_right h3 img{padding-left: 10px;width: 20px;margin-top: -7px;vertical-align: middle;}
+.land_right p{ padding-top: 15px; line-height: 25px; font-size:16px; color:#999;}
+.gray_horn{ position: absolute; top:0; left: -11px;}
+.top_code{ float: right;}
+.top_code img{ float: left;}
+.load_book{ padding:15px 0 0 10px; float: left;}
+.load_book p{ color:#fff; padding-bottom: 5px;}

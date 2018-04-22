@@ -1,0 +1,95 @@
+#set($layout = '/layout/empty.vm')
+<!DOCTYPE html>
+<html lang="en" class="root61">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="address=no;email=no">
+	<title>直播</title>
+    <meta charset="UTF-8"/>
+    <link href="${rc.contextPath}/static/css/swiper-3.4.2.min.css?$!application.getAttribute('/static/css/swiper-3.4.2.min.css')" rel="stylesheet"/>
+    <link href="${rc.contextPath}/static/css/live.css?$!application.getAttribute('/static/css/live.css')" rel="stylesheet"/>
+	<!-- rem布局js -->
+    <script type="text/javascript" src="${rc.contextPath}/static/js/rrr.js?$!application.getAttribute('/static/js/rrr.js')"></script>
+    <!-- css -->
+    <!-- end css -->
+    <!-- js -->
+    #*<script type="text/javascript" src="${rc.contextPath}/static/js/rrr.js?$!application.getAttribute('/static/js/autopage.js')">*#
+    <script src="${rc.contextPath}/static/js/jquery-1.8.3.min.js?$!application.getAttribute('/static/js/jquery-1.8.3.min.js')"></script>
+	<script src="${rc.contextPath}/static/js/index/videoList.js?$!application.getAttribute('/static/js/index/videoList.js')"></script>
+    <script src="${rc.contextPath}/static/js/swiper-3.4.1.min.js?$!application.getAttribute('/static/js/swiper-3.4.1.min.js')"></script>
+	<script src="${rc.contextPath}/static/js/index/banner.js?$!application.getAttribute('/static/js/index/banner.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/autopage.js?$!application.getAttribute('/static/js/autopage.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/video/videoInfo.js?$!application.getAttribute('/static/js/video/videoInfo.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/util/strutil.js?ver=0"></script>
+	<script type="text/javascript">   
+	//为滚动轴绑定图片懒加载事件
+		document.onscroll = function(){
+			Lazy.Load();
+		}
+		setTimeout(function() {
+    Lazy.Load()
+    },100);
+	</script>
+    <!-- end js -->
+</head>
+    <body>
+    #foreach($param in ${params.keySet()})  
+    	<input type="hidden" id="$param" value="${params.get($param)}">
+    #end
+	<script type="text/javascript" src="${rc.contextPath}/static/js/index/home.js?$!application.getAttribute('/static/js/index/home.js')"></script>
+	<script type="text/javascript" src="${rc.contextPath}/static/js/util/urlparamutils.js?$!application.getAttribute('/static/js/util/urlparamutils.js')"></script>
+	<div id="shadowUp" class="shadowUp" style="display: none;"></div>
+	<div id="make-name" class="make-name" style="display: none;">
+		<div class="make-con">
+			<p>起个昵称，主播对你好感加倍！</p>
+			<input type="text" id="nickName" placeholder="请输入昵称（3-8个字）" maxlength="8"
+				onfocus="removeErr();" onkeyup="checkName();" class="write-name"/>
+			<input type="hidden" id="userName" value=""/>
+			<span class="tc-wrong" id="err_msg"></span>
+		</div>
+		<div class="choose-btn"><input type="button" value="跳过" onclick="fadeOut();"/>
+		<input type="button" value="保存" id="confirm" onclick="modifyName();"/></div>
+	</div>
+    	<div class="page_bg" id="page_bg">
+			<div class="index-scroll">
+			  <div class="swiper-wrapper" id="home_banner">
+			  </div>
+			  <!-- 如果需要分页器 -->
+			  <div class="index-dots swiper-pagination"></div>
+			</div>
+	    	<input type="hidden" value="${rc.contextPath}" id="web"/>
+		</div>
+		<script type="text/javascript">
+            //确保多次点击时只有最后一次点击的请求能够成功
+            /*var pendingRequests = {};
+            jQuery.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+                var key = options.url;
+                console.log(key);
+                if (!pendingRequests[key]) {
+                    pendingRequests[key] = jqXHR;
+                }else{
+                    //jqXHR.abort(); //放弃后触发的提交
+                    pendingRequests[key].abort(); // 放弃先触发的提交
+                }
+                var complete = options.complete;
+                options.complete = function(jqXHR, textStatus) {
+                    pendingRequests[key] = null;
+                    if (jQuery.isFunction(complete)) {
+                        complete.apply(this, arguments);
+                    }
+                };
+            });*/
+			$(document).ready(function(){
+                //将PC端的直播封面拉伸, 和移动端保持一致
+                var imgW = $(".cover img").width();
+                $(".anchor li").height(imgW);
+                $(".cover").height(imgW);
+                $(".cover img").height(imgW);
+			})
+		</script>
+    </body>
+</html>

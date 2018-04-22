@@ -1,0 +1,24 @@
+#set($page_title="个人资料")
+#set($head_nav=4)
+
+    <div class="person_data">
+        <ul class="data_list">
+            <li><label>主播ID：</label><span>${anchor.anchorId}</span></li>
+            <li><label>昵称：</label><span>${anchor.userName}</span></li>
+            <li><label>性别：</label><span>#if(${anchor.sex} == 1)男#else女#end</span></li>
+            <li><label>生日：</label><span>${anchor.birthday}</span></li>
+            <li><label>年龄：</label><span>${anchor.age}岁</span><label class="constell">星座：</label><span>${anchor.zodiac}</span></li>
+            <li><label>房间号：</label><span>${anchor.roomNum}</span></li>
+            <li><label>公告：</label><span>${anchor.notice}</span></li>
+            <li class="head_cover"><label>头像：</label><img src="${anchor.headImg}" alt="" width="80" height="80"/></li>
+            <li class="modify"><input type="button" value="修改资料" onclick="window.location.href='/anchor/tomodify';"></li>
+        </ul>
+    </div>
+    <script>
+        $(".live_tab li").click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+            var _index =$(this).index();
+            $(".tab").eq(_index).show().siblings(".tab").hide();
+        })
+        $(".data_list li").addClass("clearfix");
+    </script>

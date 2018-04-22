@@ -1,0 +1,81 @@
+#set($page_title= "修改昵称")
+<!-- <div class="edit-infor">
+	<div class="reset-psw">
+		<h3>昵称：</h3>
+		<input type="text" id="userName" placeholder="为汉字、英文字母和数字，长度在1-8个字符之间" onfocus="cleanInfo();" maxlength="8">
+	</div>
+	<p id="info" class="wrong"></p>
+	<div class="hold-infor">
+		<input type="button" value="确定" id="modify_name" onclick="modifyName();">
+	</div>
+</div> -->
+<div class="edit-infor pt10">
+	<div class="set-infor"><input type="text" value="$!{userName}" onfocus="cleanInfo();" id="userName" placeholder="为汉字、英文字母和数字，长度在1-8个字符之间" maxlength="8"/><span></span></div>
+	<p id="info" class="wrong"></p>
+	<div class="hold-infor"><input type="button" value="保存" id="modify_name" onclick="modifyName();"></div>
+</div>
+#foreach($param in ${params.keySet()})  
+	<input type="hidden" id="$param" value="${params.get($param)}">
+#end
+<input type="hidden" value="$!{modifyUrl}" id="modifyUrl">
+<script type="text/javascript" src="${rc.contextPath}/static/js/zepto.min.js?$!application.getAttribute('/static/js/zepto.min.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/touch.js?$!application.getAttribute('/static/js/touch.js')"></script>
+<script type="text/javascript" src="${rc.contextPath}/static/js/launch/anchor/ios_info_interaction.js?$!application.getAttribute('/static/js/launch/anchor/ios_info_interaction.js')"></script>
+<script type="text/javascript">
+	function cleanInfo() {
+	    $("#info").text("");
+	}
+	$(".set-infor span").click(function () {
+		$(this).siblings("input").attr("value","").focus();
+	});
+	function modifyName() {
+    	var anchorId = $.trim($("#anchorId").val());
+		if (isBlank(anchorId)) {
+			return;
+		}
+    	//验证昵称
+    	var userName = $.trim($("#userName").val());
+        if (userName == "") {
+            $("#info").css("opacity","1").text("请填写昵称~");
+            return;
+        } else if (userName.length > 8) {
+            $("#info").css("opacity","1").text("昵称长度在1-8个字符之间~");
+            return;
+        } else {
+            var reg = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+            if (!reg.test(userName)) {
+                $("#info").css("opacity","1").text("昵称只能包含汉字、英文字母和数字~");
+                return;
+            } else {
+            }
+        }
+        var submitData = new Object();
+        submitData.anchorId = anchorId;
+        submitData.userName = userName;
+    	var modifyUrl = $.trim($("#modifyUrl").val());
+		$.ajax({
+	        type: "POST",
+	        url: "${rc.contextPath}/launch/anchor/modify/username.json?" + modifyUrl,
+	        data:submitData,
+	        timeout: 9000,
+			dataType : 'json',
+	        success: function(data) {
+	        	if (data == null) {
+	                $("#info").text("修改失败，请刷新页面。");
+	                return;
+	        	}
+	        	var value = data.data;
+	        	if (value == 1) {
+	        		updateIosData();
+	        		reloadWebView();
+		        	closeWebView();
+	        		return;
+	        	}
+                $("#info").text("修改失败，请刷新页面。");
+	        },
+	        error: function(k, j) {
+	        	console.log("异常：" + k + " " + j);
+	        },
+	    });
+	}
+</script>
