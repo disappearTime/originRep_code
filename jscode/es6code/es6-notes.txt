@@ -1,0 +1,87 @@
+一、环境搭配
+①全局安装babel-cli npm install babel-cli -g
+②本地安装babel-cli、babel-preset-es2015 npm install babel-preset-es2015 babel-cli --save-dev
+③在根目录下新建.babelrc文件，并输入以下代码
+{
+    "presets":[
+        "es2015"
+    ],
+    "plugins":[]
+}
+注意：以上三步缺一不可，否则不能编译，使用webpack可以编译es6，只要下载相应的依赖，配置好就行
+④在终端输入转换命令：babel src/index.js -o dist/index.js
+ 简化转化命令 修改package.json的scripts属性：
+ "scripts":{
+     "build":"babel src/index.js -0 dist/index.js"
+ }
+ 在终端输入npm run build 在build编译时可以执行babel编译操作
+ 注意：有时看不到效果，记得刷新
+
+ 二、es6新增特性
+    1、新增声明方式
+        ①var 声明一个全局变量 容易造成空间污染
+        ②let 声明一个局部变量
+        ②const 声明一个常量 不可更改或通过其他方式重新声明
+    2、变量的结构赋值
+        ①数组解构赋值 左右结构要一致 一一对应 数组是按顺序解构赋值的
+        ②对象解构赋值 对象解构赋值，是按照key值解构赋值的 不一定要按顺序
+         坑：先声明后，再通过对象解构赋值，一定要加圆括号
+         let a;
+         ({a} = {a:"朱威威"})
+        ③字符串解构赋值
+        let [a,b,c] = 'zhu' //a = 'z' b = 'h' c = 'u'
+    3、对象扩展运算符和...和rest运算符
+        ①...扩展运算符将一个数组转为用逗号分隔的参数序列
+        ②rest运算符是扩展运算符的逆运算，也用三个数表示，rest运算符后面不能再跟参数，否则会报错。
+    4、字符串模板
+        ①es6新增的字符串模板用tab键上的点号包裹，使用${}拼接，能够识别标签，支持运算
+        ②es6新增字符串查找方法，es5查找indexOf()
+    5、es6数字操作
+        ① es5 二进制和八进制声明 二进制英文单词是binary 二进制数用0b开头（b不区分大小写）例：let binary = 0B0101 结果是21；八进制英文是octal 八进制数以0o开头
+        ② 数字判断和转换 
+          Number.isFinite()用来判断是否是数字
+          Number.isNaN()用来验证是否是NaN,NaN是特殊的非数字
+          Number.isInteger()判断是否为整数
+          Number.parseInt()/Number.parseFloat() 整数转换和浮点型转换
+        ③ 整数取值范围操作
+          整数的操作是有一个取值范围的，他的取值范围就是2的53次方，计算时会经常超出这个值，所以我们要进行判断，Es6提供了一个常数，叫做最大安全常数，以后不需要我们计算了
+          安全整数判断 Number.isSafeInteger()
+    6、es6新增数组知识
+        ① JSON数组格式转换 Array.from(json) 将json数组格式转换为数组
+        ② Array.of() 将文本或者变量转换为数组
+        ③ find()实例方法 接收一个函数作为参数，这个函数有三个参数
+          value:表示当前查找的值
+          index:表示当前查找的数组索引
+          arr:表示当前数组
+        ④ 数组实例方法fill() 填充 能接收三个参数 第一个参数是填充的变量 第二个是开   始填充的位置，第三个是填充结束的位置 不包含最后一项
+        ⑤ 数组循环 for of 比 es5的for循环简单高效 keys() entries()
+    7、es6中的箭头函数和扩展
+        ① 运行两行代码以上需要花括号包裹
+    8、es6中的函数和数组补充
+        ① 对象的函数结构
+        ② 数组的函数结构
+        ③in的用法 用来判断对象或数组中是否存在某一项
+        ④ 数组的遍历方法
+    9、es6对象
+        ① 对象赋值
+        ② 对象key值构建
+        ③ 对象比较 Object.js()
+        ③ 合并对象 Object.assgin()
+    10、Symbol在对象中的应用
+    11、Set和WeakSet数据结构
+        ①注意这不是数据类型，而是数据结构，是es6中新的东西，Set数据结构是以数组的形式构建的。
+        ② Set的声明 new Set(['js','java']) 不允许有重复的值，如果有只显示一个
+        ② WeakSet的声明 new WeakSet() 通过对象构建 注意不能在new的时候就放值，否则报错 要通过add加进去
+    12、map数据结构
+        ①已知的数据结构有json，set,WeakSet,map等
+    13、Proxy预处理
+        ①Proxy的存在可以让我们给函数加上勾子函数，你可以理解为在执行方法前预处理一些代码。你也可以简单的理解为他是函数或者对象的生命周期
+        ② Proxy的声明 new Proxy({},{})第一个对象相当于我们方法的主体，后边的对象就是Proxy代理处理区域，相当于我们写勾子函数的地方。
+        ③ apply的使用 apply的作用是调用内部的方法，它使用在方法体是一个匿名函数时。
+    14 promise对象的使用
+        ① 执行多步操作的时候非常好用
+    15 class类
+        ① 声明一个类使用class
+    16 模块化操作 export import
+    17 Generator函数 
+        ① babel还不能编译？？

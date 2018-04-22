@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			.load{
+				width: 80px;
+				height: 80px;
+				position: fixed;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				text-align: center;
+				line-height: 80px;
+				font-size: 30px;
+			}
+			.load span{
+				display: block;
+				width: 80px;
+				height: 80px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				border-radius: 50%;
+				box-shadow: 0 2px 0 #666666;
+				animation: ani 1s infinite linear;
+			}
+			@-webkit-keyframes ani{
+				0%{
+					transform: rotate(0deg);
+				}
+				100%{
+					transform: rotate(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="load">
+			<span></span>
+			<b>10</b>
+		</div>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload = function(){
+				var time = 10;
+				var timer = setInterval(function(){
+					time--;
+					$(".load b").html(time);
+					if(time<=0){
+						clearInterval(timer);
+						$(".load").fadeOut();
+						//关闭页面
+					}
+				},1000)
+			}
+		</script>
+	</body>
+</html>

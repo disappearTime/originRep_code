@@ -1,0 +1,58 @@
+1 node指令
+    node hello.js 
+2 提高开发效率 热更新 npm install supervisor -g 用supervisor指令替换node指令
+  出了问题可以尝试重启服务
+3 common.js是属于node里的东西， 可以基于common.js模块化开发
+4 npm install async -D 安装异步调用的插件，async是第三方插件，不是node里的东西，其他项目也可以使用
+  ① 串行无关联 async.series(arr,fun(err,result)) async.series(obj,fun(err,result))
+  ② 并行无关联
+  ③ 串行有关联
+5 数据库mysql的安装
+6 链接数据库
+  ① 安装mysql npm install mysql --save
+  ② 默认端口3306 为root账号设置密码123456
+  ③ mysql服务名(MySQL80、mysql57)  net start MySQL80启动mysql服务 net stop MySQL80关闭mysql服务
+  ① mysql -u root -p (u表示用户名，p表示密码 )
+7 什么是Workbench?
+  MysqlWorkbench是为MySql设计的ER/数据库建模工具，具有设计和创建新的数据库图示，建立数据库文档，以及进行复杂的MySQL迁移的作用。说白了是一个可视化的数据管理
+8 workbench的使用
+  ① 真正操作数据库是在SCHEMAS中 打开workbench后新建一个schemas库 newschema(名字自己取)
+9 数据库操作
+  ① show databases;显示共有哪些数据库 注意mysql语句后面加分号
+  ② create database user;创建一个名字为user的数据库
+  ③ use user;使用user数据库
+  ④ show tables;显示某个数据库的表有哪些
+  ⑤ create table admin(//创建一个名为admin的表  
+    id int not null auto_increment,//auto_increment 自增
+    username varchar(50) not null,//varchar(50)表示50字节的字符串
+    password varchar(20) not null,
+    primary key (id) //id是自增的，这里必须设置id为主键
+  );
+  creat table if not exists admin()最好加上判断 如果没有这个表格则创建这个表格
+  ⑥ desc admin;显示admin这个表的结构
+  ⑦ insert into admin(username,password) values('zhuweiwei','1992629');//玩名为admin的表格中插入数据
+  ⑧ select * from admin;查看这个表的数据
+10 数据库的增删改查
+  ① 增
+    insert into admin...;
+  ② 删
+    delete from admin where id=1;
+    truncate admin;//当把表中的数据都删除后需要执行这个命名，否则会出现这种情况：比如表中有三条数据，全删后，下次添加数据会从4开始，因为mysql会记录之前储存的id
+  ① 改
+    update admin set username='余元申', password='1111' where id=3;
+  ④ 查 (使用最频繁)
+    select * from admin;//查询所有字段
+    select username from admin;//只查询username字段
+    select * from admin order by username;//通过username排序
+    select username, count(*) from admin group by username;//分组统计数量
+    select * from admin,student;//多个表一起查，查出来的结果没什么意义
+    select * from admin,student where admin.username = student.name;//where表示查询条件，同时满足多个条件可以通过and连接 满足其中一个条件可以通过or连接 条件查询
+    select * from admin where author like '%e%';//模糊查询 e%表示前面是e后面随意 %e相反 %e%表示中间有e
+    select * from admin inner join student on admin.username = student.name;//内连接 交集
+    select * from admin left join student on admin.username = student.name;//左连接 左边表格的全拿出来
+    select * from admin right join student on admin.username = student.name;//右连接，右边的全拿出来
+
+
+
+
+注意：'xxx'不是内部或外部指令通常是环境变量的原因，修改环境变量的path值时千万不要把原来的删了，否则环境都乱了
